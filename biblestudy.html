@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>电子圣经团契</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/ebf.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="logo/ebflogo.png" type="image/x-icon">
+    <script src="js/index.js"></script>
+    <SCRIpt src="js/airtime.js"></SCRIpt>
+    <script src="js/daybible.js"></script>
+    <script src="js/time.js"></script>
+    <script src="js/zooms.JS"></script>
+    <script src="js/timevideo.js"></script>
+    <script src="js/filedown.js"></script>
+    <script src="js/cookie.js"></script>
+
+    <script src="dist/fuse.min.js"></script>
+    
+</head>
+
+<body style="font-family: Arial, Helvetica, sans-serif;">
+    <div id="sidebar-left">
+        <img src="logo/ebfside.png" class="logo">
+        <div class="title">
+            <span>电子</span>
+            <span>圣经团契</span>
+        </div>
+        <p class="subtitle">生活在审判日里</p>
+        <div class="sadfds-container" id="sa d f d sContainer">
+            <input type="text" id="sadfdsInput" placeholder="搜索..." />
+            <button id="sadfdsButton">搜索</button>
+        </div>
+        <ul class="sidebar-list">
+            <li>
+                <a href="https://fenli.org" class="sidebar-link">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://us02web.zoom.us/j/8721925979?pwd=aHpWQ0RBcCs2Um1NY1dXVFdrRDZOdz09"
+                    class="sidebar-link">
+                    <i class="fas fa-video"></i>
+                    <span>Zoom</span>
+                </a>
+            </li>
+            <li>
+                <a href="ebfbiblestudy.html" class="sidebar-link">
+                    <i class="fas fa-book-open"></i>
+                    <span>圣经学习</span>
+                </a>
+            </li>
+            <li>
+                <a href="ebfbooks.html" class="sidebar-link">
+                    <i class="fas fa-book"></i>
+                    <span>书籍</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.newopenforum.org/" class="sidebar-link">
+                    <i class="fas fa-comments"></i>
+                    <span>圣经论坛</span>
+                </a>
+            </li>
+        </ul>
+        <div class="airtime-wrapper">
+            <div class="airtime-header">
+                <span class="text-blue">电子</span>圣经团契直播
+            </div>
+            <div class="airtime-player">
+                <iframe src="https://ebiblefellowshipcn.airtime.pro/embed/player?stream=auto&skin=2" allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+        <div class="social-section">
+            <h3 class="social-title">
+                <span class="text-blue">电子</span>圣经团契社交媒体
+            </h3>
+            <div class="social-grid">
+                <a href="https://www.youtube.com/user/EBibleFellowship1" class="social-item">
+                    <div class="social-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <span class="social-label">YouTube</span>
+                </a>
+
+                <a href="https://www.tiktok.com/@ebiblefellowship" class="social-item">
+                    <div class="social-icon">
+                        <i class="fab fa-tiktok"></i>
+                    </div>
+                    <span class="social-label">TikTok</span>
+                </a>
+
+                <a href="https://www.facebook.com/groups/ebiblefellowship/" class="social-item">
+                    <div class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <span class="social-label">Facebook</span>
+                </a>
+            </div>
+            <div class="social-grid">
+                <a href="https://twitter.com/EBF2033" class="social-item">
+                    <div class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <span class="social-label">Twitter</span>
+                </a>
+                <a href="https://open.spotify.com/show/2QaYhjDxUM6TYcFZS1k25N" class="social-item">
+                    <div class="social-icon">
+                        <i class="fab fa-spotify"></i>
+                    </div>
+                    <span class="social-label">Spotify</span>
+                </a>
+                <a href="https://www.instagram.com/ebiblefellowship/" class="social-item">
+                    <div class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <span class="social-label">Instagram</span>
+                </a>
+            </div>
+        </div>
+        <div class="contact-container" style="
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 320px;
+        margin: 40px auto;
+        padding: 25px;
+        font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;">
+            <div class="contact-header" style="
+            background: #a7daff;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            text-align: center;">
+                <h2 style="
+                color: #1a3a5e;
+                margin: 0;
+                font-size: 1.4em;
+                font-weight: 600;
+            ">联系我们</h2>
+            </div>
+
+            <address style="
+            text-align: center;
+            font-style: normal;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;">
+                <p style="margin: 10px 0;">
+                    <a href="mailto:htmlInfo@eBibleFellowship.org" style="
+                       color: #1e6bce;
+                       text-decoration: none;
+                       font-weight: 500;">
+                        Info@eBibleFellowship.org
+                    </a>
+                </p>
+                <p style="margin: 10px 0;">P.O. Box 1393</p>
+                <p style="margin: 10px 0;">Sharon Hill, PA 19079-0593</p>
+                <p style="margin: 10px 0;">USA</p>
+            </address>
+
+            <div class="copyright" style="
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #eee;
+            padding-top: 15px;">
+                © 2024 eBible Fellowship
+            </div>
+        </div>
+    </div>
+    <header class="bibl-header">
+        <div class="header-grid">
+            <!-- 品牌区 -->
+            <div class="branding">
+                
+                <div class="books"style>
+          
+                    <img src="logo/ebfside.png" width="100px">
+                    <h1 class="site-title" style="text-align: center;font-family: Arial, Helvetica, sans-serif;"><span>电子</span>圣经团契</h1>
+                    <h1 class="site-title" style="text-align: center;font-family: Arial, Helvetica, sans-serif;">圣经书籍</h1>
+                </div>
+            </div>
+            <!-- 智能搜索 -->
+            <div class="searcsadfpper">
+                <input type="text" id="adsgarch" placeholder="搜索经文、主题或注释...">
+             
+            </div>
+            <ul id="dropdown" class="dropdown"></ul>
+        </div>
+    </header>
+    <p style="text-align: center;font-size: 20px;color: #0095ff;font-family: Arial, Helvetica, sans-serif;">电子圣经团契整理了很多书籍</p>
+ 
+
+    <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+        <main style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/roman1.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">罗马书1章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">罗马书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/roman1.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/roman1.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+    
+            <!-- 罗马书2章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/roman2.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">罗马书2章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">罗马书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/roman2.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/roman2.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+    
+            <!-- 罗马书3章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/roman3.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">罗马书3章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">罗马书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/roman3.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/roman3.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+    
+            <!-- 罗马书4章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/roman4.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">罗马书4章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">罗马书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/roman4.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/roman4.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+    
+            <!-- 罗马书5章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/roman5.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">罗马书5章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">罗马书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/roman5.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/roman5.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/dan1.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">但以理书1章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">但以理书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/但以理书1章.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/但以理书1章.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 但以理书2章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/dan2.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">但以理书2章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">但以理书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/但以理书2章.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/但以理书2章.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 但以理书3章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/dan3.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">但以理书3章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">但以理书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/但以理书3章.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/但以理书3章.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis24.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记24章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis24.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis24.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis25.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记25章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis25.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis25.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis26.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记26章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis26.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis26.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记27章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis27.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记27章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis27.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis27.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记28章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis28.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记28章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis28.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis28.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记29章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis29.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记29章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis29.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis29.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记30章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis30.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记30章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis30.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis30.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记31章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis31.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记31章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis31.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis31.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记32章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis32.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记32章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis32.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis32.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记33章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis33.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记33章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis33.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis33.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记34章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis34.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记34章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis34.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis34.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记35章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis35.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记35章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis35.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease,Statics box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis35.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记36章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis36.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记36章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis36.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis36.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记37章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis37.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记37章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis37.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis37.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记38章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis38.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记38章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis38.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis38.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+        
+            <!-- 创世记39章 -->
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis39.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记39章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis39.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis39.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/jugement.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">创世记40章查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">创世记系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/jugement.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/jugement.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/Genesis40.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">所记录的审判</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">末日审判系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/Genesis40.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/Genesis40.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/biblcal.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">末日圣经证据</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">末日审判系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/biblcal.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/biblcal.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/worldend.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">世界末了的两个灾难时期</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">末日审判系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/worldend.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/worldend.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/yueshafa.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">约沙法谷</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">约珥书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/yueshafa.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/yueshafa.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/yueer1.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">约珥书第一章</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">约珥书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/yueer1.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/yueer1.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/yueer2.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">约珥书第二章</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">约珥书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/yueer2.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/yueer2.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/luck1.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">路加福音第2章</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">路加福音系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/luck1.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/luck1.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/psalm37.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">诗篇第三十七篇</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">诗篇系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/psalm37.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/psalm37.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/rele2.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">启示录2章</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">启示录系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/rele2.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/rele2.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/jiala.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">加拉太书查考</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">加拉太书系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/jiala.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/jiala.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/ant.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">去查看蚂蚁的动作</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">其他系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/ant.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/ant.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/god.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">上帝要收获他已播种的</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">其他系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/god.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/god.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+            <div style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <img src="picture/jesus.png" alt="圣经注释" style="width: 100%; height: 200px; object-fit: cover;">
+                <h3 style="font-size: 1.5rem; margin: 10px; color: #333; font-weight: 600;">耶稣的第二次降临</h3>
+                <div style="padding: 0 10px; color: #666;">
+                    <p style="margin: 5px 0; font-size: 0.9rem;">📚 作者：克里斯·麦肯</p>
+                    <p style="margin: 5px 0; font-size: 0.9rem;">其他系列</p>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; justify-content: center;">
+                    <a href="#" onclick="handlePreview('studybible/jesus.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #007bff, #00c4ff); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">在线阅读</a>
+                    <a href="#" onclick="handleDownload('studybible/jesus.docx'); return false;" style="text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; background: linear-gradient(45deg, #28a745, #4caf50); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 10px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 6px rgba(0, 0, 0, 0.2)';">下载文件</a>
+                </div>
+            </div>
+
+            
+            <!-- 其他卡片（如罗马书2章、3章）复制以上样式，替换图片路径和标题 -->
+        </main>
+        
+    </div>
+<!--autoupdate-->
+<script>
+    function handlePreview(file) {
+        const filePath = `files/docx/${file}`;
+       
+        window.location.href = `word.html?file=${file}`;
+    }
+
+    function handleDownload(file) {
+        const filePath = `files/docx/${file}`;
+      
+        window.location.href = `download.php?file=${file}`;
+    }
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("✅ DOM 加载完成，初始化 JavaScript");
+
+  // 获取所有 .book-card 信息（title, xl内容, 在线阅读链接）
+  const bookItems = Array.from(document.querySelectorAll('.book-card')).map(item => {
+    return {
+      title: item.querySelector('.book-title').textContent.trim(),
+      extra: item.querySelector('.xl') ? item.querySelector('.xl').textContent.trim() : "无附加信息",
+      readLink: item.querySelector('.preview-btn.d') ? item.querySelector('.preview-btn.d').href : "#"
+    };
+  });
+
+  const fuse = new Fuse(bookItems, {
+    keys: ["title"],
+    includeScore: true,
+    threshold: 0.4,
+    useExtendedSearch: true,
+  });
+
+  // 获取 DOM 元素
+  const searchInput = document.getElementById('adsgarch');
+  const dropdown = document.getElementById('dropdown');
+
+  // 监听输入框
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      handleUserInput(this.value.trim().toLowerCase());
+    });
+  } else {
+    console.error("❌ 错误：未找到 `adsgarch` 输入框");
+  }
+
+  // 处理用户输入
+  function handleUserInput(query) {
+    if (query === "music" || query === "音乐") {
+      playRandomMusic();
+    } else if (query === "停止" || query === "break") {
+      stopMusic();
+    } else {
+      performSearch(query);
+    }
+  }
+
+  // 执行搜索
+  function performSearch(query) {
+    if (!query) {
+      dropdown.innerHTML = '';
+      return;
+    }
+
+    const results = fuse.search(query);
+    renderDropdown(results);
+  }
+
+  // 渲染下拉菜单
+  function renderDropdown(results) {
+    dropdown.innerHTML = '';
+
+    // 添加 "圣经查考" 作为第一项
+    const headerItem = document.createElement('li');
+    headerItem.textContent = "圣经查考";
+    headerItem.style.fontWeight = "bold";
+    headerItem.style.color = "#3CB371"; // 淡绿色
+    headerItem.style.padding = "10px";
+    headerItem.style.borderBottom = "1px solid #ddd"; // GitHub 风格的淡灰色线
+    dropdown.appendChild(headerItem);
+
+    if (results.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = '无匹配结果';
+      dropdown.appendChild(li);
+      return;
+    }
+
+    results.forEach(result => {
+      const bookData = result.item;
+
+      const li = document.createElement('li');
+      li.style.display = "flex";
+      li.style.justifyContent = "space-between";
+      li.style.alignItems = "center";
+      li.style.padding = "8px 10px";
+      li.style.cursor = "pointer"; // 让鼠标变成手型
+      li.style.backgroundColor = "white"; 
+      li.style.borderBottom = "1px solid #eee"; // 添加分隔线
+      li.addEventListener("mouseover", () => li.style.backgroundColor = "#f6f8fa"); // GitHub hover 效果
+      li.addEventListener("mouseout", () => li.style.backgroundColor = "white");
+
+      // 监听点击，跳转到 `在线阅读` 链接
+      li.addEventListener("click", () => {
+        window.open(bookData.readLink, "_blank"); // 在新窗口打开
+      });
+
+      // 左边：书籍图标 + 标题
+      const leftContainer = document.createElement("div");
+      leftContainer.style.display = "flex";
+      leftContainer.style.alignItems = "center";
+
+      const icon = document.createElement('i');
+      icon.className = "fas fa-book"; // FontAwesome 书籍图标
+      icon.style.marginRight = "10px";
+      icon.style.color = "#555"; // 深灰色
+
+      const title = document.createElement("span");
+      title.textContent = bookData.title;
+
+      leftContainer.appendChild(icon);
+      leftContainer.appendChild(title);
+
+      // 右边：灰色宋体 `.xl` 内容
+      const extraInfo = document.createElement("span");
+      extraInfo.textContent = bookData.extra;
+      extraInfo.style.color = "gray";
+      extraInfo.style.fontFamily = "SimSun, 宋体"; // 使用宋体
+      extraInfo.style.fontSize = "14px";
+
+      li.appendChild(leftContainer);
+      li.appendChild(extraInfo);
+      dropdown.appendChild(li);
+    });
+  }
+
+  // 随机播放音乐
+  function playRandomMusic() {
+    let musicFiles = ["21.mp3", "31.mp3", "201.mp3", "501.mp3", "381.mp3"];
+    let baseURL = "https://s1.ebiblefellowship.org:40080/b/piano/";
+
+    let randomIndex = Math.floor(Math.random() * musicFiles.length);
+    let selectedTrack = `${baseURL}${musicFiles[randomIndex]}`;
+
+    audioPlayer.src = selectedTrack;
+    audioPlayer.play();
+
+    console.log(`🎵 正在播放: ${selectedTrack}`);
+  }
+
+  // 停止音乐
+  function stopMusic() {
+    if (isPlaying) {
+      audioPlayer.pause();
+      audioPlayer.src = "";
+      isPlaying = false;
+      console.log("⏹️ 音乐播放已停止");
+    }
+  }
+});
+
+
+</script>
+<a href="#" class="download-button-yfd w-button" onclick="handleDownload('studybible/jesus.docx');">下载</a>
+<a href="#" class="order-button w-button" onclick="handlePreview('studybible/jesus.docx');">阅读</a>

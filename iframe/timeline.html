@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圣经历史年代表系列</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .episode-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background: #3498db;
+            color: white;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background 0.3s;
+        }
+        .episode-button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        .episode-button:active {
+            transform: translateY(0);
+        }
+        .episode-button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .video-container {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        video {
+            width: 100%;
+            display: block;
+        }
+        .coming-soon {
+            font-size: 1.1rem;
+            color: #e74c3c;
+            font-weight: 500;
+            display: none;
+            margin-top: 15px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            .episode-button {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>圣经历史年代表系列</h1>
+        <p class="subtitle">探索信仰的历史脉络，感受神的话语</p>
+        <div class="button-container">
+            <button class="episode-button" onclick="playVideo(1)">第一集</button>
+            <button class="episode-button" onclick="playVideo(2)">第二集</button>
+            <button class="episode-button" onclick="showComingSoon()" disabled>第三集</button>
+            <button class="episode-button" onclick="showComingSoon()" disabled>第四集</button>
+        </div>
+        <div class="video-container" id="videoContainer">
+            <video id="episodeVideo" controls>
+                <source id="videoSource" src="" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+        </div>
+        <p class="coming-soon" id="comingSoon">即将推出，敬请期待！</p>
+    </div>
+
+    <script>
+        const videos = {
+            1: 'https://pub-b9b10ffed3144f8aba9aa3150f527448.r2.dev/videos/Biblecaltimeline.mp4',
+            2: 'https://pub-b9b10ffed3144f8aba9aa3150f527448.r2.dev/videos/4900B.C.mp4'
+        };
+
+        function playVideo(episode) {
+            const video = document.getElementById('episodeVideo');
+            const videoSource = document.getElementById('videoSource');
+            const comingSoon = document.getElementById('comingSoon');
+            const videoContainer = document.getElementById('videoContainer');
+
+            if (videos[episode]) {
+                videoSource.src = videos[episode];
+                video.load(); // 重新加载视频
+                videoContainer.style.display = 'block';
+                comingSoon.style.display = 'none';
+                video.play().catch(err => console.error('播放失败:', err));
+            }
+        }
+
+        function showComingSoon() {
+            const videoContainer = document.getElementById('videoContainer');
+            const comingSoon = document.getElementById('comingSoon');
+            videoContainer.style.display = 'none';
+            comingSoon.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件 - 电子圣经团契手机端</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0066cc;
+      --secondary-color: #99ccff;
+      --text-color: #1a202c;
+      --bg-gradient: linear-gradient(135deg, #f5f7fa, #e0e7ff);
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --blur-bg: rgba(255, 255, 255, 0.95);
+      --blur-bg-secondary: rgba(255, 255, 255, 0.9);
+      --border-radius: 12px;
+      --transition: all 0.3s ease;
+    }
+
+    .dark-mode {
+      --bg-gradient: linear-gradient(135deg, #2d3748, #4a5568);
+      --blur-bg: rgba(45, 55, 72, 0.95);
+      --blur-bg-secondary: rgba(45, 55, 72, 0.9);
+      --text-color: #e2e8f0;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-color);
+    }
+
+    .blur-bg {
+      background: var(--blur-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--card-shadow);
+      border-radius: var(--border-radius);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      background: var(--blur-bg);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius);
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+
+    .electronic {
+      color: var(--primary-color);
+    }
+
+    .header-right {
+      display: flex;
+      gap: 10px;
+    }
+
+    .back-btn, .settings-btn, .theme-toggle {
+      background: var(--blur-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: none;
+      font-size: 24px;
+      color: var(--text-color);
+      cursor: pointer;
+      padding: 10px;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 48px;
+      height: 48px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .back-btn:hover, .settings-btn:hover, .theme-toggle:hover {
+      color: var(--primary-color);
+      transform: scale(1.05);
+    }
+
+    main {
+      flex: 1;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .search-container {
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 18px;
+      color: var(--text-color);
+      background: var(--blur-bg);
+      border: 1px solid var(--secondary-color);
+      border-radius: var(--border-radius);
+      outline: none;
+      transition: var(--transition);
+      box-shadow: var(--card-shadow);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 8px rgba(0, 102, 204, 0.4);
+    }
+
+    .file-container {
+      width: 100%;
+    }
+
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      text-decoration: none;
+      color: var(--text-color);
+      background: var(--blur-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      box-shadow: var(--card-shadow);
+      width: 100%;
+    }
+
+    .file-item:hover {
+      background: var(--secondary-color);
+      color: #fff;
+      transform: scale(1.02);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .file-icon {
+      font-size: 28px;
+      color: var(--primary-color);
+      flex-shrink: 0;
+    }
+
+    .file-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .file-name {
+      font-size: 18px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-details {
+      font-size: 14px;
+      color: var(--secondary-color);
+    }
+
+    nav {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      padding: 12px 0;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      background: var(--blur-bg);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 12px;
+      transition: var(--transition);
+    }
+
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+
+    .nav-item:not(.active) i {
+      color: var(--secondary-color);
+    }
+
+    .nav-item:hover {
+      color: var(--primary-color);
+      transform: scale(1.05);
+    }
+
+    .nav-item i {
+      font-size: 24px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        font-size: 15px;
+      }
+      header {
+        padding: 12px;
+      }
+      .logo {
+        width: 44px;
+        height: 44px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .back-btn, .settings-btn, .theme-toggle {
+        font-size: 22px;
+        padding: 8px;
+        width: 44px;
+        height: 44px;
+      }
+      .search-input {
+        font-size: 16px;
+        padding: 12px 14px;
+      }
+      .file-item {
+        padding: 14px 16px;
+        gap: 12px;
+      }
+      .file-icon {
+        font-size: 24px;
+      }
+      .file-name {
+        font-size: 16px;
+      }
+      .file-details {
+        font-size: 13px;
+      }
+      .nav-item {
+        font-size: 13px;
+        padding: 10px;
+      }
+      .nav-item i {
+        font-size: 22px;
+      }
+    }
+
+    @media (orientation: landscape) {
+      .header-right {
+        flex: 0;
+      }
+      .back-btn, .settings-btn, .theme-toggle {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    .dark-mode .settings-btn, .dark-mode .theme-toggle, .dark-mode .back-btn {
+      color: #e2e8f0;
+      background: var(--blur-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .dark-mode .settings-btn:hover, .dark-mode .theme-toggle:hover, .dark-mode .back-btn:hover {
+      color: #80bfff;
+    }
+
+    .dark-mode .nav-item {
+      color: #e2e8f0;
+    }
+
+    .dark-mode .nav-item.active {
+      color: #80bfff;
+    }
+
+    .dark-mode .nav-item:not(.active) i {
+      color: #a0aec0;
+    }
+
+    .dark-mode .nav-item:hover {
+      color: #80bfff;
+    }
+
+    .dark-mode .search-input {
+      background: var(--blur-bg);
+      color: #e2e8f0;
+      border-color: #a0aec0;
+    }
+
+    .dark-mode .search-input:focus {
+      border-color: #80bfff;
+    }
+
+    .dark-mode .file-item {
+      color: #e2e8f0;
+      background: var(--blur-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .dark-mode .file-item:hover {
+      background: #2b6cb0;
+      color: #fff;
+    }
+
+    .dark-mode .file-details {
+      color: #a0aec0;
+    }
+  </style>
+</head>
+<body>
+  <header class="blur-bg">
+    <div class="header-left">
+      <button class="back-btn" aria-label="返回首页" onclick="window.location.href='../index.html'">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <div class="logo-container">
+        <img src="logo/ebfside.png" alt="Logo" class="logo" loading="lazy" onerror="this.style.display='none'">
+        <h1><span class="electronic">电子</span>圣经团契</h1>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="settings-btn" aria-label="设置"><i class="fas fa-gear"></i></button>
+      <button class="theme-toggle" aria-label="切换主题"><i class="fas fa-moon"></i></button>
+    </div>
+  </header>
+
+  <main>
+    <div class="search-container">
+      <input type="text" id="searchInput" class="search-input" placeholder="搜索文件..." aria-label="搜索文件">
+    </div>
+    <div class="file-container">
+      <div id="fileList" class="file-list"></div>
+    </div>
+  </main>
+
+  <nav class="blur-bg">
+    <a href="../mobile.html" class="nav-item">
+      <i class="fas fa-home"></i>
+      <span>首页</span>
+    </a>
+    <a href="#" class="nav-item active">
+      <i class="far fa-file-alt"></i>
+      <span>文件</span>
+    </a>
+    <a href="item.html" class="nav-item">
+      <i class="far fa-compass"></i>
+      <span>发现</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="far fa-comments"></i>
+      <span>开放论坛</span>
+    </a>
+        <a href="live.html" class="nav-item">
+      <span class="icon-container"><i class="fas fa-video"></i><span class="badge"></span></span>
+      <span>直播室</span>
+    </a>
+  </nav>
+
+  <script>
+    const files = [
+      { name: '约珥书2章（2）.mp3', size: '15.3 MB', type: 'audio' },
+      { name: '约珥书1章（4）.mp3', size: '10.0 MB', type: 'audio' },
+      { name: '约沙法谷（2）.mp3', size: '11.9 MB', type: 'audio' },
+      { name: '约沙法谷（3）.mp3', size: '12.7 MB', type: 'audio' },
+      { name: '约珥书1章（5）.mp3', size: '10.8 MB', type: 'audio' },
+      { name: '约珥书2章（3）.mp3', size: '13.2 MB', type: 'audio' },
+      { name: '约珥书2章（8）.mp3', size: '10.9 MB', type: 'audio' },
+      { name: '约沙法谷（4）.mp3', size: '10.9 MB', type: 'audio' },
+      { name: '约珥书2章（4）.mp3', size: '12.9 MB', type: 'audio' },
+      { name: '约沙法谷（8）.mp3', size: '11.2 MB', type: 'audio' },
+      { name: '约珥书1章（2）.mp3', size: '15.8 MB', type: 'audio' },
+      { name: '约珥书1章（3）.mp3', size: '13.7 MB', type: 'audio' },
+      { name: '约珥书2章（5）.mp3', size: '13.7 MB', type: 'audio' },
+      { name: '约沙法谷（5）.mp3', size: '15.3 MB', type: 'audio' },
+      { name: '约沙法谷（6）.mp3', size: '15.5 MB', type: 'audio' },
+      { name: '约珥书2章（6）.mp3', size: '14.8 MB', type: 'audio' },
+      { name: '约珥书2章（7）.mp3', size: '15.4 MB', type: 'audio' },
+      { name: '约珥书1章（1）.mp3', size: '16.2 MB', type: 'audio' },
+      { name: '约沙法谷（7）.mp3', size: '15.4 MB', type: 'audio' },
+      { name: '约珥书1章（6）.mp3', size: '12.8 MB', type: 'audio' },
+      { name: '约沙法谷（1）.mp3', size: '15.3 MB', type: 'audio' },
+      { name: '约珥书2章（1）.mp3', size: '15.0 MB', type: 'audio' },
+      { name: '罗马书3章（16）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '罗马书3章（45）.mp3', size: '8.1 MB', type: 'audio' },
+      { name: '启示录2章（1）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '罗马书5章（39）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '罗马书2章（12）.mp3', size: '5.2 MB', type: 'audio' },
+      { name: '罗马书3章（12）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '路加福音1章（27）.mp3', size: '5.1 MB', type: 'audio' },
+      { name: '启示录2章（12）.mp3', size: '8.7 MB', type: 'audio' },
+      { name: '路加福音1章（31）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '路加福音1章（4）.mp3', size: '8.2 MB', type: 'audio' },
+      { name: '罗马书2章（28）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '罗马书3章（28）.mp3', size: '6.6 MB', type: 'audio' },
+      { name: '罗马书4章（15）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '罗马书5章（15）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '启示录2章（28）.mp3', size: '6.8 MB', type: 'audio' },
+      { name: '罗马书4章（35）.mp3', size: '5.0 MB', type: 'audio' },
+      { name: '罗马书5章（35）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '罗马书5章（3）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '罗马书5章（23）.mp3', size: '5.8 MB', type: 'audio' },
+      { name: '罗马书4章（23）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书2章（7）.mp3', size: '5.2 MB', type: 'audio' },
+      { name: '路加福音1章（8）.mp3', size: '6.8 MB', type: 'audio' },
+      { name: '路加福音1章（11）.mp3', size: '7.7 MB', type: 'audio' },
+      { name: '罗马书3章（24）.mp3', size: '7.4 MB', type: 'audio' },
+      { name: '启示录2章（32）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '罗马书2章（24）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '罗马书4章（2）.mp3', size: '6.9 MB', type: 'audio' },
+      { name: '罗马书3章（6）.mp3', size: '7.8 MB', type: 'audio' },
+      { name: '启示录2章（24）.mp3', size: '5.3 MB', type: 'audio' },
+      { name: '罗马书3章（32）.mp3', size: '7.1 MB', type: 'audio' },
+      { name: '罗马书5章（19）.mp3', size: '6.9 MB', type: 'audio' },
+      { name: '罗马书4章（19）.mp3', size: '5.1 MB', type: 'audio' },
+      { name: '罗马书5章（18）.mp3', size: '6.9 MB', type: 'audio' },
+      { name: '罗马书4章（18）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书3章（33）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '启示录2章（25）.mp3', size: '7.2 MB', type: 'audio' },
+      { name: '创世记24章（1）.mp3', size: '5.4 MB', type: 'audio' },
+      { name: '罗马书3章（7）.mp3', size: '7.6 MB', type: 'audio' },
+      { name: '罗马书4章（3）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '路加福音1章（10）.mp3', size: '8.2 MB', type: 'audio' },
+      { name: '启示录2章（33）.mp3', size: '6.6 MB', type: 'audio' },
+      { name: '罗马书3章（25）.mp3', size: '5.7 MB', type: 'audio' },
+      { name: '罗马书2章（25）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '罗马书2章（6）.mp3', size: '5.6 MB', type: 'audio' },
+      { name: '路加福音1章（9）.mp3', size: '8.4 MB', type: 'audio' },
+      { name: '罗马书5章（22）.mp3', size: '5.7 MB', type: 'audio' },
+      { name: '罗马书4章（22）.mp3', size: '6.8 MB', type: 'audio' },
+      { name: '罗马书5章（2）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书4章（34）.mp3', size: '5.2 MB', type: 'audio' },
+      { name: '罗马书5章（34）.mp3', size: '8.2 MB', type: 'audio' },
+      { name: '启示录2章（29）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '罗马书4章（14）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '罗马书5章（14）.mp3', size: '5.2 MB', type: 'audio' },
+      { name: '罗马书2章（29）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '罗马书3章（29）.mp3', size: '5.3 MB', type: 'audio' },
+      { name: '路加福音1章（5）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '启示录2章（13）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '路加福音1章（30）.mp3', size: '7.8 MB', type: 'audio' },
+      { name: '罗马书2章（13）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '罗马书3章（13）.mp3', size: '8.1 MB', type: 'audio' },
+      { name: '路加福音1章（26）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '耶稣的第二次降临（1）.mp3', size: '8.1 MB', type: 'audio' },
+      { name: '罗马书5章（38）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书3章（44）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '罗马书2章（18）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书3章（18）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '罗马书5章（33）.mp3', size: '7.5 MB', type: 'audio' },
+      { name: '罗马书4章（33）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '启示录2章（18）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '罗马书5章（5）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '罗马书4章（25）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书5章（25）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '罗马书2章（1）.mp3', size: '5.1 MB', type: 'audio' },
+      { name: '路加福音1章（17）.mp3', size: '7.0 MB', type: 'audio' },
+      { name: '罗马书2章（22）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '创世记24章（11）.mp3', size: '9.6 MB', type: 'audio' },
+      { name: '罗马书3章（22）.mp3', size: '7.0 MB', type: 'audio' },
+      { name: '启示录2章（34）.mp3', size: '6.9 MB', type: 'audio' },
+      { name: '罗马书4章（4）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '路加福音1章（40）.mp3', size: '5.7 MB', type: 'audio' },
+      { name: '创世记24章（6）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '启示录2章（22）.mp3', size: '6.5 MB', type: 'audio' },
+      { name: '罗马书3章（34）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '罗马书3章（43）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '启示录2章（7）.mp3', size: '6.0 MB', type: 'audio' },
+      { name: '罗马书3章（14）.mp3', size: '5.6 MB', type: 'audio' },
+      { name: '罗马书2章（14）.mp3', size: '5.6 MB', type: 'audio' },
+      { name: '路加福音1章（21）.mp3', size: '7.7 MB', type: 'audio' },
+      { name: '罗马书5章（29）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '罗马书4章（29）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '罗马书5章（9）.mp3', size: '8.3 MB', type: 'audio' },
+      { name: '启示录2章（14）.mp3', size: '6.9 MB', type: 'audio' },
+      { name: '路加福音1章（37）.mp3', size: '5.4 MB', type: 'audio' },
+      { name: '路加福音1章（2）.mp3', size: '8.2 MB', type: 'audio' },
+      { name: '罗马书4章（8）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '启示录2章（38）.mp3', size: '7.0 MB', type: 'audio' },
+      { name: '罗马书5章（13）.mp3', size: '8.6 MB', type: 'audio' },
+      { name: '罗马书4章（13）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '罗马书3章（38）.mp3', size: '7.7 MB', type: 'audio' },
+      { name: '罗马书3章（39）.mp3', size: '7.3 MB', type: 'audio' },
+      { name: '罗马书5章（12）.mp3', size: '5.8 MB', type: 'audio' },
+      { name: '罗马书4章（12）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '启示录2章（39）.mp3', size: '7.2 MB', type: 'audio' },
+      { name: '罗马书4章（9）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '路加福音1章（3）.mp3', size: '7.6 MB', type: 'audio' },
+      { name: '罗马书5章（8）.mp3', size: '5.6 MB', type: 'audio' },
+      { name: '启示录2章（15）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '路加福音1章（36）.mp3', size: '5.7 MB', type: 'audio' },
+      { name: '罗马书5章（28）.mp3', size: '7.2 MB', type: 'audio' },
+      { name: '罗马书4章（28）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '罗马书3章（15）.mp3', size: '6.5 MB', type: 'audio' },
+      { name: '罗马书2章（15）.mp3', size: '5.3 MB', type: 'audio' },
+      { name: '路加福音1章（20）.mp3', size: '8.8 MB', type: 'audio' },
+      { name: '启示录2章（6）.mp3', size: '7.0 MB', type: 'audio' },
+      { name: '罗马书3章（42）.mp3', size: '7.7 MB', type: 'audio' },
+      { name: '罗马书3章（35）.mp3', size: '5.8 MB', type: 'audio' },
+      { name: '启示录2章（23）.mp3', size: '7.2 MB', type: 'audio' },
+      { name: '创世记24章（7）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '罗马书3章（1）.mp3', size: '3.8 MB', type: 'audio' },
+      { name: '罗马书4章（5）.mp3', size: '5.4 MB', type: 'audio' },
+      { name: '路加福音1章（16）.mp3', size: '7.4 MB', type: 'audio' },
+      { name: '罗马书2章（23）.mp3', size: '5.7 MB', type: 'audio' },
+      { name: '创世记24章（10）.mp3', size: '8.7 MB', type: 'audio' },
+      { name: '启示录2章（35）.mp3', size: '7.1 MB', type: 'audio' },
+      { name: '罗马书3章（23）.mp3', size: '5.1 MB', type: 'audio' },
+      { name: '罗马书4章（24）.mp3', size: '6.8 MB', type: 'audio' },
+      { name: '罗马书5章（24）.mp3', size: '7.5 MB', type: 'audio' },
+      { name: '启示录2章（19）.mp3', size: '7.2 MB', type: 'audio' },
+      { name: '罗马书5章（4）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书5章（32）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书4章（32）.mp3', size: '5.3 MB', type: 'audio' },
+      { name: '罗马书2章（19）.mp3', size: '5.1 MB', type: 'audio' },
+      { name: '罗马书3章（19）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '罗马书3章（36）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '启示录2章（20）.mp3', size: '7.1 MB', type: 'audio' },
+      { name: '创世记24章（4）.mp3', size: '6.9 MB', type: 'audio' },
+      { name: '罗马书3章（2）.mp3', size: '4.5 MB', type: 'audio' },
+      { name: '罗马书4章（6）.mp3', size: '5.8 MB', type: 'audio' },
+      { name: '启示录2章（36）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '罗马书3章（20）.mp3', size: '7.9 MB', type: 'audio' },
+      { name: '罗马书2章（20）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '路加福音1章（15）.mp3', size: '8.2 MB', type: 'audio' },
+      { name: '罗马书2章（3）.mp3', size: '5.2 MB', type: 'audio' },
+      { name: '罗马书5章（27）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书4章（27）.mp3', size: '5.6 MB', type: 'audio' },
+      { name: '路加福音1章（39）.mp3', size: '7.5 MB', type: 'audio' },
+      { name: '罗马书5章（7）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '罗马书4章（31）.mp3', size: '5.4 MB', type: 'audio' },
+      { name: '罗马书5章（31）.mp3', size: '5.6 MB', type: 'audio' },
+      { name: '启示录2章（9）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '罗马书4章（11）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '罗马书5章（11）.mp3', size: '6.8 MB', type: 'audio' },
+      { name: '创世记24章（8）.mp3', size: '6.0 MB', type: 'audio' },
+      { name: 'A Shelter in the Time of Storm - Piano.mp3', size: '2.7 MB', type: 'audio' },
+      { name: '路加福音1章（19）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '路加福音1章（35）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '启示录2章（16）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '路加福音1章（23）.mp3', size: '7.4 MB', type: 'audio' },
+      { name: '罗马书2章（16）.mp3', size: '4.7 MB', type: 'audio' },
+      { name: '罗马书3章（16）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '启示录2章（5）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '罗马书3章（41）.mp3', size: '7.8 MB', type: 'audio' },
+      { name: '罗马书3章（40）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '启示录2章（4）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '路加福音1章（22）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '罗马书2章（17）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '罗马书3章（17）.mp3', size: '8.6 MB', type: 'audio' },
+      { name: 'And Can It Be - Piano.mp3', size: '10.9 MB', type: 'audio' },
+      { name: '路加福音1章（34）.mp3', size: '8.3 MB', type: 'audio' },
+      { name: '启示录2章（17）.mp3', size: '6.5 MB', type: 'audio' },
+      { name: '路加福音1章（1）.mp3', size: '8.6 MB', type: 'audio' },
+      { name: '路加福音1章（18）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '创世记24章（9）.mp3', size: '6.0 MB', type: 'audio' },
+      { name: '罗马书4章（10）.mp3', size: '5.7 MB', type: 'audio' },
+      { name: '罗马书5章（10）.mp3', size: '7.6 MB', type: 'audio' },
+      { name: '罗马书4章（30）.mp3', size: '5.0 MB', type: 'audio' },
+      { name: '罗马书5章（30）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '启示录2章（8）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '路加福音1章（38）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书5章（6）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '罗马书5章（26）.mp3', size: '7.1 MB', type: 'audio' },
+      { name: '罗马书4章（26）.mp3', size: '6.8 MB', type: 'audio' },
+      { name: '罗马书2章（2）.mp3', size: '4.7 MB', type: 'audio' },
+      { name: '创世记24章（12）.mp3', size: '9.9 MB', type: 'audio' },
+      { name: '罗马书3章（21）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '启示录2章（37）.mp3', size: '6.8 MB', type: 'audio' },
+      { name: '罗马书2章（21）.mp3', size: '6.3 MB', type: 'audio' },
+      { name: '路加福音1章（14）.mp3', size: '7.8 MB', type: 'audio' },
+      { name: '罗马书4章（7）.mp3', size: '6.0 MB', type: 'audio' },
+      { name: '罗马书3章（3）.mp3', size: '4.1 MB', type: 'audio' },
+      { name: '创世记24章（5）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '启示录2章（21）.mp3', size: '6.9 MB', type: 'audio' },
+      { name: '罗马书3章（37）.mp3', size: '7.4 MB', type: 'audio' },
+      { name: '罗马书5章（17）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '罗马书4章（17）.mp3', size: '6.3 MB', type: 'audio' },
+      { name: '罗马书5章（40）.mp3', size: '5.8 MB', type: 'audio' },
+      { name: '罗马书3章（8）.mp3', size: '5.1 MB', type: 'audio' },
+      { name: '路加福音1章（6）.mp3', size: '6.9 MB', type: 'audio' },
+      { name: '罗马书2章（9）.mp3', size: '5.2 MB', type: 'audio' },
+      { name: '路加福音1章（33）.mp3', size: '6.6 MB', type: 'audio' },
+      { name: '启示录2章（10）.mp3', size: '7.5 MB', type: 'audio' },
+      { name: '耶稣的第二次降临（2）.mp3', size: '10.3 MB', type: 'audio' },
+      { name: '路加福音1章（25）.mp3', size: '6.8 MB', type: 'audio' },
+      { name: '罗马书3章（10）.mp3', size: '6.0 MB', type: 'audio' },
+      { name: '罗马书2章（10）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '启示录2章（3）.mp3', size: '7.2 MB', type: 'audio' },
+      { name: '罗马书3章（30）.mp3', size: '5.9 MB', type: 'audio' },
+      { name: '启示录2章（26）.mp3', size: '6.5 MB', type: 'audio' },
+      { name: '创世记24章（2）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '罗马书3章（4）.mp3', size: '3.9 MB', type: 'audio' },
+      { name: '罗马书2章（26）.mp3', size: '5.5 MB', type: 'audio' },
+      { name: '启示录2章（30）.mp3', size: '6.1 MB', type: 'audio' },
+      { name: '罗马书3章（26）.mp3', size: '7.0 MB', type: 'audio' },
+      { name: '路加福音1章（13）.mp3', size: '7.7 MB', type: 'audio' },
+      { name: '罗马书2章（5）.mp3', size: '5.3 MB', type: 'audio' },
+      { name: '罗马书4章（21）.mp3', size: '5.0 MB', type: 'audio' },
+      { name: '罗马书5章（21）.mp3', size: '8.9 MB', type: 'audio' },
+      { name: '罗马书5章（1）.mp3', size: '7.1 MB', type: 'audio' },
+      { name: '罗马书5章（37）.mp3', size: '5.6 MB', type: 'audio' },
+      { name: '罗马书4章（37）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '路加福音1章（29）.mp3', size: '6.7 MB', type: 'audio' },
+      { name: '路加福音1章（28）.mp3', size: '8.3 MB', type: 'audio' },
+      { name: '罗马书5章（36）.mp3', size: '7.0 MB', type: 'audio' },
+      { name: '罗马书4章（36）.mp3', size: '5.8 MB', type: 'audio' },
+      { name: '罗马书4章（20）.mp3', size: '5.6 MB', type: 'audio' },
+      { name: '罗马书5章（20）.mp3', size: '7.8 MB', type: 'audio' },
+      { name: '罗马书2章（4）.mp3', size: '4.9 MB', type: 'audio' },
+      { name: '罗马书2章（27）.mp3', size: '5.1 MB', type: 'audio' },
+      { name: '罗马书3章（27）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '启示录2章（31）.mp3', size: '5.8 MB', type: 'audio' },
+      { name: '路加福音1章（12）.mp3', size: '8.5 MB', type: 'audio' },
+      { name: '罗马书4章（1）.mp3', size: '6.0 MB', type: 'audio' },
+      { name: '罗马书3章（5）.mp3', size: '6.6 MB', type: 'audio' },
+      { name: '创世记24章（3）.mp3', size: '6.5 MB', type: 'audio' },
+      { name: '启示录2章（27）.mp3', size: '6.4 MB', type: 'audio' },
+      { name: '罗马书3章（31）.mp3', size: '5.2 MB', type: 'audio' },
+      { name: '启示录2章（2）.mp3', size: '6.9 MB', type: 'audio' },
+      { name: '耶稣的第二次降临（3）.mp3', size: '11.8 MB', type: 'audio' },
+      { name: '路加福音1章（24）.mp3', size: '7.9 MB', type: 'audio' },
+      { name: '罗马书3章（11）.mp3', size: '6.3 MB', type: 'audio' },
+      { name: '罗马书2章（11）.mp3', size: '5.2 MB', type: 'audio' },
+      { name: '路加福音1章（32）.mp3', size: '6.6 MB', type: 'audio' },
+      { name: '启示录2章（11）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '路加福音1章（7）.mp3', size: '7.5 MB', type: 'audio' },
+      { name: '罗马书2章（8）.mp3', size: '5.4 MB', type: 'audio' },
+      { name: '罗马书3章（9）.mp3', size: '6.2 MB', type: 'audio' },
+      { name: '罗马书5章（41）.mp3', size: '7.8 MB', type: 'audio' },
+      { name: '罗马书5章（16）.mp3', size: '7.1 MB', type: 'audio' },
+      { name: '罗马书4章（16）.mp3', size: '6.2 MB', type: 'audio' }
+    ];
+
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return null;
+    }
+
+    function applySettings() {
+      const fontSize = getCookie('fontSize') || '16';
+      const scale = getCookie('scale') || '1.0';
+      document.body.style.fontSize = `${fontSize}px`;
+      document.body.style.transform = `scale(${scale})`;
+      document.body.style.transformOrigin = 'top left';
+    }
+
+    function getFileIcon(type) {
+      const icons = {
+        audio: 'fa-file-audio',
+        video: 'fa-file-video',
+        image: 'fa-file-image',
+        pdf: 'fa-file-pdf',
+        docx: 'fa-file-word',
+        default: 'fa-file'
+      };
+      return `<i class="fas ${icons[type] || icons.default} file-icon"></i>`;
+    }
+
+    function generateFileList(filteredFiles = files) {
+      const fileList = document.getElementById('fileList');
+      fileList.innerHTML = filteredFiles.map(file => {
+        const fileExtension = file.name.split('.').pop().toLowerCase();
+        let filePath = '#';
+        if (fileExtension === 'mp3' || fileExtension === 'm4a') {
+          filePath = `mp3.html?file=${encodeURIComponent(`https://pub-8d0366c1632443c78c9c2f7cce84cff5.r2.dev/${file.name}`)}`;
+        } else if (fileExtension === 'docx') {
+          filePath = `docx.html?file=${encodeURIComponent(`https://pub-8d0366c1632443c78c9c2f7cce84cff5.r2.dev/${file.name}`)}`;
+        } else if (fileExtension === 'pdf') {
+          filePath = `pdf.html?file=${encodeURIComponent(`https://pub-8d0366c1632443c78c9c2f7cce84cff5.r2.dev/${file.name}`)}`;
+        }
+        return `
+          <a href="${filePath}" class="file-item" target="_blank">
+            ${getFileIcon(file.type)}
+            <div class="file-info">
+              <div class="file-name">${file.name}</div>
+              <div class="file-details">
+                ${file.type.toUpperCase()} • ${file.size}
+              </div>
+            </div>
+          </a>
+        `;
+      }).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      applySettings();
+      generateFileList();
+
+      const searchInput = document.getElementById('searchInput');
+
+      searchInput.addEventListener('input', function () {
+        const keyword = this.value.trim().toLowerCase();
+
+        let filteredFiles = files;
+        if (keyword !== '') {
+          filteredFiles = files.filter(file =>
+            file.name.toLowerCase().includes(keyword)
+          );
+
+          filteredFiles.sort((a, b) => {
+            const numA = extractNumber(a.name);
+            const numB = extractNumber(b.name);
+
+            if (numA !== null && numB !== null) {
+              if (numA !== numB) {
+                return numA - numB;
+              }
+            } else if (numA !== null) {
+              return -1;
+            } else if (numB !== null) {
+              return 1;
+            }
+            return a.name.localeCompare(b.name);
+          });
+        }
+
+        generateFileList(filteredFiles);
+      });
+
+      document.querySelector('.settings-btn').addEventListener('click', () => {
+        window.location.href = 'setting.html';
+      });
+
+      document.querySelector('.theme-toggle').addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        document.querySelector('.theme-toggle i').classList.toggle('fa-moon', !isDark);
+        document.querySelector('.theme-toggle i').classList.toggle('fa-sun', isDark);
+      });
+    });
+
+    function extractNumber(str) {
+      const match = str.match(/\d+/);
+      return match ? parseInt(match[0], 10) : null;
+    }
+
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    if (!isMobileDevice()) {
+      window.location.href = '../index.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发现 - 电子圣经团契手机端</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0066cc;
+      --secondary-color: #99ccff;
+      --text-color: #1a202c;
+      --bg-gradient: linear-gradient(135deg, #f5f7fa, #e0e7ff);
+      --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      --blur-bg: rgba(255, 255, 255, 0.98);
+      --blur-bg-secondary: rgba(255, 255, 255, 0.9);
+      --border-radius: 10px;
+      --transition: all 0.2s ease;
+    }
+
+    .dark-mode {
+      --bg-gradient: linear-gradient(135deg, #2d3748, #4a5568);
+      --blur-bg: rgba(45, 55, 72, 0.98);
+      --blur-bg-secondary: rgba(45, 55, 72, 0.9);
+      --text-color: #e2e8f0;
+      --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-color);
+    }
+
+    .blur-bg {
+      background: var(--blur-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: var(--card-shadow);
+      border-radius: var(--border-radius);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      background: var(--blur-bg);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius);
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+
+    .header-right {
+      display: flex;
+      gap: 10px;
+    }
+
+    .back-btn, .settings-btn, .theme-toggle {
+      background: var(--blur-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: none;
+      font-size: 24px;
+      color: var(--text-color);
+      cursor: pointer;
+      padding: 10px;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 48px;
+      height: 48px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .back-btn:hover, .settings-btn:hover, .theme-toggle:hover {
+      color: var(--primary-color);
+      transform: scale(1.02);
+    }
+
+    main {
+      flex: 1;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .iframe-container {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 80px - 64px); /* 减去header和nav的高度 */
+      overflow: hidden;
+    }
+
+    .live-iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
+
+    nav {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      padding: 12px 0;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      background: var(--blur-bg);
+    }
+
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 12px;
+      transition: var(--transition);
+    }
+
+    .bottom-nav-item.active {
+      color: var(--primary-color);
+    }
+
+    .bottom-nav-item:not(.active) i {
+      color: var(--secondary-color);
+    }
+
+    .bottom-nav-item:hover {
+      color: var(--primary-color);
+      transform: scale(1.02);
+    }
+
+    .bottom-nav-item i {
+      font-size: 24px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        font-size: 15px;
+      }
+      header {
+        padding: 12px;
+      }
+      .logo {
+        width: 44px;
+        height: 44px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .back-btn, .settings-btn, .theme-toggle {
+        font-size: 22px;
+        padding: 8px;
+        width: 44px;
+        height: 44px;
+      }
+      .bottom-nav-item {
+        font-size: 13px;
+        padding: 10px;
+      }
+      .bottom-nav-item i {
+        font-size: 22px;
+      }
+    }
+
+    @media (orientation: landscape) {
+      .header-right {
+        flex: 0;
+      }
+      .back-btn, .settings-btn, .theme-toggle {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    .dark-mode .settings-btn, .dark-mode .theme-toggle, .dark-mode .back-btn {
+      color: #e2e8f0;
+      background: var(--blur-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .dark-mode .settings-btn:hover, .dark-mode .theme-toggle:hover, .dark-mode .back-btn:hover {
+      color: #80bfff;
+    }
+
+    .dark-mode .bottom-nav-item.active {
+      color: #80bfff;
+    }
+
+    .dark-mode .bottom-nav-item:not(.active) i {
+      color: #a0aec0;
+    }
+
+    .dark-mode .bottom-nav-item:hover {
+      color: #80bfff;
+    }
+  </style>
+</head>
+<body>
+  <header class="blur-bg">
+    <div class="header-left">
+      <button class="back-btn" aria-label="返回首页" onclick="window.location.href='../index.html'">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <div class="logo-container">
+        <img src="logo/ebfside.png" alt="Logo" class="logo" loading="lazy" onerror="this.style.display='none'">
+        <h1>直播室</h1>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="settings-btn" aria-label="设置"><i class="fas fa-gear"></i></button>
+      <button class="theme-toggle" aria-label="切换主题"><i class="fas fa-moon"></i></button>
+    </div>
+  </header>
+
+  <main>
+    <div class="iframe-container">
+      <iframe src="airtime.html" class="live-iframe" title="直播室"></iframe>
+    </div>
+  </main>
+
+  <nav class="blur-bg">
+    <a href="../mobile.html" class="bottom-nav-item">
+      <i class="fas fa-home"></i>
+      <span>首页</span>
+    </a>
+    <a href="file.html" class="bottom-nav-item">
+      <i class="far fa-file-alt"></i>
+      <span>文件</span>
+    </a>
+    <a href="item.html" class="bottom-nav-item">
+      <i class="far fa-compass"></i>
+      <span>发现</span>
+    </a>
+    <a href="#" class="bottom-nav-item">
+      <i class="far fa-comments"></i>
+      <span>开放论坛</span>
+    </a>
+    <a href="Airtime.html" class="bottom-nav-item active">
+      <i class="fas fa-video"></i>
+      <span>直播室</span>
+    </a>
+  </nav>
+
+  <script>
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return null;
+    }
+
+    function applySettings() {
+      const fontSize = getCookie('fontSize') || '16';
+      const scale = getCookie('scale') || '1.0';
+      document.body.style.fontSize = `${fontSize}px`;
+      document.body.style.transform = `scale(${scale})`;
+      document.body.style.transformOrigin = 'top left';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      applySettings();
+
+      document.querySelector('.settings-btn').addEventListener('click', () => {
+        window.location.href = 'setting.html';
+      });
+
+      document.querySelector('.theme-toggle').addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        document.querySelector('.theme-toggle i').classList.toggle('fa-moon', !isDark);
+        document.querySelector('.theme-toggle i').classList.toggle('fa-sun', isDark);
+      });
+    });
+
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    if (!isMobileDevice()) {
+      window.location.href = '../index.html';
+    }
+  </script>
+</body>
+</html>

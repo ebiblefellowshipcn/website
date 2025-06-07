@@ -1,0 +1,8 @@
++ *.{doc,docx,mp3,m4a,mp4,png,jpg}
+- *.tmp
+- desktop.ini
+- ._*/**
+- *.onetoc2
+- *.one
+- .*/**
+- .DS_Store

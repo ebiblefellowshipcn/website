@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eBible Fellowship 视频节目</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        }
+
+        /* Body styling */
+        body {
+            background-color: #f7fbff;
+            color: #2d3748;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background: rgba(213, 235, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-radius: 0 0 16px 16px;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .navbar .logo img {
+            width: 100px;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar .logo img:hover {
+            transform: scale(1.08);
+        }
+
+        .navbar .search-bar {
+            flex: 1;
+            margin: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .search-bar input {
+            width: 100%;
+            padding: 10px 16px;
+            border: 1px solid #a3d7ff;
+            border-radius: 16px 0 0 16px;
+            outline: none;
+            background: #fff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-size: 15px;
+        }
+
+        .navbar .search-bar input:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+        }
+
+        .navbar .search-bar button {
+            padding: 10px 20px;
+            border: 1px solid #a3d7ff;
+            border-left: none;
+            background: #fff;
+            border-radius: 0 16px 16px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 15px;
+        }
+
+        .navbar .search-bar button:hover {
+            background: #a3d7ff;
+            transform: scale(1.03);
+        }
+
+        .navbar .user-options img {
+            width: 36px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar .user-options img:hover {
+            transform: rotate(360deg);
+        }
+
+        /* Channel header */
+        .channel-header {
+            margin-top: 80px;
+        }
+
+        .banner {
+            width: 100%;
+            height: 280px;
+            background-image: url('https://pub-eae5d4cfcdc944f6ba22ea09a635a195.r2.dev/channels4_banner.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px 16px 0 0;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .channel-info {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #f7fbff;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .channel-info .avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background-image: url('https://pub-eae5d4cfcdc944f6ba22ea09a635a195.r2.dev/channels4_profile.jpg');
+            background-size: cover;
+            margin-right: 20px;
+            animation: rotateIn 1s ease-out;
+        }
+
+        @keyframes rotateIn {
+            from { transform: rotate(-15deg); }
+            to { transform: rotate(0); }
+        }
+
+        .channel-details h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            color: #4a90e2;
+            font-weight: 600;
+        }
+
+        .channel-details p {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        .subscribe-btn, .about-btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .subscribe-btn {
+            background: #4a90e2;
+            color: #fff;
+            margin-left: auto;
+        }
+
+        .subscribe-btn:hover {
+            background: #3b82f6;
+            transform: scale(1.05);
+        }
+
+        .about-btn {
+            background: #d6ebff;
+            color: #2d3748;
+            margin-left: 12px;
+        }
+
+        .about-btn:hover {
+            background: #a3d7ff;
+            transform: scale(1.05);
+        }
+
+        .about-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .about-modal.active {
+            display: flex;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .about-content {
+            background: #f7fbff;
+            padding: 24px;
+            border-radius: 16px;
+            max-width: 480px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50%); }
+            to { transform: translateY(0); }
+        }
+
+        .about-content h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #4a90e2;
+            font-weight: 600;
+        }
+
+        .about-content p {
+            font-size: 14px;
+            color: #718096;
+            line-height: 1.7;
+        }
+
+        .about-content .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #4a90e2;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .about-content .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #d6ebff;
+            background: #f7fbff;
+            padding: 0 20px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .tabs a {
+            padding: 12px 20px;
+            text-decoration: none;
+            color: #718096;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+
+        .tabs a:hover, .tabs a.active {
+            color: #4a90e2;
+            border-bottom: 2px solid #4a90e2;
+        }
+
+        .video-content {
+            padding: 20px;
+            background: #f7fbff;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            animation: gridFadeIn 0.5s ease-in;
+        }
+
+        .video-grid.hidden {
+            display: none;
+        }
+
+        @keyframes gridFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .video-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-card .thumbnail {
+            width: 100%;
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+        }
+
+        .video-card .video-info {
+            padding: 12px;
+        }
+
+        .video-card .video-info h3 {
+            font-size: 15px;
+            margin-bottom: 6px;
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        .video-card .video-info p {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: #4a90e2;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 24px;
+            border-radius: 12px;
+            display: none;
+            z-index: 3000;
+        }
+
+        .thumbnail-error {
+            background: #edf2f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #718096;
+            font-size: 13px;
+            text-align: center;
+            height: 100%;
+            border-radius: 16px 16px 0 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .navbar { padding: 10px 16px; }
+            .navbar .logo img { width: 80px; }
+            .navbar .search-bar input { font-size: 14px; padding: 8px 12px; }
+            .navbar .search-bar button { padding: 8px 16px; font-size: 14px; }
+            .banner { height: 200px; }
+            .channel-info { flex-direction: column; align-items: flex-start; padding: 16px; }
+            .channel-info .avatar { width: 80px; height: 80px; margin-bottom: 16px; }
+            .channel-details h1 { font-size: 22px; }
+            .channel-details p { font-size: 14px; }
+            .subscribe-btn, .about-btn { margin: 8px 0 0; padding: 8px 20px; font-size: 14px; }
+            .tabs { overflow-x: auto; padding: 0 16px; }
+            .tabs a { padding: 10px 16px; font-size: 14px; }
+            .video-grid { grid-template-columns: 1fr; gap: 16px; padding: 16px; }
+            .video-card .thumbnail { height: 180px; }
+            .about-content { max-width: 90%; padding: 20px; }
+            .loading { font-size: 16px; padding: 10px 20px; }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .navbar .search-bar input { width: 60%; }
+            .banner { height: 240px; }
+            .video-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+            .channel-details h1 { font-size: 24px; }
+        }
+
+        @media (min-width: 1200px) {
+            .navbar .search-bar input { width: 40%; }
+            .banner { height: 320px; }
+            .video-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+            .channel-details h1 { font-size: 28px; }
+            .subscribe-btn, .about-btn { padding: 12px 28px; font-size: 16px; }
+        }
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            body { background: #1a202c; color: #e2e8f0; }
+            .navbar { background: rgba(45, 55, 72, 0.9); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
+            .navbar .search-bar input { background: #2d3748; border-color: #4a90e2; color: #e2e8f0; }
+            .navbar .search-bar button { background: #2d3748; border-color: #4a90e2; color: #e2e8f0; }
+            .channel-info { background: #1a202c; }
+            .channel-details h1 { color: #a3d7ff; }
+            .channel-details p { color: #a0aec0; }
+            .subscribe-btn { background: #4a90e2; }
+            .about-btn { background: #2d3748; }
+            .about-content { background: #2d3748; color: #e2e8f0; }
+            .tabs { background: #1a202c; border-bottom-color: #4a90e2; }
+            .tabs a { color: #a0aec0; }
+            .tabs a:hover, .tabs a.active { color: #a3d7ff; border-bottom-color: #a3d7ff; }
+            .video-content { background: #1a202c; }
+            .video-card { background: #2d3748; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
+            .video-card .video-info h3 { color: #e2e8f0; }
+            .video-card .video-info p { color: #a0aec0; }
+            .thumbnail-error { background: #4a5568; color: #a0aec0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="logo/ebfside.png" alt="eBible Fellowship Logo">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="搜索圣经内容">
+            <button>🔍</button>
+        </div>
+        <div class="user-options">
+            <img src="https://placehold.co/40" alt="User Avatar">
+        </div>
+    </div>
+
+    <div class="channel-header">
+        <div class="banner"></div>
+        <div class="channel-info">
+            <div class="avatar"></div>
+            <div class="channel-details">
+                <h1>eBible Fellowship</h1>
+                <p>深入圣经研究与预言解读</p>
+            </div>
+            <button class="subscribe-btn">订阅</button>
+            <button class="about-btn" onclick="openAbout()">查看简介</button>
+        </div>
+    </div>
+
+    <div class="about-modal" id="aboutModal">
+        <div class="about-content">
+            <button class="close-btn" onclick="closeAbout()">✖</button>
+            <h2>关于 eBible Fellowship</h2>
+            <p>eBible Fellowship 是一个致力于分享圣经真理的在线社区，提供深入的圣经研究、预言解读和视频节目，欢迎加入我们，一起探索信仰的奥秘。</p>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <a class="tab-link active" onclick="showTab('all-videos')">全部视频</a>
+        <a class="tab-link" onclick="showTab('bible-study')">圣经研究</a>
+        <a class="tab-link" onclick="showTab('prophecy')">预言</a>
+        <a class="tab-link" onclick="showTab('qa')">问答</a>
+        <a class="tab-link" onclick="showTab('psalms')">诗篇</a>
+        <a class="tab-link" onclick="showTab('playlists')">播放列表</a>
+    </div>
+
+    <div class="video-content">
+        <div class="video-grid" id="all-videos"></div>
+        <div class="video-grid hidden" id="bible-study"></div>
+        <div class="video-grid hidden" id="prophecy"></div>
+        <div class="video-grid hidden" id="qa"></div>
+        <div class="video-grid hidden" id="psalms"></div>
+        <div class="video-grid hidden" id="playlists"></div>
+    </div>
+
+    <div class="loading" id="loading">加载封面中...</div>
+
+    <script>
+        function openAbout() {
+            document.getElementById('aboutModal').classList.add('active');
+        }
+
+        function closeAbout() {
+            document.getElementById('aboutModal').classList.remove('active');
+        }
+
+        function showTab(tabId) {
+            document.querySelectorAll('.video-grid').forEach(grid => grid.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function captureFirstFrame(videoUrl, callback) {
+            const video = document.createElement('video');
+            video.src = videoUrl;
+            video.muted = true;
+            video.crossOrigin = 'anonymous';
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            video.addEventListener('loadedmetadata', () => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                video.currentTime = 0;
+            });
+
+            video.addEventListener('canplay', () => {
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                callback(canvas.toDataURL('image/jpeg'));
+                video.remove();
+                canvas.remove();
+            });
+
+            video.addEventListener('error', () => {
+                console.error(`Failed to load video: ${videoUrl}`);
+                callback(null);
+            });
+
+            video.load();
+        }
+
+        function renderVideos(videos, gridId) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = '';
+            videos.forEach(video => {
+                const card = document.createElement('a');
+                card.className = 'video-card';
+                card.href = `html/mp4.html?video=${encodeURIComponent(video.url)}`;
+                card.setAttribute('data-video-id', video.videoId);
+                card.setAttribute('data-video-url', video.url);
+                card.innerHTML = `
+                    <div class="thumbnail"></div>
+                    <div class="video-info">
+                        <h3>${video.title}</h3>
+                        <p>${video.description || ''}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function setThumbnails() {
+            const videoCards = document.querySelectorAll('.video-card');
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            let processed = 0;
+
+            videoCards.forEach(card => {
+                const videoUrl = card.getAttribute('data-video-url');
+                if (!videoUrl) {
+                    card.querySelector('.thumbnail').innerHTML = '<div class="thumbnail-error">无法加载封面</div>';
+                    processed++;
+                    if (processed === videoCards.length) loading.style.display = 'none';
+                    return;
+                }
+
+                captureFirstFrame(videoUrl, (imageDataUrl) => {
+                    const thumbnail = card.querySelector('.thumbnail');
+                    if (imageDataUrl) {
+                        thumbnail.style.backgroundImage = `url(${imageDataUrl})`;
+                    } else {
+                        thumbnail.innerHTML = '<div class="thumbnail-error">无法加载封面</div>';
+                    }
+                    processed++;
+                    if (processed === videoCards.length) loading.style.display = 'none';
+                });
+            });
+        }
+
+        function initialize() {
+            fetch('videos.json')
+                .then(response => response.json())
+                .then(data => {
+                    renderVideos(data['all-videos'], 'all-videos');
+                    renderVideos(data['psalms'], 'psalms');
+                    setThumbnails();
+                })
+                .catch(error => console.error('Failed to load videos:', error));
+
+            document.querySelector('.search-bar button').addEventListener('click', () => {
+                const query = document.querySelector('.search-bar input').value.trim();
+                if (query) alert(`搜索: ${query}`);
+            });
+
+            document.querySelector('.subscribe-btn').addEventListener('click', () => {
+                alert('感谢订阅 eBible Fellowship！');
+            });
+
+            document.querySelector('.user-options img').addEventListener('click', () => {
+                alert('用户中心（功能待实现）');
+            });
+        }
+
+        window.onload = initialize;
+    </script>
+</body>
+</html>

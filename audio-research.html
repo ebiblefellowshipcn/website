@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圣经朗读 - 现代美学版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2A5CAA;
+            --secondary: #4A90E2;
+            --accent: #6EB5FF;
+            --background: #F8FBFF;
+            --text: #2C3E50;
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* 动态渐变头部 */
+        header {
+            background: linear-gradient(135deg, 
+                rgba(42, 92, 170, 0.95) 0%,
+                rgba(74, 144, 226, 0.95) 100%
+            ), url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="https://www.w3.org/2000/svg"><rect width="100" height="100" fill="%232A5CAA" opacity="0.1"/></svg>');
+            padding: 2rem 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            backdrop-filter: blur(4px);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回按钮 */
+        .nav-back {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* 主标题 */
+        .page-title {
+            color: white;
+            font-size: 2.4rem;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            margin: 1rem 0;
+        }
+
+        /* 专业搜索框 */
+        .search-wrapper {
+            max-width: 720px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .search-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(42, 92, 170, 0.1);
+            display: flex;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(74, 144, 226, 0.2);
+        }
+
+        .search-container:focus-within {
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            font-size: 1.1rem;
+            color: var(--text);
+            border-radius: 12px 0 0 12px;
+        }
+
+        .search-input::placeholder {
+            color: #90A4AE;
+        }
+
+        .search-button {
+            padding: 0 1.8rem;
+            background: var(--primary);
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 12px 12px 0;
+            transition: background 0.3s ease;
+        }
+
+        .search-button:hover {
+            background: var(--secondary);
+        }
+
+        /* 主体内容 */
+        .main-content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* 书卷容器 */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
+            margin-top: 2rem;
+        }
+
+        /* 书卷板块 */
+        .testament-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 6px 18px rgba(42, 92, 170, 0.08);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(74, 144, 226, 0.1);
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        /* 书卷按钮 */
+        .book-item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            margin: 0.8rem 0;
+            background: rgba(110, 181, 255, 0.08);
+            border: 1px solid rgba(74, 144, 226, 0.15);
+            border-radius: 10px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .book-item:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateX(10px);
+            border-color: var(--secondary);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        }
+
+        .book-icon {
+            color: var(--primary);
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .book-item:hover .book-icon {
+            color: white;
+        }
+
+        /* 页脚 */
+        .page-footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(110, 181, 255, 0.05);
+            color: var(--text);
+            margin-top: 4rem;
+            border-top: 1px solid rgba(74, 144, 226, 0.1);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-container {
+                padding-top: 4rem;
+            }
+
+            .nav-back {
+                top: 1.5rem;
+                transform: none;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .search-wrapper {
+                margin: 1.5rem auto;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testament-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <button class="nav-back" onclick="history.back()">
+                <i class="fas fa-chevron-left"></i>
+                返回
+            </button>
+            <h1 class="page-title">📖 圣经朗读</h1>
+            
+            <!-- 专业搜索框 -->
+            <div class="search-wrapper">
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        class="search-input"
+                        placeholder="输入书卷名称或经文..."
+                        aria-label="圣经搜索"
+                    >
+                    <button class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="books-grid">
+            <!-- 旧约书卷 -->
+            <section class="testament-section">
+                <h2 class="section-title">旧约全书 (39卷)</h2>
+                <!-- 创世记 ~ 玛拉基书 -->
+                <button class="book-item" onclick="location.href='biblereading.html?book=genesis'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    创世记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=exodus'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    出埃及记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=leviticus'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    利未记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=numbers'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    民数记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=deuteronomy'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    申命记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=joshua'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    约书亚记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=judges'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    士师记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=ruth'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    路得记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=1samuel'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    撒母耳记上
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=2samuel'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    撒母耳记下
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=1kings'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    列王记上
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=2kings'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    列王记下
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=1chronicles'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    历代志上
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=2chronicles'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    历代志下
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=ezra'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    以斯拉记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=nehemiah'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    尼希米记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=esther'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    以斯帖记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=job'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    约伯记
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=psalms'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    诗篇
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=proverbs'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    箴言
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=ecclesiastes'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    传道书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=songofsolomon'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    雅歌
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=isaiah'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    以赛亚书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=jeremiah'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    耶利米书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=lamentations'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    耶利米哀歌
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=ezekiel'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    以西结书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=daniel'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    但以理书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=hosea'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    何西阿书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=joel'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    约珥书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=amos'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    阿摩司书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=obadiah'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    俄巴底亚书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=jonah'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    约拿书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=micah'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    弥迦书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=nahum'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    那鸿书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=habakkuk'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    哈巴谷书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=zephaniah'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    西番雅书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=haggai'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    哈该书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=zechariah'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    撒迦利亚书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=malachi'">
+                    <i class="fas fa-scroll book-icon"></i>
+                    玛拉基书
+                </button>
+            </section>
+    
+            <!-- 新约书卷 -->
+            <section class="testament-section">
+                <h2 class="section-title">新约全书 (27卷)</h2>
+                <!-- 马太福音 ~ 启示录 -->
+                <button class="book-item" onclick="location.href='biblereading.html?book=matthew'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    马太福音
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=mark'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    马可福音
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=luke'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    路加福音
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=john'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    约翰福音
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=acts'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    使徒行传
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=romans'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    罗马书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=1corinthians'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    哥林多前书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=2corinthians'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    哥林多后书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=galatians'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    加拉太书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=ephesians'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    以弗所书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=philippians'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    腓立比书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=colossians'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    歌罗西书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=1thessalonians'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    帖撒罗尼迦前书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=2thessalonians'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    帖撒罗尼迦后书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=1timothy'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    提摩太前书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=2timothy'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    提摩太后书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=titus'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    提多书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=philemon'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    腓利门书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=hebrews'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    希伯来书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=james'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    雅各书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=1peter'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    彼得前书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=2peter'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    彼得后书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=1john'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    约翰一书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=2john'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    约翰二书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=3john'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    约翰三书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=jude'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    犹大书
+                </button>
+                <button class="book-item" onclick="location.href='biblereading.html?book=revelation'">
+                    <i class="fas fa-book-open book-icon"></i>
+                    启示录
+                </button>
+            </section>
+        </div>
+    </main>
+    <footer class="page-footer">
+        <p>© 2024 圣经朗读 | 基于和合本圣经 | 每日更新</p>
+    </footer>
+</body>
+</html>

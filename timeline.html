@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>电子圣经团契 - 圣经历史年表</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1e3a8a, #60a5fa);
+      font-family: 'Noto Sans SC', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      max-width: 800px;
+      width: 90%;
+      border: 1px solid rgba(147, 197, 253, 0.4);
+      text-align: center;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      color: #bfdbfe;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      transition: color 0.3s ease, transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .back-button:hover {
+      color: #3b82f6;
+      transform: translateX(-5px);
+    }
+
+    .back-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      stroke: currentColor;
+    }
+
+    h1 {
+      color: #dbeafe;
+      font-size: 36px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #60a5fa;
+      animation: typewriter 3s steps(20) 1s 1 normal both,
+                 blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: #60a5fa; }
+    }
+
+    h2 {
+      color: #3b82f6;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    h2.left {
+      text-align: left;
+    }
+
+    h2.center {
+      text-align: center;
+    }
+
+    p {
+      color: #ffffff;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    p.left {
+      text-align: left;
+    }
+
+    p.center {
+      text-align: center;
+    }
+
+    .timeline-bars {
+      display: flex;
+      overflow: hidden;
+      margin-bottom: 30px;
+      justify-content: flex-start;
+    }
+
+    .bar {
+      width: 20px;
+      height: 200px;
+      background: #3b82f6;
+      margin-right: 5px;
+      flex-shrink: 0;
+    }
+
+    .bar.animate {
+      animation: stretch 0.6s ease-in-out 5;
+    }
+
+    @keyframes stretch {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(1.2); }
+    }
+
+    .continue-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background: linear-gradient(135deg, #6b21a8, #a855f7);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      flex: 1;
+      min-width: 150px;
+      max-width: 200px;
+      text-align: center;
+    }
+
+    .continue-button:hover {
+      background: linear-gradient(135deg, #7e22ce, #c084fc);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .continue-button {
+        flex: 0 0 calc(50% - 10px);
+        max-width: none;
+      }
+    }
+
+    @media (min-width: 601px) {
+      .continue-button {
+        flex: 0 0 calc(33.33% - 10px);
+      }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+      animation: modalOpen 0.5s ease-out;
+      color: #ffffff;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    @keyframes modalOpen {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 24px;
+      color: #bfdbfe;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: #3b82f6;
+      transform: scale(1.2);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+
+    .modal ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .modal ul li {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .modal ul li span {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 24px;
+      height: 24px;
+      background: #6b21a8;
+      color: #ffffff;
+      border-radius: 50%;
+      margin-right: 10px;
+      font-size: 14px;
+    }
+
+    .scrollable-content {
+      max-height: 60vh;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .qara-sem-info-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1100;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .qara-sem-info-modal-content {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+      animation: modalOpen 0.5s ease-out;
+      color: #ffffff;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .qara-sem-info-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 24px;
+      color: #bfdbfe;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .qara-sem-info-modal-close:hover {
+      color: #3b82f6;
+      transform: scale(1.2);
+    }
+
+    .animated-button {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #6b21a8, #a855f7);
+      color: #ffffff;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .animated-button:hover {
+      background: linear-gradient(135deg, #7e22ce, #c084fc);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .abc {
+      text-align: left;
+    }
+
+    .def {
+      font-size: 24px;
+      color: #ffcc00;
+      margin-bottom: 15px;
+    }
+
+    .jkl {
+      font-size: 18px;
+      color: #bfdbfe;
+      margin: 15px 0;
+    }
+
+    .mno {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 5px;
+      margin: 10px 0;
+      overflow-x: auto;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    .stu {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      color: #ffffff;
+      border-radius: 5px;
+      flex-shrink: 0;
+    }
+
+    .yz1 {
+      background: #6b21a8;
+    }
+
+    .yz2 {
+      background: #3498db;
+    }
+
+    .yz3 {
+      background: #999;
+    }
+
+    .yz5 {
+      font-size: 16px;
+      color: #ffffff;
+    }
+
+    .yz5 p {
+      margin: 10px 0;
+    }
+
+    .yz5 span {
+      font-weight: bold;
+      color: #ffcc00;
+    }
+
+    .yz5 p::before {
+      content: '';
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .yz5 p:nth-child(5)::before, .yz5 p:nth-child(6)::before {
+      background: #ff5555;
+    }
+
+    .yz5 p:nth-child(8)::before, .yz5 p:nth-child(9)::before {
+      background: #55ff55;
+    }
+
+    .logo {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 140px;
+      opacity: 0.7;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      z-index: 1000;
+    }
+
+    .logo:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      color: #bfdbfe;
+      font-size: 14px;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+    }
+
+    .footer:hover {
+      opacity: 1;
+    }
+
+    .footer-icon {
+      width: 20px;
+      height: 20px;
+      margin-left: 8px;
+      stroke: currentColor;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .fade-out {
+      animation: fadeOut 0.8s forwards;
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-50px); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- 返回按钮 -->
+  <a href="javascript:history.back()" class="back-button">
+    <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+    <span>返回</span>
+  </a>
+
+  <!-- 第一界面 -->
+  <div class="container section active" id="section1">
+    <h1>欢迎来到电子圣经团契</h1>
+    <p>探索地龄与关键圣经历史时刻</p>
+    <p>时间线界面正在精心制作中，敬请期待！</p>
+    <a class="continue-button" href="#" onclick="showSection(2); return false;">继续探索</a>
+  </div>
+
+  <!-- 第二界面 -->
+  <div class="container section" id="section2">
+    <h2 class="left">圣经历史时间线</h2>
+    <p class="left">览圣经中引人入胜之历史时间线，自创世之日起，至已故哈罗德·康平发现之时终，正如上帝所许，于末日之时启封其言。此交互图表将展示关键圣经事件，如创世日期、洪水之时、出埃及记及所罗门圣殿奠基等。点击编号框，揭开背后真理，皆由圣经细研而得。观上帝之精确与详尽。</p>
+    <div class="timeline-bars" id="timeline-bars"></div>
+    <a class="continue-button" href="#" onclick="showSection(3); return false;">进入时间线</a>
+  </div>
+
+  <!-- 第三界面 -->
+  <div class="container section" id="section3">
+    <h2 class="center">圣经历史时间线</h2>
+    <p class="center">发现地龄与关键圣经日期</p>
+    <p class="center">时间线页面仍在制作中，感谢您的耐心等待。</p>
+    <div class="button-group">
+      <a class="continue-button" href="#" onclick="openModal('patriarchModal'); return false;">族长名录</a>
+      <a class="continue-button" href="#" onclick="openModal('qaraSemModal'); return false;">呼名</a>
+      <a class="continue-button" href="#" onclick="openModal('howToCalculateModal'); return false;">如何计算</a>
+      <a class="continue-button" href="#" onclick="openModal('bcAdModal'); return false;">主前与主后</a>
+      <a class="continue-button" href="#">时间线视频系列</a>
+      <a class="continue-button" href="timeline-table.html">表格</a>
+    </div>
+  </div>
+
+  <!-- 族长名录弹出窗口 -->
+  <div class="modal" id="patriarchModal">
+    <div class="modal-content" draggable="true" ondragstart="dragStart(event)" ondrag="drag(event)" ondragend="dragEnd(event)">
+      <span class="modal-close" onclick="closeModal('patriarchModal')"><i class="fas fa-times"></i></span>
+      <h2 class="center">族长名录</h2>
+      <div class="modal-buttons">
+        <button class="animated-button" onclick="copyContent('patriarchModal')"><i class="fas fa-copy"></i> 复制</button>
+        <button class="animated-button" onclick="shareContent('patriarchModal')"><i class="fas fa-share-alt"></i> 分享</button>
+      </div>
+      <p class="left">时间线族长乃上帝赐予其生卒年份之人。如该隐、亚伯、塞特皆亚当之子，唯塞特有生卒记录，故为时间线族长。非时间线族长亦有生卒记录，然对地龄计算非必需，时间线将示其因，标为非族长。</p>
+      <ul>
+        <li><span>1</span> 亚当</li>
+        <li><span>2</span> 塞特</li>
+        <li><span>3</span> 以挪士</li>
+        <li><span>4</span> 该南</li>
+        <li><span>5</span> 玛勒列</li>
+        <li><span>6</span> 雅列</li>
+        <li><span>7</span> 以诺</li>
+        <li><span>8</span> 玛土撒拉</li>
+        <li><span>9</span> 拉麦</li>
+        <li><span>10</span> 挪亚</li>
+        <li><span>11</span> 闪</li>
+        <li><span>12</span> 亚法撒</li>
+        <li><span>13</span> 沙拉</li>
+        <li><span>14</span> 希伯</li>
+        <li><span>15</span> 法勒</li>
+        <li><span>16</span> 拉吴</li>
+        <li><span>17</span> 西鹿</li>
+        <li><span>18</span> 拿鹤</li>
+        <li><span>19</span> 他拉</li>
+        <li><span>20</span> 亚伯拉罕</li>
+        <li><span>21</span> 以撒</li>
+        <li><span>22</span> 雅各</li>
+        <li><span>23</span> 利未</li>
+        <li><span>24</span> 哥辖</li>
+        <li><span>25</span> 暗兰</li>
+        <li><span>26</span> 亚伦</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 呼名弹出窗口 -->
+  <div class="modal" id="qaraSemModal">
+    <div class="modal-content" draggable="true" ondragstart="dragStart(event)" ondrag="drag(event)" ondragend="dragEnd(event)">
+      <span class="modal-close" onclick="closeModal('qaraSemModal')"><i class="fas fa-times"></i></span>
+      <h2 style="color: #ffcc00;">呼名</h2>
+      <div class="modal-buttons">
+        <button class="animated-button" onclick="copyContent('qaraSemModal')"><i class="fas fa-copy"></i> 复制</button>
+        <button class="animated-button" onclick="shareContent('qaraSemModal')"><i class="fas fa-share-alt"></i> 分享</button>
+      </div>
+      <div class="scrollable-content">
+        <p style="color: #3498db;">★ = 使用呼名 - 直系父子 （7次）</p>
+        <p>★ = 未用呼名 - 仍为直系父子 （2次）</p>
+        <p style="color: #ff7b7b;">无星 = 未用呼名 - 后裔 （17次）</p>
+        <br>
+        <p>上帝藉哈罗德·康平（1921-2013）揭示圣经历史时间线。</p>
+        <p><span style="color: dodgerblue;font-size: 23px;font-weight: 900;">“呼名”</span><span>（H7121 H8034）</span><span style="color: dodgerblue;font-size: 23px;font-weight: 900;"> </span><span>乃理解时间线族长为直系亲属或后裔（如孙、曾孙）之关键。</span></p>
+        <p>例如，马太福音22:42称耶稣为“大卫之子孙”。若仅观字面，误以为大卫之子即耶稣，然耶稣非大卫直系子，乃其后裔。基督徒当深入研经，挖掘真理。</p>
+        <p style="font-size: 27px;font-weight: 900;color: #ffcc00;">
+          显然，此非真，须探经文深意。耶稣非大卫直系子，乃后裔。多数基督徒仅观表层，未深入挖掘。
+        </p>
+        <p>时间线族长亦然。</p>
+        <p>观二经文：</p>
+        <p style="color: yellow;">创世记 5:6 塞特一百零五年，生以挪士。</p>
+        <p style="color: yellow;">创世记 5:9 以挪士九十年，生该南。</p>
+        <p>二者看似相似，然创世记5:6以挪士确于塞特105岁时生，<span style="color: #ff7b7b;">该南非以挪士90岁时生</span>。</p>
+        <p>因创世记 4:26：<span style="color: #ffcc00;">塞特生子，</span><span style="color: #3498db;">呼其名以挪士，</span><span style="color: #ffcc00;">人始呼求耶和华之名。</span></p>
+        <p>康平悟“呼其名”表直系父子，未用则为后裔（如孙、曾孙）。未用“呼名”者，出生于前族长卒年，如以挪士与该南。</p>
+        <p>注：呼名规则限于时间线族长，例外为挪亚对闪、他拉对亚伯拉罕，未用呼名，然经文证其为直系父子。</p>
+        <p style="font-size: 35px;">呼名结论：</p>
+        <p style="color: green;font-size: 30px;">用呼名 = 直系子</p>
+        <p style="color: red;font-size: 30px;">未用呼名 = 孙、曾孙等</p>
+        <div class="button-container">
+          <button class="animated-button" onclick="openInfoModal()"><i class="fas fa-info-circle"></i> 关于呼名</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 关于呼名嵌套模态窗口 -->
+  <div class="qara-sem-info-modal" id="qaraSemInfoModal">
+    <div class="qara-sem-info-modal-content">
+      <span class="qara-sem-info-modal-close" onclick="closeInfoModal()">×</span>
+      <h2>关于呼名</h2>
+      <p>“呼名”乃辨直系父子或后裔（如孙、曾孙）之线索。如施洗约翰之父撒迦利亚，皆用“呼其名”表直系父子。</p>
+      <p style="color: #ffcc00;">“生”为何无助</p>
+      <p style="color: #007BFF;">历代志上 1:34 亚伯拉罕生以撒。以撒生以扫、以色列。</p>
+      <p>此表直系父子，然“生”亦可指后裔。</p>
+      <p style="color: #007BFF;">马太福音 1:8 亚撒生约沙法，约沙法生约兰，约兰生乌西亚。</p>
+      <p>乌西亚非约兰直系子，中间有<span style="color: red;">亚哈谢、约阿施、亚玛谢</span>。“生”可指后裔。</p>
+      <p style="color: yellow;">证据</p>
+      <p>时间线未用呼名者，设出生于前族长卒年，如以挪士与该南。创世记15:16称第四代出埃及，亚伦为第四代，证此法正确。</p>
+      <p>路加福音3:35-36示该南非以挪士直系子，乃亚法撒后裔，出生于亚法撒卒年，证时间线安排乃上帝指引。</p>
+    </div>
+  </div>
+
+  <!-- 如何计算弹出窗口 -->
+  <div class="modal" id="howToCalculateModal">
+    <div class="modal-content" draggable="true" ondragstart="dragStart(event)" ondrag="drag(event)" ondragend="dragEnd(event)">
+      <span class="modal-close" onclick="closeModal('howToCalculateModal')"><i class="fas fa-times"></i></span>
+      <h2 class="center" style="color: #ffcc00;">如何计算</h2>
+      <div class="modal-buttons">
+        <button class="animated-button" onclick="copyContent('howToCalculateModal')"><i class="fas fa-copy"></i> 复制</button>
+        <button class="animated-button" onclick="shareContent('howToCalculateModal')"><i class="fas fa-share-alt"></i> 分享</button>
+      </div>
+      <div class="scrollable-content">
+        <p class="left">计算地龄与圣经日期，需析族长年龄、关键事件（如洪水、出埃及记）及呼名规则。本节待补充，请提供具体方法。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主前与主后弹出窗口 -->
+  <div class="modal" id="bcAdModal">
+    <div class="modal-content" draggable="true" ondragstart="dragStart(event)" ondrag="drag(event)" ondragend="dragEnd(event)">
+      <span class="modal-close" onclick="closeModal('bcAdModal')"><i class="fas fa-times"></i></span>
+      <h2 class="center" style="font-size: 30px; color: #ffcc00;">主前与主后</h2>
+      <div class="modal-buttons">
+        <button class="animated-button" onclick="copyContent('bcAdModal')"><i class="fas fa-copy"></i> 复制</button>
+        <button class="animated-button" onclick="shareContent('bcAdModal')"><i class="fas fa-share-alt"></i> 分享</button>
+      </div>
+      <div class="scrollable-content">
+        <section style="font-size: 16px;">
+          <div class="abc">
+            <h1 class="def">理解无零年</h1>
+            <p class="jkl">正确数学计算法：</p>
+            <div class="mno">
+              <div class="stu yz1">-10</div>
+              <div class="stu yz1">-9</div>
+              <div class="stu yz1">-8</div>
+              <div class="stu yz1">-7</div>
+              <div class="stu yz1">-6</div>
+              <div class="stu yz1">-5</div>
+              <div class="stu yz1">-4</div>
+              <div class="stu yz1">-3</div>
+              <div class="stu yz1">-2</div>
+              <div class="stu yz1">-1</div>
+              <div class="stu yz3">0</div>
+              <div class="stu yz2">1</div>
+              <div class="stu yz2">2</div>
+              <div class="stu yz2">3</div>
+              <div class="stu yz2">4</div>
+              <div class="stu yz2">5</div>
+              <div class="stu yz2">6</div>
+              <div class="stu yz2">7</div>
+              <div class="stu yz2">8</div>
+              <div class="stu yz2">9</div>
+              <div class="stu yz2">10</div>
+            </div>
+            <p class="jkl">不正确计算法，然现代公历如此运作：</p>
+            <div class="mno">
+              <div class="stu yz1">-10</div>
+              <div class="stu yz1">-9</div>
+              <div class="stu yz1">-8</div>
+              <div class="stu yz1">-7</div>
+              <div class="stu yz1">-6</div>
+              <div class="stu yz1">-5</div>
+              <div class="stu yz1">-4</div>
+              <div class="stu yz1">-3</div>
+              <div class="stu yz1">-2</div>
+              <div class="stu yz1">-1</div>
+              <div class="stu yz2">1</div>
+              <div class="stu yz2">2</div>
+              <div class="stu yz2">3</div>
+              <div class="stu yz2">4</div>
+              <div class="stu yz2">5</div>
+              <div class="stu yz2">6</div>
+              <div class="stu yz2">7</div>
+              <div class="stu yz2">8</div>
+              <div class="stu yz2">9</div>
+              <div class="stu yz2">10</div>
+            </div>
+            <div class="yz5">
+              <p><span>地龄</span> = 地球之年龄</p>
+              <p><span>主前</span> = 公元前</p>
+              <p><span>主后</span> = 公元</p>
+              <p>主前年份转地龄之法：</p>
+              <p>主前11013年 - 主前4990年 = 地龄6023年（洪水日期）</p>
+              <p>主前11013年 - 主前1447年 = 地龄9566年（出埃及记日期）</p>
+              <p>主后年份转地龄之法：</p>
+              <p>主前11013年 + 主后2011年 - 1年（公历无零年） = 地龄13023年（审判日）</p>
+              <p>主前11013年 + 主后33年 - 1年（公历无零年） = 地龄11045年（十字架/复活节）</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logo -->
+  <img src="logo/ebfside.png" alt="电子圣经团契 Logo" class="logo">
+
+  <!-- 页脚 -->
+  <div class="footer">
+    <span>电子圣经团契 © 2025</span>
+    <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+    </svg>
+  </div>
+
+  <script>
+    let dragOffsetX, dragOffsetY, isDragging = false;
+
+    function showSection(sectionNum) {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => {
+        section.classList.remove('active', 'fade-in');
+        section.classList.add('fade-out');
+      });
+
+      const targetSection = document.getElementById(`section${sectionNum}`);
+      if (targetSection) {
+        setTimeout(() => {
+          sections.forEach(section => section.classList.remove('fade-out'));
+          targetSection.classList.add('active', 'fade-in');
+          if (sectionNum === 2) {
+            generateBars();
+          }
+        }, 800);
+      }
+    }
+
+    function generateBars() {
+      const barsContainer = document.getElementById('timeline-bars');
+      if (!barsContainer) return;
+
+      barsContainer.innerHTML = '';
+      const maxBars = 70;
+      const barWidth = 25;
+      const containerWidth = barsContainer.offsetWidth;
+      const numBars = Math.min(maxBars, Math.floor(containerWidth / barWidth));
+
+      for (let i = 0; i < numBars; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        let animationCount = 0;
+
+        bar.addEventListener('mouseenter', () => {
+          if (animationCount < 5) {
+            bar.classList.add('animate');
+            const onAnimationEnd = () => {
+              animationCount++;
+              if (animationCount >= 5) {
+                bar.classList.remove('animate');
+                bar.removeEventListener('animationend', onAnimationEnd);
+              }
+            };
+            bar.addEventListener('animationend', onAnimationEnd);
+          }
+        });
+
+        barsContainer.appendChild(bar);
+      }
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.style.display = 'flex';
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500);
+      }
+    }
+
+    function openInfoModal() {
+      const infoModal = document.getElementById('qaraSemInfoModal');
+      if (infoModal) {
+        infoModal.style.display = 'flex';
+      }
+    }
+
+    function closeInfoModal() {
+      const infoModal = document.getElementById('qaraSemInfoModal');
+      if (infoModal) {
+        infoModal.classList.add('fade-out');
+        setTimeout(() => {
+          infoModal.style.display = 'none';
+          infoModal.classList.remove('fade-out');
+        }, 500);
+      }
+    }
+
+    function copyContent(modalId) {
+      const modal = document.getElementById(modalId);
+      const content = modal.querySelector('.modal-content').innerText.replace('×', '');
+      navigator.clipboard.writeText(content).then(() => {
+        alert('内容已复制到剪贴板！');
+      }).catch(() => {
+        alert('复制失败，请重试！');
+      });
+    }
+
+    function shareContent(modalId) {
+      const modal = document.getElementById(modalId);
+      const content = modal.querySelector('.modal-content').innerText.replace('×', '') + '\n- 电子圣经团契';
+      navigator.clipboard.writeText(content).then(() => {
+        alert('分享内容已复制到剪贴板！');
+      }).catch(() => {
+        alert('复制失败，请重试！');
+      });
+    }
+
+    function dragStart(event) {
+      const modalContent = event.target.closest('.modal-content');
+      if (modalContent) {
+        isDragging = true;
+        dragOffsetX = event.clientX - modalContent.offsetLeft;
+        dragOffsetY = event.clientY - modalContent.offsetTop;
+        modalContent.style.transition = 'none';
+      }
+    }
+
+    function drag(event) {
+      if (isDragging) {
+        const modalContent = event.target.closest('.modal-content');
+        if (modalContent && event.clientX && event.clientY) {
+          modalContent.style.left = `${event.clientX - dragOffsetX}px`;
+          modalContent.style.top = `${event.clientY - dragOffsetY}px`;
+          modalContent.style.position = 'absolute';
+        }
+      }
+    }
+
+    function dragEnd(event) {
+      isDragging = false;
+      const modalContent = event.target.closest('.modal-content');
+      if (modalContent) {
+        modalContent.style.transition = 'all 0.3s ease';
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      if (document.getElementById('section2').classList.contains('active')) {
+        generateBars();
+      }
+    });
+
+    window.addEventListener('wheel', (e) => {
+      const modals = ['patriarchModal', 'qaraSemModal', 'howToCalculateModal', 'bcAdModal', 'qaraSemInfoModal'];
+      if (modals.some(id => document.getElementById(id).style.display === 'flex')) return;
+      const activeSection = document.querySelector('.section.active');
+      const sectionNum = parseInt(activeSection.id.replace('section', ''));
+      if (e.deltaY > 0 && sectionNum < 3) {
+        showSection(sectionNum + 1);
+      } else if (e.deltaY < 0 && sectionNum > 1) {
+        showSection(sectionNum - 1);
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      const modals = [
+        { id: 'patriarchModal', content: '.modal-content' },
+        { id: 'qaraSemModal', content: '.modal-content' },
+        { id: 'howToCalculateModal', content: '.modal-content' },
+        { id: 'bcAdModal', content: '.modal-content' },
+        { id: 'qaraSemInfoModal', content: '.qara-sem-info-modal-content' }
+      ];
+      modals.forEach(modal => {
+        const element = document.getElementById(modal.id);
+        if (element.style.display === 'flex' && !e.target.closest(modal.content) && !e.target.closest('.continue-button') && !e.target.closest('.animated-button')) {
+          if (modal.id === 'qaraSemInfoModal') {
+            closeInfoModal();
+          } else {
+            closeModal(modal.id);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

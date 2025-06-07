@@ -1,0 +1,2067 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>电子圣经团契</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://kit.fontawesome.com/12c6fa529b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/ebf.css">
+    <link rel="icon" href="logo/ebflogo.png" type="image/x-icon">
+    <script src="js/index.js"></script>
+    <script src="js/airtime.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+    <script src="js/time.js"></script>
+    <script src="js/zooms.JS"></script>
+    <script src="js/timevideo.js"></script>
+    <script src="js/vidFeotime.js"></script>
+    <script src="js/filedown.js"></script>
+    <script src="js/cookie.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <style>
+        :root {
+            --primary-color: #007AFF; /* Apple blue */
+            --secondary-color: #F5F7FA; /* Light gray-blue */
+            --accent-color: #4A90E2; /* Soft blue */
+            --background-color: rgba(255, 255, 255, 0.95); /* Clean white */
+            --text-color: #1A2A44; /* Deep navy */
+            --light-text: #69768C; /* Subtle gray */
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+            --background-blur: blur(12px);
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: url('https://images.unsplash.com/photo-1513519245088-0e12902e5a38') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-color);
+            line-height: 1.7;
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: var(--background-blur);
+            z-index: -1;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding: 25px;
+        }
+
+        #sidebar-left {
+            width: 300px;
+            padding: 40px 20px;
+            background: var(--background-color);
+            backdrop-filter: var(--background-blur);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            box-shadow: var(--shadow);
+            transition: all var(--transition-speed) ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            max-height: 100vh;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-left: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #sidebar-left .logo {
+            max-width: 180px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+
+        #sidebar-left .logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #sidebar-left .title {
+            font-weight: 700;
+            color: var(--text-color);
+            font-size: 1.6em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        #sidebar-left .title span.electronic {
+            color: var(--primary-color);
+        }
+
+        #sidebar-left .subtitle {
+            font-size: 1em;
+            color: var(--light-text);
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .sidebar-list {
+            list-style: none;
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        .sidebar-list li {
+            margin: 10px 0;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all var(--transition-speed) ease;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        .sidebar-link i {
+            margin-right: 12px;
+            color: var(--primary-color);
+            font-size: 1.2em;
+        }
+
+        .sidebar-link:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-link:hover i {
+            color: white;
+        }
+
+        .social-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .social-title {
+            font-size: 1.2em;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .social-title i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .social-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all var(--transition-speed) ease;
+            font-size: 0.95em;
+        }
+
+        .social-item i {
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: var(--accent-color);
+        }
+
+        .social-item:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-item:hover i {
+            color: white;
+        }
+
+        .youtube-subscribe {
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .sidebar-right {
+            width: 300px;
+            padding: 40px 20px;
+            background: var(--background-color);
+            backdrop-filter: var(--background-blur);
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: all var(--transition-speed) ease;
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            max-height: 100vh;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-right: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            justify-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 120px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            border-radius: 12px;
+            border: none;
+            color: var(--text-color);
+            font-size: 0.85em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .nav-item img {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 8px;
+        }
+
+        .nav-item:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .nav-item:hover i {
+            color: white;
+        }
+
+        .language-options {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            padding: 12px 0;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            margin-top: 8px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .language-options.show {
+            display: flex;
+        }
+
+        .language-options a {
+            text-decoration: none;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .language-options .nav-item {
+            background: rgba(255, 255, 255, 0.9);
+            width: 120px;
+            height: 120px;
+        }
+
+        .language-options .nav-item:hover {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .file-container, .announcement-container {
+            position: relative;
+            width: 100%;
+            background: var(--background-color);
+            backdrop-filter: var(--background-blur);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .latest-btn, .announcement-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
+            backdrop-filter: var(--background-blur);
+            border: none;
+            width: 100%;
+            padding: 20px 25px;
+            border-radius: 10px;
+            color: var(--primary-color);
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-speed) ease;
+            box-shadow: var(--shadow);
+        }
+
+        .latest-btn i, .announcement-btn i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .latest-btn:hover, .announcement-btn:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .latest-btn:hover i, .announcement-btn:hover i {
+            color: white;
+        }
+
+        .file-list, .announcement-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 0;
+            overflow: hidden;
+            background: var(--background-color);
+            backdrop-filter: var(--background-blur);
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: var(--shadow);
+            transition: max-height var(--transition-speed) ease-out, padding var(--transition-speed) ease-out;
+            z-index: 10;
+        }
+
+        .file-list.show, .announcement-list.show {
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .file-item, .announcement-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .file-item i {
+            margin-right: 10px;
+            color: var(--accent-color);
+            font-size: 1.3em;
+        }
+
+        .file-item:hover, .announcement-item:hover {
+            background: rgba(0, 122, 255, 0.1);
+            transform: translateX(4px);
+        }
+
+        .file-item:hover i {
+            color: var(--primary-color);
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .file-details {
+            font-size: 0.9em;
+            color: var(--light-text);
+        }
+
+        .announcement-item p {
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+        }
+
+        .announcement-item p strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .no-announcements {
+            padding: 25px;
+            text-align: center;
+            color: var(--light-text);
+            font-size: 1.1em;
+        }
+
+        .no-announcements i {
+            margin-right: 8px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            font-size: 1em;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 122, 255, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .search-wrapper input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(0, 122, 255, 0.4);
+            outline: none;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-text);
+            font-size: 1.1em;
+        }
+
+        .contact-form-container, .about-us-section, .BIBLE-EVERYDAY, .schedule-container, .zoom-container, .center-container, .bible-content-wrapper {
+
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 720px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .contact-form-container h2, .about-us-section h2, .center-container h1, .bible-content-wrapper h1 {
+            font-size: 2em;
+            color: var(--text-color);
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 1.1em;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(0, 122, 255, 0.3);
+            border-radius: 10px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(0, 122, 255, 0.4);
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: var(--shadow);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .submit-button i {
+            margin-right: 8px;
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .iframe-container {
+            max-width: 960px;
+            margin: 30px auto;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            display: block;
+        }
+
+        .video-container {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            max-width: 960px;
+            margin: 0 auto 20px;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .video-container h2 {
+            font-size: 2em;
+            color: var(--text-color);
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .video-container h2 i {
+            margin-right: 8px;
+        }
+
+        .about-us-section p {
+            font-size: 1.1em;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+
+        .about-us-section .intro-paragraph {
+            font-size: 1.2em;
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 30px;
+        }
+
+        .about-us-section .intro-paragraph i {
+            margin-right: 8px;
+        }
+
+        .about-us-section .keyword {
+            color: var(--primary-color);
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .about-us-section .keyword i {
+            margin-right: 8px;
+        }
+
+        .about-us-section .emphasis {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        .about-us-section .authority-emphasis {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .about-us-section blockquote {
+            border-left: 6px solid var(--primary-color);
+            padding: 20px 25px;
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-us-section blockquote p {
+            font-style: italic;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .about-us-section blockquote p i {
+            margin-right: 8px;
+        }
+
+        .about-us-section blockquote footer {
+            text-align: right;
+            font-size: 1em;
+            color: var(--light-text);
+        }
+
+        .about-us-section blockquote footer i {
+            margin-right: 8px;
+        }
+
+        .BIBLE-EVERYDAY {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: var(--background-blur);
+            padding: 30px;
+            text-align: center;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .BIBLE-EVERYDAY::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1513519245088-0e12902e5a38') center center / cover;
+            opacity: 0.1;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        .BIBLE-EVERYDAY .bible-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .BIBLE-EVERYDAY .logo {
+            max-width: 140px;
+            border-radius: 8px;
+        }
+
+        .BIBLE-EVERYDAY .title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .BIBLE-EVERYDAY .title i {
+            margin-right: 8px;
+        }
+
+        .BIBLE-EVERYDAY .verse, .BIBLE-EVERYDAY .reference, .BIBLE-EVERYDAY .loading {
+            font-size: 1.2em;
+            color: var(--text-color);
+            margin: 10px 0;
+            padding: 0 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .BIBLE-EVERYDAY .verse {
+            font-style: italic;
+        }
+
+        .BIBLE-EVERYDAY .reference {
+            font-weight: 500;
+        }
+
+        .BIBLE-EVERYDAY .loading i {
+            margin-right: 8px;
+        }
+
+        .schedule-container .schedule-title {
+            font-size: 2em;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .schedule-container .schedule-title i {
+            margin-right: 8px;
+        }
+
+        .schedule-container .schedule-time, .schedule-container .schedule-note {
+            font-size: 1.1em;
+            color: var(--text-color);
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .schedule-container .schedule-time i, .schedule-container .schedule-note i {
+            margin-right: 8px;
+        }
+
+        .zoom-container .zoom-title {
+            font-size: 2em;
+            font-weight: 600;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .zoom-container .zoom-title i {
+            margin-right: 8px;
+        }
+
+        .zoom-container .zoom-info, .zoom-container .no-zoom-container {
+            font-size: 1.1em;
+            color: var(--light-text);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .zoom-container .zoom-info i, .zoom-container .no-zoom-container i {
+            margin-right: 8px;
+        }
+
+        .zoom-container a, .center-container a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .zoom-container a i, .center-container a i {
+            margin-right: 8px;
+        }
+
+        .zoom-container a:hover, .center-container a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        .download-buttons a {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 8px;
+            display: inline-block;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .download-buttons a i {
+            margin-right: 8px;
+        }
+
+        .download-buttons a:hover {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .live-room {
+            position: fixed;
+            bottom: 30px;
+            right: 0;
+            width: 320px;
+            height: 420px;
+            background: var(--background-color);
+            backdrop-filter: var(--background-blur);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            cursor: move;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-right: none;
+        }
+
+        .live-room-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 12px;
+            font-size: 1.3em;
+            font-weight: 600;
+            text-align: center;
+            user-select: none;
+        }
+
+        .live-room-header i {
+            margin-right: 8px;
+        }
+
+        .live-room-content {
+            width: 100%;
+            height: calc(100% - 45px);
+        }
+
+        .live-room-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .forum-header p {
+            font-size: 1.3em;
+            color: var(--text-color);
+            text-align: center;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        .forum-header p i {
+            margin-right: 8px;
+        }
+
+        .dddd {
+            display: block;
+            margin: 0 auto;
+            max-width: 320px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .dddd:hover {
+            transform: scale(1.05);
+        }
+
+        .trigger-btn {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 1000;
+            display: none;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .trigger-btn i {
+            font-size: 1.1em;
+        }
+
+        .trigger-btn:hover {
+            background: var(--accent-color);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 1024px) {
+            #sidebar-left, .sidebar-right {
+                transform: translateX(-100%);
+                transition: transform var(--transition-speed) ease;
+            }
+
+            #sidebar-left.active, .sidebar-right.active {
+                transform: translateX(0);
+            }
+
+            .trigger-btn {
+                display: block;
+            }
+
+            .main-container {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container, .contact-form-container, .about-us-section, .BIBLE-EVERYDAY, .schedule-container, .zoom-container, .center-container, .bible-content-wrapper {
+                max-width: calc(100% - 20px);
+                padding: 20px;
+            }
+
+            .iframe-container {
+                max-width: calc(100% - 20px);
+            }
+
+            iframe {
+                height: 400px;
+            }
+
+            .live-room {
+                width: 280px;
+                height: 360px;
+                right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-left">
+        <img src="logo/ebfside.png" class="logo" alt="eBible Fellowship Logo">
+        <div class="title">
+            <span class="electronic">电子</span><span class="fellowship">圣经团契</span>
+        </div>
+        <p class="subtitle">生活在审判日</p>
+        <ul class="sidebar-list">
+            <li><a href="https://fenli.org" class="sidebar-link"><i class="fas fa-home"></i>首页</a></li>
+            <li><a href="https://us02web.zoom.us/j/8721925979?pwd=aHpWQ0RBcCs2Um1NY1dXVFdrRDZOdz09" class="sidebar-link"><i class="fas fa-video"></i>Zoom</a></li>
+            <li><a href="fbiblestudy.html" class="sidebar-link"><i class="fas fa-book-open"></i>圣经学习</a></li>
+            <li><a href="biblestudy.html" class="sidebar-link"><i class="fas fa-book"></i>书籍</a></li>
+            <li><a href="https://www.newopenforum.org/" class="sidebar-link"><i class="fas fa-comments"></i>圣经论坛</a></li>
+            <li><a href="donate.html" class="sidebar-link"><i class="fas fa-donate"></i>捐赠</a></li>
+            <li><a href="all-scriptures.html" class="sidebar-link"><i class="fas fa-bible"></i>全部书籍</a></li>
+            <li><a href="feed-gods-sheep.html" class="sidebar-link"><i class="fas fa-dove"></i>喂养神的羊</a></li>
+        </ul>
+        <div class="social-section">
+            <h3 class="social-title">
+                <i class="fas fa-users"></i>
+                <span style="color: var(--primary-color);">电子</span>圣经团契社交媒体
+            </h3>
+            <div class="social-grid">
+                <a href="https://www.youtube.com/user/EBibleFellowship1" class="social-item">
+                    <i class="fab fa-youtube"></i><span class="social-label">YouTube</span>
+                </a>
+                <a href="https://www.tiktok.com/@ebiblefellowship" class="social-item">
+                    <i class="fab fa-tiktok"></i><span class="social-label">TikTok</span>
+                </a>
+                <a href="https://www.facebook.com/groups/ebiblefellowship/" class="social-item">
+                    <i class="fab fa-facebook-f"></i><span class="social-label">Facebook</span>
+                </a>
+            </div>
+            <div class="social-grid">
+                <a href="https://open.spotify.com/show/2QaYhjDxUM6TYcFZS1k25N" class="social-item">
+                    <i class="fab fa-spotify"></i><span class="social-label">Spotify</span>
+                </a>
+                <a href="https://www.instagram.com/ebiblefellowship/" class="social-item">
+                    <i class="fab fa-instagram"></i><span class="social-label">Instagram</span>
+                </a>
+            </div>
+        </div>
+        <div class="youtube-subscribe">
+            <div class="g-ytsubscribe" data-channelid="UC6LZdK0g0H1mV8M2iWTSnOw" data-layout="default" data-count="default"></div>
+        </div>
+        <div class="contact-container" style="
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            max-width: 320px;
+            margin: 30px auto;
+            padding: 25px;">
+            <div class="contact-header" style="
+                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 20px;
+                text-align: center;">
+                <h2 style="
+                    color: white;
+                    margin: 0;
+                    font-size: 1.4em;
+                    font-weight: 600;">
+                    <i class="fas fa-envelope" style="margin-right: 8px;"></i>联系我们
+                </h2>
+            </div>
+            <address style="
+                text-align: center;
+                font-style: normal;
+                line-height: 1.8;
+                color: var(--light-text);
+                margin-bottom: 20px;">
+                <p style="margin: 10px 0;">
+                    <a href="mailto:htmlInfo@eBibleFellowship.org" style="
+                        color: var(--primary-color);
+                        text-decoration: none;
+                        font-weight: 500;">
+                        <i class="fas fa-at" style="margin-right: 8px;"></i>Info@eBibleFellowship.org
+                    </a>
+                </p>
+                <p style="margin: 10px 0;"><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>P.O. Box 1393</p>
+                <p style="margin: 10px 0;"><i class="fas fa-map" style="margin-right: 8px;"></i>Sharon Hill, PA 19079-0593</p>
+                <p style="margin: 10px 0;"><i class="fas fa-globe-americas" style="margin-right: 8px;"></i>USA</p>
+            </address>
+            <div class="copyright" style="
+                text-align: center;
+                color: var(--light-text);
+                font-size: 0.9em;
+                border-top: 1px solid rgba(0, 122, 255, 0.3);
+                padding-top: 15px;">
+                <i class="fas fa-copyright" style="margin-right: 8px;"></i>2025 eBible Fellowship
+            </div>
+        </div>
+    </div>
+
+    <button class="trigger-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="sidebar-right">
+        <div class="sidebar-content">
+            <button class="nav-item" onclick="toggleLanguage()">
+                <i class="fas fa-globe"></i><span>语言设置</span>
+            </button>
+            <div class="language-options" id="languageOptions">
+                <a href="https://fenli.org"> 
+                    <button class="nav-item">
+                        <img src="icon/Chinese.png" alt=""><span>简体中文</span>
+                    </button>
+                </a>
+                <a href="https://ebiblefellowship.org"> 
+                    <button class="nav-item">
+                        <img src="icon/American.png" alt=""><span>English</span>
+                    </button>
+                </a>
+            </div>
+            <a href="bibleflie.html"><button class="nav-item"><i class="fas fa-file"></i><span>文件资源</span></button></a>
+            <a href="ebfbiblestudy.html"><button class="nav-item"><i class="fas fa-book"></i><span>圣经阅读</span></button></a>
+            <a href="audio-research.html"><button class="nav-item"><i class="fas fa-headphones"></i><span>圣经朗读</span></button></a>
+            <a href="allbooks.html"><button class="nav-item"><i class="fas fa-book-bible"></i><span>全部书籍</span></button></a>
+            <a href="biblesongs.html"><button class="nav-item"><i class="fas fa-music"></i><span>圣经歌曲</span></button></a>
+            <a href="timeline.html"><button class="nav-item"><i class="fas fa-timeline"></i><span>圣经历史年代表</span></button></a>
+            <a href="audioresearch.html"><button class="nav-item"><i class="fas fa-podcast"></i><span>查考音频</span></button></a>
+            <a href="daily-verse.html"><button class="nav-item"><i class="fas fa-film"></i><span>每日经文视频</span></button></a>
+            <a href="song-videos.html"><button class="nav-item"><i class="fas fa-video"></i><span>歌曲视频</span></button></a>
+            <a href="fbiblestudy.html"><button class="nav-item"><i class="fas fa-graduation-cap"></i><span>圣经学习</span></button></a>
+            <a href="sealed-books.html"><button class="nav-item"><i class="fas fa-lock"></i><span>封印的书卷</span></button></a>
+            <a href="timeline.html"><button class="nav-item"><i class="fas fa-table"></i><span>圣经历史年代表表格</span></button></a>
+            <a href="worldend.html"><button class="nav-item"><i class="fas fa-hourglass-end"></i><span>距离末日时间</span></button></a>
+            <a href="video.html"><button class="nav-item"><i class="fas fa-video"></i><span>视频</span></button></a>
+            <a href="contact.html"><button class="nav-item"><i class="fas fa-envelope"></i><span>联系我们</span></button></a>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="BIBLE-EVERYDAY">
+            <div class="bible-box">
+                <img src="logo/ebfside.png" alt="eBible Fellowship Logo" class="logo">
+                <div class="title"><i class="fas fa-bible" style="margin-right: 8px;"></i>每日圣经</div>
+                <div id="loading" class="loading"><i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>正在加载每日经文...</div>
+                <div class="verse" id="verse"></div>
+                <div class="reference" id="reference"></div>
+            </div>
+        </div>
+        <div class="file-container">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="搜索文件..." />
+                <i class="fas fa-magnifying-glass"></i>
+            </div>
+            <button class="latest-btn" onclick="toggleFileList()">
+                <i class="fas fa-file-alt"></i>最新文件<i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="file-list" id="fileList"></div>
+        </div>
+        <div class="announcement-container">
+            <button class="announcement-btn" onclick="toggleAnnouncement()">
+                <i class="fas fa-bullhorn"></i>最新公告<i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="announcement-list" id="announcementList"></div>
+        </div>
+    </div>
+
+    <div class="live-room" id="liveRoom">
+        <div class="live-room-header"><i class="fas fa-broadcast-tower"></i>直播+计划</div>
+        <div class="live-room-content">
+            <iframe src="airtime.html" allowfullscreen scrolling="no"></iframe>
+        </div>
+    </div>
+
+    <div>
+        <img src="https://pub-eae5d4cfcdc944f6ba22ea09a635a195.r2.dev/forum.png" alt="论坛视觉图" class="dddd">
+    </div>
+    <h1 style="text-align: center; font-size: 2.8em; color: var(--text-color); font-weight: 600; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);">
+        <i class="fas fa-cross" style="color: var(--primary-color); margin-right: 8px;"></i>
+        <span style="color: var(--primary-color);">电子</span>圣经团契新开放论坛
+    </h1>
+    <div class="forum-header">
+        <p><i class="fas fa-comments" style="margin-right: 8px;"></i>现场互动式圣经问答节目</p>
+    </div>
+    <div class="center-container">
+        <a href="https://www.newopenforum.org" style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); color: white; padding: 16px 40px; border-radius: 10px; text-decoration: none; font-weight: 500; box-shadow: var(--shadow); display: inline-block;">
+            <i class="fas fa-link" style="margin-right: 8px;"></i><span style="font-size: 1.2em;">Newopenforum.org</span>
+            <span style="display: block; font-size: 0.9em;">立即访问</span>
+        </a>
+    </div>
+
+    <div class="center-container">
+        <h1><i class="fas fa-question-circle" style="margin-right: 8px;"></i>来自圣经论坛的问题记录</h1>
+        <a href="biblequestion.html" style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); color: white; padding: 16px 40px; border-radius: 10px; text-decoration: none; font-weight: 500; box-shadow: var(--shadow); display: inline-block; margin: 20px 0;">
+            <i class="fas fa-search" style="margin-right: 8px;"></i>圣经问题查询（beta）
+        </a>
+        <p style="font-size: 1.1em; color: var(--light-text);"><i class="fas fa-info-circle" style="margin-right: 8px;"></i>将要更新650卷超3000个问题</p>
+    </div>
+
+    
+    <div class="zoom-container">
+        <div class="zoom-title"><i class="fas fa-video" style="margin-right: 8px;"></i>我该如何加入</div>
+        <div class="no-zoom-container">
+            <i class="fas fa-exclamation-triangle" style="margin-right: 8px;"></i>如果您没有安装 Zoom 应用，您可以通过以下链接下载：
+            <div class="download-buttons">
+                <a href="https://play.google.com/store/apps/details?id=us.zoom.videomeetings" target="_blank"><i class="fab fa-google-play" style="margin-right: 8px;"></i>下载 Zoom (Google Play)</a>
+                <a href="https://apps.apple.com/us/app/zoom-cloud-meetings/id546505307" target="_blank"><i class="fab fa-app-store-ios" style="margin-right: 8px;"></i>下载 Zoom (App Store)</a>
+                <a href="https://zoom.us/client/latest/Zoom.apk" target="_blank"><i class="fas fa-download" style="margin-right: 8px;"></i>下载 APK</a>
+            </div>
+        </div>
+        <div class="zoom-info">
+            <i class="fas fa-check" style="margin-right: 8px;"></i>如果您下载完成请点击<strong>加入会议</strong><br>
+            <i class="fas fa-id-card" style="margin-right: 8px;"></i>会议号：<strong>872 192 5979</strong><br>
+            <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>加入方式：
+            <ul>
+                <li><i class="fas fa-phone" style="margin-right: 8px;"></i><strong>电话加入</strong>：拨打 <a href="tel:+18889699883">+1 888-969-9883</a></li>
+                <li><i class="fas fa-laptop" style="margin-right: 8px;"></i><strong>在线加入</strong>：<a href="https://us02web.zoom.us/j/8721925979?pwd=aHpWQ0RBcCs2Um1NY1dXVFdrRDZOdz09#success" target="_blank">点击这里进入会议</a></li>
+            </ul>
+            <i class="fas fa-exclamation-circle" style="margin-right: 8px;"></i>注意：圣经论坛的语言是英语，所以请填写下面表单电子圣经团契可以请求翻译，请耐心等待会有邮件发送
+        </div>
+        <a href="https://us02web.zoom.us/j/8721925979?pwd=aHpWQ0RBcCs2Um1NY1dXVFdrRDZOdz09#success">
+            <button class="join-button" style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); color: white; padding: 16px 40px; border-radius: 10px; border: none; font-size: 1.2em; font-weight: 500; box-shadow: var(--shadow); width: 100%;">
+                <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>立即加入会议
+            </button>
+        </a>
+        <div class="zoom-info">
+            <i class="fas fa-hand-paper" style="margin-right: 8px;"></i><strong>可以举手提出问题</strong>
+        </div>
+        <a href="downloadbe.html"><i class="fas fa-book" style="margin-right: 8px;"></i>完整教程请点击此链接</a>
+    </div>
+<div class="countdown-container">
+    <div id="countdown">
+        <div class="header">
+            <div class="header-year">2033</div>
+        </div>
+        <div class="time-container">
+            <div class="time-unit">
+                <span class="time-value" id="years">0</span>
+                <div class="time-label">年</div>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="months">0</span>
+                <div class="time-label">月</div>
+            </div>
+            <div class="time-unit-or">
+                <div class="or-label">或</div>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="days">0</span>
+                <div class="time-label">天</div>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="hours">0</span>
+                <div class="time-label">小时</div>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="minutes">0</span>
+                <div class="time-label">分钟</div>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="seconds">0</span>
+                <div class="time-label">秒</div>
+            </div>
+        </div>
+        <div class="verse-text">"因为必有结局，你的指望必不致断绝。"</div>
+        <div class="verse-reference">箴言 23:18</div>
+    </div>
+    <div class="timeline-section">
+        <div class="timeline">
+            <svg width="100%" height="20" viewBox="0 0 800 20" preserveAspectRatio="xMidYMid meet">
+                <line x1="0" y1="10" x2="800" y2="10" class="timeline-line">
+                    <animate attributeName="stroke-dasharray" from="0 800" to="800 0" dur="2s" fill="freeze" />
+                    <animate attributeName="stroke-dashoffset" from="800" to="0" dur="2s" fill="freeze" />
+                </line>
+            </svg>
+        </div>
+        <div class="years-text">23 个包含年份</div>
+        <div class="year-container">
+            <div class="year-label">第1年</div>
+            <div class="year-box"><span>2011</span></div>
+            <div class="year-label">第2年</div>
+            <div class="year-box"><span>2012</span></div>
+            <div class="year-label">第3年</div>
+            <div class="year-box"><span>2013</span></div>
+            <div class="year-label">第4年</div>
+            <div class="year-box"><span>2014</span></div>
+            <div class="year-label">第5年</div>
+            <div class="year-box"><span>2015</span></div>
+            <div class="year-label">第6年</div>
+            <div class="year-box"><span>2016</span></div>
+            <div class="year-label">第7年</div>
+            <div class="year-box"><span>2017</span></div>
+            <div class="year-label">第8年</div>
+            <div class="year-box"><span>2018</span></div>
+            <div class="year-label">第9年</div>
+            <div class="year-box"><span>2019</span></div>
+            <div class="year-label">第10年</div>
+            <div class="year-box"><span>2020</span></div>
+            <div class="year-label">第11年</div>
+            <div class="year-box"><span>2021</span></div>
+            <div class="year-label">第12年</div>
+            <div class="year-box"><span>2022</span></div>
+            <div class="year-label">第13年</div>
+            <div class="year-box"><span>2023</span></div>
+            <div class="year-label">第14年</div>
+            <div class="year-box"><span>2024</span></div>
+            <div class="year-label">第15年</div>
+            <div class="year-box"><span>2025</span></div>
+            <div class="year-label">第16年</div>
+            <div class="year-box"><span>2026</span></div>
+            <div class="year-label">第17年</div>
+            <div class="year-box"><span>2027</span></div>
+            <div class="year-label">第18年</div>
+            <div class="year-box"><span>2028</span></div>
+            <div class="year-label">第19年</div>
+            <div class="year-box"><span>2029</span></div>
+            <div class="year-label">第20年</div>
+            <div class="year-box"><span>2030</span></div>
+            <div class="year-label">第21年</div>
+            <div class="year-box"><span>2031</span></div>
+            <div class="year-label">第22年</div>
+            <div class="year-box"><span>2032</span></div>
+            <div class="year-label">第23年</div>
+            <div class="year-box"><span>2033</span></div>
+        </div>
+        <div class="note-text">2011年是审判日开始的年份，那一年有大约5个月的救赎期，其余大约7个月是审判日，因此我们可以从2011年到2033年计算包含年份，得到23年。</div>
+    </div>
+    <div class="timeline-section">
+        <div class="timeline">
+            <svg width="100%" height="20" viewBox="0 0 800 20" preserveAspectRatio="xMidYMid meet">
+                <line x1="0" y1="10" x2="800" y2="10" class="timeline-line">
+                    <animate attributeName="stroke-dasharray" from="0 800" to="800 0" dur="2s" fill="freeze" />
+                    <animate attributeName="stroke-dashoffset" from="800" to="0" dur="2s" fill="freeze" />
+                </line>
+            </svg>
+        </div>
+        <div class="years-text">22 个实际年份</div>
+        <div class="year-container">
+            <div class="year-label">第1年</div>
+            <div class="year-box"><span>2012</span></div>
+            <div class="year-label">第2年</div>
+            <div class="year-box"><span>2013</span></div>
+            <div class="year-label">第3年</div>
+            <div class="year-box"><span>2014</span></div>
+            <div class="year-label">第4年</div>
+            <div class="year-box"><span>2015</span></div>
+            <div class="year-label">第5年</div>
+            <div class="year-box"><span>2016</span></div>
+            <div class="year-label">第6年</div>
+            <div class="year-box"><span>2017</span></div>
+            <div class="year-label">第7年</div>
+            <div class="year-box"><span>2018</span></div>
+            <div class="year-label">第8年</div>
+            <div class="year-box"><span>2019</span></div>
+            <div class="year-label">第9年</div>
+            <div class="year-box"><span>2020</span></div>
+            <div class="year-label">第10年</div>
+            <div class="year-box"><span>2021</span></div>
+            <div class="year-label">第11年</div>
+            <div class="year-box"><span>2022</span></div>
+            <div class="year-label">第12年</div>
+            <div class="year-box"><span>2023</span></div>
+            <div class="year-label">第13年</div>
+            <div class="year-box"><span>2024</span></div>
+            <div class="year-label">第14年</div>
+            <div class="year-box"><span>2025</span></div>
+            <div class="year-label">第15年</div>
+            <div class="year-box"><span>2026</span></div>
+            <div class="year-label">第16年</div>
+            <div class="year-box"><span>2027</span></div>
+            <div class="year-label">第17年</div>
+            <div class="year-box"><span>2028</span></div>
+            <div class="year-label">第18年</div>
+            <div class="year-box"><span>2029</span></div>
+            <div class="year-label">第19年</div>
+            <div class="year-box"><span>2030</span></div>
+            <div class="year-label">第20年</div>
+            <div class="year-box"><span>2031</span></div>
+            <div class="year-label">第21年</div>
+            <div class="year-box"><span>2032</span></div>
+            <div class="year-label">第22年</div>
+            <div class="year-box"><span>2033</span></div>
+        </div>
+        <div class="note-text">2012年是审判日的第一个完整年份。因此，我们可以从2012年到2033年计算实际年份，得到22年。</div>
+    </div>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        .countdown-container {
+            font-family: 'Montserrat', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            overflow-x: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        #countdown {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 1200px;
+            width: 95%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        .timeline-section {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 1200px;
+            width: 95%;
+            box-sizing: border-box;
+            margin: 20px auto;
+        }
+        .header {
+            margin-bottom: 30px;
+            animation: slideIn 1s ease-in;
+            border: none;
+            box-shadow: none;
+            background: none;
+            display: block;
+        }
+        .header-year {
+            font-size: 4em;
+            color: #333;
+            font-weight: 700;
+            line-height: 1;
+            display: block;
+        }
+        .time-container {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .time-unit {
+            background: linear-gradient(145deg, #f0f0f0, #ffffff);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 100px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.8);
+            transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+            opacity: 0;
+            animation: growIn 0.5s ease-out forwards;
+        }
+        .time-unit:hover {
+            transform: scale(1.2) rotate(5deg);
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2), -5px -5px 20px rgba(255, 255, 255, 1);
+        }
+        .time-unit-or {
+            background: #E6F0FA;
+            border-radius: 10px;
+            padding: 3px;
+            min-width: 50px;
+            min-height: 24px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), -3px -3px 10px rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            animation: growIn 0.5s ease-out forwards;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .time-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #6e45e2;
+            animation: pulse 1s infinite;
+        }
+        .time-label {
+            font-size: 1em;
+            color: #555;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        .or-label {
+            font-size: 0.7em;
+            font-weight: bold;
+            color: #000000;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .verse-text, .note-text {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-style: italic;
+            color: #333;
+            animation: fadeIn 1s ease-in;
+        }
+        .verse-reference {
+            font-size: 1em;
+            color: #555;
+            margin-top: 5px;
+        }
+        .time-unit:nth-child(1) { animation-delay: 0s; }
+        .time-unit:nth-child(2) { animation-delay: 0.3s; }
+        .time-unit-or:nth-child(3) { animation-delay: 0.45s; }
+        .time-unit:nth-child(4) { animation-delay: 0.6s; }
+        .time-unit:nth-child(5) { animation-delay: 0.9s; }
+        .time-unit:nth-child(6) { animation-delay: 1.2s; }
+        .time-unit:nth-child(7) { animation-delay: 1.5s; }
+        .timeline {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+        .timeline-line {
+            stroke: #6e45e2;
+            stroke-width: 4;
+            stroke-linecap: round;
+            animation: stretchLine 2s ease-out forwards;
+            animation-delay: 2s;
+        }
+        .years-text {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            animation: fadeIn 1s ease-in;
+        }
+        .year-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 70px));
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            max-width: 100%;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+            padding: 0;
+        }
+        .year-box {
+            border: 2px solid #32CD32;
+            background: transparent;
+            border-radius: 8px;
+            padding: 5px;
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: 700;
+            color: #333;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            margin: 0;
+        }
+        .year-box:hover {
+            background-color: rgba(50, 205, 50, 0.8);
+        }
+        .year-box::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(50, 205, 50, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+            z-index: 0;
+        }
+        .year-box:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+        .year-box span {
+            position: relative;
+            z-index: 1;
+        }
+        .year-label {
+            font-size: 0.8em;
+            color: #333;
+            text-align: center;
+            margin-bottom: 3px;
+            width: 60px;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        .year-label:nth-child(1), .year-box:nth-child(2) { animation-delay: 2.5s; }
+        .year-label:nth-child(3), .year-box:nth-child(4) { animation-delay: 2.6s; }
+        .year-label:nth-child(5), .year-box:nth-child(6) { animation-delay: 2.7s; }
+        .year-label:nth-child(7), .year-box:nth-child(8) { animation-delay: 2.8s; }
+        .year-label:nth-child(9), .year-box:nth-child(10) { animation-delay: 2.9s; }
+        .year-label:nth-child(11), .year-box:nth-child(12) { animation-delay: 3.0s; }
+        .year-label:nth-child(13), .year-box:nth-child(14) { animation-delay: 3.1s; }
+        .year-label:nth-child(15), .year-box:nth-child(16) { animation-delay: 3.2s; }
+        .year-label:nth-child(17), .year-box:nth-child(18) { animation-delay: 3.3s; }
+        .year-label:nth-child(19), .year-box:nth-child(20) { animation-delay: 3.4s; }
+        .year-label:nth-child(21), .year-box:nth-child(22) { animation-delay: 3.5s; }
+        .year-label:nth-child(23), .year-box:nth-child(24) { animation-delay: 3.6s; }
+        .year-label:nth-child(25), .year-box:nth-child(26) { animation-delay: 3.7s; }
+        .year-label:nth-child(27), .year-box:nth-child(28) { animation-delay: 3.8s; }
+        .year-label:nth-child(29), .year-box:nth-child(30) { animation-delay: 3.9s; }
+        .year-label:nth-child(31), .year-box:nth-child(32) { animation-delay: 4.0s; }
+        .year-label:nth-child(33), .year-box:nth-child(34) { animation-delay: 4.1s; }
+        .year-label:nth-child(35), .year-box:nth-child(36) { animation-delay: 4.2s; }
+        .year-label:nth-child(37), .year-box:nth-child(38) { animation-delay: 4.3s; }
+        .year-label:nth-child(39), .year-box:nth-child(40) { animation-delay: 4.4s; }
+        .year-label:nth-child(41), .year-box:nth-child(42) { animation-delay: 4.5s; }
+        .year-label:nth-child(43), .year-box:nth-child(44) { animation-delay: 4.6s; }
+        .year-label:nth-child(45), .year-box:nth-child(46) { animation-delay: 4.7s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(1), .timeline-section:nth-child(2) .year-box:nth-child(2) { animation-delay: 4.8s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(3), .timeline-section:nth-child(2) .year-box:nth-child(4) { animation-delay: 4.9s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(5), .timeline-section:nth-child(2) .year-box:nth-child(6) { animation-delay: 5.0s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(7), .timeline-section:nth-child(2) .year-box:nth-child(8) { animation-delay: 5.1s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(9), .timeline-section:nth-child(2) .year-box:nth-child(10) { animation-delay: 5.2s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(11), .timeline-section:nth-child(2) .year-box:nth-child(12) { animation-delay: 5.3s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(13), .timeline-section:nth-child(2) .year-box:nth-child(14) { animation-delay: 5.4s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(15), .timeline-section:nth-child(2) .year-box:nth-child(16) { animation-delay: 5.5s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(17), .timeline-section:nth-child(2) .year-box:nth-child(18) { animation-delay: 5.6s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(19), .timeline-section:nth-child(2) .year-box:nth-child(20) { animation-delay: 5.7s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(21), .timeline-section:nth-child(2) .year-box:nth-child(22) { animation-delay: 5.8s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(23), .timeline-section:nth-child(2) .year-box:nth-child(24) { animation-delay: 5.9s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(25), .timeline-section:nth-child(2) .year-box:nth-child(26) { animation-delay: 6.0s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(27), .timeline-section:nth-child(2) .year-box:nth-child(28) { animation-delay: 6.1s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(29), .timeline-section:nth-child(2) .year-box:nth-child(30) { animation-delay: 6.2s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(31), .timeline-section:nth-child(2) .year-box:nth-child(32) { animation-delay: 6.3s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(33), .timeline-section:nth-child(2) .year-box:nth-child(34) { animation-delay: 6.4s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(35), .timeline-section:nth-child(2) .year-box:nth-child(36) { animation-delay: 6.5s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(37), .timeline-section:nth-child(2) .year-box:nth-child(38) { animation-delay: 6.6s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(39), .timeline-section:nth-child(2) .year-box:nth-child(40) { animation-delay: 6.7s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(41), .timeline-section:nth-child(2) .year-box:nth-child(42) { animation-delay: 6.8s; }
+        .timeline-section:nth-child(2) .year-label:nth-child(43), .timeline-section:nth-child(2) .year-box:nth-child(44) { animation-delay: 6.9s; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes growIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes stretchLine {
+            from { stroke-dashoffset: 800; }
+            to { stroke-dashoffset: 0; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 900px) {
+            .countdown-container {
+                padding: 15px;
+            }
+            .time-container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .time-unit {
+                min-width: 80px;
+                padding: 15px;
+                flex: 1 1 45%;
+                max-width: 120px;
+            }
+            .time-unit-or {
+                min-width: 40px;
+                padding: 2px;
+                min-height: 16px;
+                flex: 1 1 45%;
+                max-width: 60px;
+                background: #E6F0FA;
+                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), -3px -3px 10px rgba(255, 255, 255, 0.8);
+            }
+            .or-label {
+                color: #000000;
+            }
+            .time-value {
+                font-size: 2em;
+            }
+            .year-container {
+                grid-template-columns: repeat(auto-fit, minmax(70px, 70px));
+                justify-content: center;
+            }
+            .year-box {
+                width: 60px;
+                height: 40px;
+                margin: 0;
+            }
+            .year-label {
+                width: 60px;
+                margin-bottom: 3px;
+            }
+            .timeline {
+                max-width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            .countdown-container {
+                padding: 10px;
+            }
+            #countdown, .timeline-section {
+                padding: 20px;
+            }
+            .time-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .time-unit {
+                flex: 1 1 100%;
+                max-width: 150px;
+            }
+            .time-unit-or {
+                flex: 1 1 100%;
+                max-width: 75px;
+                min-height: 20px;
+                padding: 2px;
+                background: #E6F0FA;
+                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), -3px -3px 10px rgba(255, 255, 255, 0.8);
+            }
+            .or-label {
+                color: #000000;
+            }
+            .header-year {
+                font-size: 3em;
+            }
+            .year-container {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 80px));
+                justify-content: center;
+            }
+            .year-box {
+                width: 70px;
+                height: 40px;
+                margin: 0;
+            }
+            .year-label {
+                width: 70px;
+            }
+            .verse-text, .note-text {
+                font-size: 1em;
+            }
+        }
+    </style>
+
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date('January 1, 2033 00:00:00').getTime();
+            const now = new Date().getTime();
+            const timeDiff = targetDate - now;
+
+            if (timeDiff <= 0) {
+                document.getElementById('countdown').innerHTML = '<div class="header"><div class="header-year">2033</div></div><h1>倒计时完成！</h1>';
+                return;
+            }
+
+            const seconds = Math.floor((timeDiff / 1000) % 60);
+            const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
+            const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+
+            const currentDate = new Date();
+            const target = new Date('January 1, 2033');
+            let years = target.getFullYear() - currentDate.getFullYear();
+            let months = target.getMonth() - currentDate.getMonth();
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            if (currentDate.getDate() > target.getDate()) {
+                months--;
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+            }
+
+            document.getElementById('years').textContent = years;
+            document.getElementById('months').textContent = months;
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+    
+</div>
+    <h1 style="text-align: center; font-size: 2.8em; color: var(--text-color); font-weight: 600; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);">
+        <i class="fas fa-envelope" style="margin-right: 8px;"></i>联系我们
+    </h1>
+    <div class="contact-form-container">
+        <form action="https://formspree.io/f/xldgnjgy" method="POST" id="contactForm">
+            <div class="form-group">
+                <label for="zxcv01"><i class="fas fa-at" style="margin-right: 8px;"></i>电子邮箱</label>
+                <input type="email" id="zxcv01" name="email" placeholder="请输入您的邮箱" required>
+            </div>
+            <div class="form-group">
+                <label for="asdf02"><i class="fas fa-user" style="margin-right: 8px;"></i>名字</label>
+                <input type="text" id="asdf02" name="name" placeholder="请输入您的名字" required>
+            </div>
+            <div class="form-group">
+                <label for="qwert3"><i class="fas fa-question" style="margin-right: 8px;"></i>问题</label>
+                <textarea id="qwert3" name="question" placeholder="请输入您的问题" required></textarea>
+            </div>
+            <button type="submit" class="submit-button" id="submitButton">
+                <i class="fas fa-paper-plane" style="margin-right: 8px;"></i>提交
+            </button>
+        </form>
+        <div id="successMessage" style="text-align: center; color: var(--accent-color); font-size: 1.2em; margin-top: 20px; display: none;">
+            <i class="fas fa-check-circle" style="margin-right: 8px;"></i>感谢您的联系！我们已收到您的信息。
+        </div>
+    </div>
+
+    <div class="iframe-container">
+        <iframe src="iframe/timeline.html" title="圣经历史年代表系列"></iframe>
+    </div>
+
+    <div class="bible-content-wrapper">
+        <h1><i class="fas fa-bible" style="margin-right: 8px;"></i>圣经历史年表</h1>
+        <p><i class="fas fa-scroll" style="margin-right: 8px;"></i>看看圣经中发现的圣经历史时间表，从创世之日到时间的终结，由已故的哈罗德·康平（Harold Camping）发现，正如上帝允许他的那样，在末世时解封了他的话语。这个交互式图表将显示关键的圣经事件，例如创建日期、洪水发生的时间、出埃及、所罗门圣殿地基的奠基等。</p>
+        <p><i class="fas fa-lightbulb" style="margin-right: 8px;"></i>您将单击编号框以揭开这些日期背后的真相，所有这些都是通过对圣经的仔细研究发现的。你会看到圣经的作者，全能的上帝是多么精确和详细。</p>
+        <div class="video-container"></div>
+        <div style="text-align: center;">
+            <a href="timeline.html" style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); color: white; padding: 16px 40px; border-radius: 10px; text-decoration: none; font-weight: 500; box-shadow: var(--shadow);">
+                <i class="fas fa-timeline" style="margin-right: 8px;"></i>进入圣经历史年表
+            </a>
+        </div>
+    </div>
+
+    <div class="video-container">
+        <h2><i class="fas fa-video" style="margin-right: 8px;"></i>巴比伦倾倒了</h2>
+        <video controls>
+            <source src="https://pub-b9b10ffed3144f8aba9aa3150f527448.r2.dev/videos/Babylong_is_fallon.mp4" type="video/mp4">
+            您的浏览器不支持HTML5视频。
+        </video>
+    </div>
+
+    <div class="about-us-section">
+        <h2><i class="fas fa-users" style="margin-right: 8px;"></i>关于我们</h2>
+        <p class="intro-paragraph"><i class="fas fa-bible" style="margin-right: 8px;"></i>「电子圣经团契」这个名字承载着我们的核心信念：</p>
+        <p><strong class="keyword"><i class="fas fa-wifi" style="margin-right: 8px;"></i>电子：</strong> 我们相信主通过电子媒介（如广播、互联网等）在极大的程度上拯救了许多来自教会和世界其他团体之外的人。如今我们的任务是<em class="emphasis">“喂养祂的羊”</em>，以便所有神所拯救的人都能通过福音得以建造。</p>
+        <p><strong class="keyword"><i class="fas fa-bible" style="margin-right: 8px;"></i>圣经：</strong> 圣经是我们的<strong class="authority-emphasis">唯一权威</strong>。任何人类所制定的信条、教义或声明都无法凌驾于圣经之上。我们正处在一个时代，在这个时代中，圣经被神极大地尊崇，神的话语是至高无上的。</p>
+        <p><strong class="keyword"><i class="fas fa-users" style="margin-right: 8px;"></i>团契：</strong> 我们是一群信徒的团契，渴望通过神的话语与神建立团契。圣经教导我们，教会时代已经结束，因此我们与任何教会或教派没有任何隶属或认同。</p>
+        <p class="closing-paragraph"><i class="fas fa-pray" style="margin-right: 8px;"></i>感谢您的访问。</p>
+        <blockquote>
+            <p><i class="fas fa-quote-left" style="margin-right: 8px;"></i>“我们所看见、所听见的，宣告给你们，使你们也与我们有团契，我们乃是与父、并与祂儿子耶稣基督有团契。”</p>
+            <footer><i class="fas fa-bible" style="margin-right: 8px;"></i>— 约翰一书 1:3</footer>
+        </blockquote>
+    </div>
+
+    <script>
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            window.location.href = 'mobile.html';
+        }
+
+        const announcements = [
+            { title: "2025年网站更新", content: "我们将于2025年6月推出新的圣经学习资源，敬请期待！" },
+            { title: "论坛时间调整", content: "自2025年7月起，圣经论坛时间调整为每周一至周五上午10点至11点（北京时间）。" }
+        ];
+
+        function generateAnnouncementList() {
+            const announcementList = document.getElementById('announcementList');
+            announcementList.innerHTML = announcements.length ? announcements.map(a => `
+                <div class="announcement-item">
+                    <p><strong>${a.title}</strong></p>
+                    <p>${a.content}</p>
+                </div>
+            `).join('') : `
+                <div class="no-announcements">
+                    <p><i class="fas fa-info-circle" style="margin-right: 8px;"></i>暂无公告内容</p>
+                </div>
+            `;
+        }
+
+        function toggleAnnouncement() {
+            document.getElementById('announcementList').classList.toggle('show');
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.announcement-container')) {
+                document.getElementById('announcementList').classList.remove('show');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', generateAnnouncementList);
+
+        const liveRoom = document.getElementById('liveRoom');
+        let isDragging = false, currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
+
+        liveRoom.addEventListener('mousedown', (e) => {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+            if (e.target === liveRoom || e.target.classList.contains('live-room-header')) {
+                isDragging = true;
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                xOffset = currentX;
+                yOffset = currentY;
+                liveRoom.style.transform = `translate(${currentX}px, ${currentY}px)`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                if (data.country_code === 'CN') {
+                    const youtubeButton = document.querySelector('.youtube-subscribe');
+                    if (youtubeButton) youtubeButton.remove();
+                }
+            })
+            .catch(error => console.error('IP API Error:', error));
+
+        const files = [
+            { name: '约珥书2章（2）.mp3', size: '15.3 MB', type: 'audio' },
+            { name: '约珥书1章（4）.mp3', size: '10.0 MB', type: 'audio' },
+            { name: '约沙法谷（2）.mp3', size: '11.9 MB', type: 'audio' }
+        ].sort((a, b) => b.name.localeCompare(a.name));
+
+        function getFileIcon(type) {
+            const icons = {
+                audio: 'fas fa-file-audio',
+                video: 'fas fa-file-video',
+                image: 'fas fa-file-image',
+                pdf: 'fas fa-file-pdf',
+                docx: 'fas fa-file-word',
+                default: 'fas fa-file'
+            };
+            return `<i class="${icons[type] || icons.default}"></i>`;
+        }
+
+        function generateFileList() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = files.map(file => {
+                const ext = file.name.split('.').pop().toLowerCase();
+                let path = '#';
+                if (ext === 'mp3' || ext === 'm4a') path = `mp3.html?file=${encodeURIComponent(`NewFile/${file.name}`)}`;
+                else if (ext === 'docx') path = `docx.html?file=${encodeURIComponent(`NewFile/${file.name}`)}`;
+                else if (ext === 'pdf') path = `pdf.html?file=${encodeURIComponent(`NewFile/${file.name}`)}`;
+                return `
+                    <a href="${path}" class="file-item" target="_blank">
+                        ${getFileIcon(file.type)}
+                        <div class="file-info">
+                            <div class="file-name">${file.name}</div>
+                            <div class="file-details">${file.type.toUpperCase()} • ${file.size}</div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function toggleFileList() {
+            document.getElementById('fileList').classList.toggle('show');
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.file-container')) {
+                document.getElementById('fileList').classList.remove('show');
+            }
+        });
+
+        generateFileList();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const fileList = document.getElementById('fileList');
+
+            searchInput.addEventListener('input', () => {
+                const keyword = searchInput.value.trim().toLowerCase();
+                if (!keyword) {
+                    fileList.classList.remove('show');
+                    fileList.innerHTML = '';
+                    generateFileList();
+                    return;
+                }
+                fileList.classList.add('show');
+                const filtered = files.filter(f => f.name.toLowerCase().includes(keyword))
+                    .sort((a, b) => {
+                        const numA = (a.name.match(/\d+/) || [])[0];
+                        const numB = (b.name.match(/\d+/) || [])[0];
+                        if (numA && numB) return numA - numB;
+                        return a.name.localeCompare(b.name);
+                    });
+                fileList.innerHTML = filtered.map(file => {
+                    const ext = file.name.split('.').pop().toLowerCase();
+                    let path = '#';
+                    if (ext === 'mp3' || ext === 'm4a') path = `mp3.html?file=${encodeURIComponent(`NewFile/${file.name}`)}`;
+                    else if (ext === 'docx') path = `docx.html?file=${encodeURIComponent(`NewFile/${file.name}`)}`;
+                    else if (ext === 'pdf') path = `pdf.html?file=${encodeURIComponent(`NewFile/${file.name}`)}`;
+                    return `
+                        <a href="${path}" class="file-item" target="_blank">
+                            ${getFileIcon(file.type)}
+                            <div class="file-info">
+                                <div class="file-name">${file.name}</div>
+                                <div class="file-details">${file.type.toUpperCase()} • ${file.size}</div>
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitButton');
+            const successMsg = document.getElementById('successMessage');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('zxcv01').value;
+                const name = document.getElementById('asdf02').value;
+                const question = document.getElementById('qwert3').value;
+
+                if (!email || !name || !question) {
+                    alert('请填写所有必填字段！');
+                    return;
+                }
+
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>发送中...';
+                submitBtn.disabled = true;
+
+                try {
+                    const res = await fetch('https://formspree.io/f/xldgnjgy', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, name, question })
+                    });
+
+                    if (res.ok) {
+                        form.reset();
+                        successMsg.style.display = 'block';
+                        setTimeout(() => successMsg.style.display = 'none', 5000);
+                    } else {
+                        throw new Error('提交失败');
+                    }
+                } catch (err) {
+                    alert('提交失败，请重试！');
+                } finally {
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 8px;"></i>提交';
+                    submitBtn.disabled = false;
+                }
+            });
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar-left').classList.toggle('active');
+            document.querySelector('.sidebar-right').classList.toggle('active');
+        }
+
+        function toggleLanguage() {
+            const langOptions = document.getElementById('languageOptions');
+            langOptions.classList.toggle('show');
+        }
+    </script>
+    <script src="js/daybible.js"></script>
+</body>
+</html>

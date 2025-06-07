@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>电子圣经团契手机端</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0066cc;
+      --secondary-color: #99ccff;
+      --text-color: #1a202c;
+      --bg-gradient: linear-gradient(135deg, #f5f7fa, #e0e7ff);
+      --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      --blur-bg: rgba(255, 255, 255, 0.98);
+      --blur-bg-secondary: rgba(255, 255, 255, 0.9);
+      --border-radius: 10px;
+      --transition: all 0.2s ease;
+    }
+
+    .dark-mode {
+      --bg-gradient: linear-gradient(135deg, #2d3748, #4a5568);
+      --blur-bg: rgba(45, 55, 72, 0.98);
+      --blur-bg-secondary: rgba(45, 55, 72, 0.9);
+      --text-color: #e2e8f0;
+      --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-color);
+    }
+
+    .blur-bg {
+      background: var(--blur-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: var(--card-shadow);
+      border-radius: var(--border-radius);
+    }
+
+    .blur-bg-secondary {
+      background: var(--blur-bg-secondary);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: var(--card-shadow);
+      border-radius: var(--border-radius);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      background: var(--blur-bg);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius);
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+
+    .electronic {
+      color: var(--primary-color);
+    }
+
+    .search-btn, .theme-toggle {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-color);
+      cursor: pointer;
+      padding: 10px;
+      transition: var(--transition);
+    }
+
+    .search-btn:hover, .theme-toggle:hover {
+      color: var(--primary-color);
+    }
+
+    main {
+      flex: 1;
+      padding: 16px;
+    }
+
+    section {
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 12px;
+    }
+
+    .music-carousel {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      border-radius: var(--border-radius);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .music-card {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      height: 100%;
+      transition: left 0.5s ease-in-out;
+      cursor: pointer;
+    }
+
+    .music-card.active {
+      left: 0;
+    }
+
+    .music-thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--border-radius);
+    }
+
+    .music-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--border-radius);
+    }
+
+    .play-btn {
+      font-size: 48px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      padding: 16px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .play-btn:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .play-btn.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .pause-btn {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      font-size: 24px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 50%;
+      padding: 8px;
+      cursor: pointer;
+      display: none;
+      transition: var(--transition);
+    }
+
+    .music-card.playing .pause-btn {
+      display: block;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--secondary-color);
+      background: transparent;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dot.active {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .recommend-section {
+      margin-bottom: 16px;
+      padding: 12px;
+      background: var(--blur-bg-secondary);
+      border-radius: var(--border-radius);
+    }
+
+    .recommend-section h2 {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-color);
+      margin-bottom: 10px;
+    }
+
+    .recommend-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 220px;
+      padding: 10px 14px;
+      margin: 6px auto;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--primary-color);
+      background: var(--blur-bg);
+      border: 1px solid var(--secondary-color);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .recommend-button i {
+      font-size: 16px;
+    }
+
+    .recommend-button .icon-container {
+      position: relative;
+    }
+
+    .recommend-button .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 10px;
+      height: 10px;
+      background: #ff0000;
+      border-radius: 50%;
+      border: 1px solid var(--blur-bg);
+    }
+
+    .recommend-button:hover {
+      background: var(--secondary-color);
+      color: #fff;
+      border-color: var(--secondary-color);
+      transform: scale(1.02);
+    }
+
+    .tracts-section {
+      margin-bottom: 24px;
+    }
+
+    .tracts-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      gap: 16px;
+      padding: 16px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      background: var(--blur-bg);
+    }
+
+    .tracts-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .tracts-container::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 4px;
+    }
+
+    .tracts-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .tract-card {
+      flex: 0 0 140px;
+      height: 200px;
+      position: relative;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      scroll-snap-align: start;
+      transition: var(--transition);
+    }
+
+    .tract-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .tract-cover, .tract-overlay {
+      backface-visibility: hidden;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--border-radius);
+    }
+
+    .tract-cover {
+      object-fit: cover;
+      box-shadow: var(--card-shadow);
+    }
+
+    .tract-overlay {
+      transform: rotateY(180deg);
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .audio-section {
+      margin-bottom: 24px;
+    }
+
+    .audio-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      background: var(--blur-bg);
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .audio-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .audio-container::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 4px;
+    }
+
+    .audio-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .audio-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px;
+      background: var(--blur-bg);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    .audio-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .audio-card h4 {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-color);
+      text-align: center;
+    }
+
+    .bible-timeline {
+      max-width: 840px;
+      margin: 24px auto;
+      padding: 20px;
+      background: var(--blur-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+    }
+
+    .bible-timeline h1 {
+      color: #fff;
+      background: var(--primary-color);
+      text-align: center;
+      padding: 14px;
+      margin-bottom: 14px;
+      font-size: 22px;
+      border-radius: var(--border-radius);
+    }
+
+    .timeline-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 280px;
+      padding: 14px 20px;
+      margin: 12px auto;
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary-color);
+      border: 2px solid var(--secondary-color);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .timeline-button i {
+      font-size: 16px;
+    }
+
+    .timeline-button:hover {
+      background: #005bb5;
+      border-color: #80bfff;
+      transform: scale(1.02);
+    }
+
+    .timeline-container {
+      padding: 16px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      background: var(--blur-bg);
+    }
+
+    .timeline-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-start;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      padding: 10px;
+      scroll-behavior: smooth;
+    }
+
+    .timeline-buttons::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .timeline-buttons::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 3px;
+    }
+
+    .timeline-btn {
+      flex: 0 0 auto;
+      padding: 10px 18px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--primary-color);
+      background: var(--blur-bg);
+      border: 2px solid var(--primary-color);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .timeline-btn:hover {
+      background: var(--primary-color);
+      color: #fff;
+      border-color: var(--primary-color);
+    }
+
+    .timeline-btn.active {
+      background: var(--primary-color);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .timeline-video-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #000;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+    }
+
+    .timeline-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+
+    .timeline-video.active {
+      display: block;
+    }
+
+    .about-section {
+      margin-bottom: 16px;
+      padding: 12px;
+      background: var(--blur-bg-secondary);
+      border-radius: var(--border-radius);
+    }
+
+    .about-container {
+      padding: 12px;
+      border-radius: var(--border-radius);
+      background: var(--blur-bg-secondary);
+      text-align: center;
+    }
+
+    .about-container p {
+      font-size: 15px;
+      color: var(--text-color);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .about-container blockquote {
+      font-style: italic;
+      color: var(--primary-color);
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    nav {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      padding: 12px 0;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      background: var(--blur-bg);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 12px;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+
+    .nav-item:not(.active) i {
+      color: var(--secondary-color);
+    }
+
+    .nav-item:hover {
+      color: var(--primary-color);
+    }
+
+    .nav-item i {
+      font-size: 24px;
+    }
+
+    .nav-item .icon-container {
+      position: relative;
+    }
+
+    .nav-item .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 10px;
+      height: 10px;
+      background: #ff0000;
+      border-radius: 50%;
+      border: 1px solid var(--blur-bg);
+    }
+
+    .bible-daily {
+      background: var(--blur-bg);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin: 24px 0;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      color: var(--text-color);
+    }
+
+    .bible-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+    }
+
+    .fa-bible {
+      color: var(--primary-color);
+      font-size: 28px;
+    }
+
+    .bible-header h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .date-badge {
+      margin-left: auto;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: var(--text-color);
+    }
+
+    .scripture-text {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .scripture-reference {
+      text-align: right;
+      color: var(--secondary-color);
+      font-size: 16px;
+      font-style: italic;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        font-size: 15px;
+      }
+      header {
+        padding: 12px;
+      }
+      .logo {
+        width: 44px;
+        height: 44px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      h2 {
+        font-size: 18px;
+      }
+      .music-carousel {
+        height: 180px;
+      }
+      .music-card {
+        height: 180px;
+      }
+      .tract-card {
+        flex: 0 0 120px;
+        height: 180px;
+      }
+      .bible-daily {
+        margin: 20px 0;
+        padding: 16px;
+      }
+      .scripture-text {
+        font-size: 16px;
+      }
+      .audio-card h4 {
+        font-size: 15px;
+      }
+      .about-container p, .about-container blockquote {
+        font-size: 14px;
+      }
+      .timeline-btn {
+        font-size: 15px;
+        padding: 8px 16px;
+      }
+      .recommend-button {
+        max-width: 200px;
+        padding: 8px 12px;
+        font-size: 14px;
+        margin: 5px auto;
+      }
+      .recommend-button i {
+        font-size: 14px;
+      }
+      .recommend-button .badge, .nav-item .badge {
+        width: 8px;
+        height: 8px;
+        top: -3px;
+        right: -3px;
+      }
+      .timeline-button {
+        max-width: 260px;
+        padding: 12px 18px;
+        font-size: 16px;
+      }
+      .timeline-button i {
+        font-size: 14px;
+      }
+    }
+
+    .dark-mode .recommend-button, .dark-mode .timeline-button {
+      background: var(--blur-bg);
+      border-color: #a0aec0;
+      color: #e2e8f0;
+    }
+
+    .dark-mode .recommend-button:hover, .dark-mode .timeline-button:hover {
+      background: #2b6cb0;
+      border-color: #cbd5e0;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <header class="blur-bg">
+    <div class="logo-container">
+      <img src="logo/ebfside.png" alt="Logo" class="logo" loading="lazy" onerror="this.style.display='none'">
+      <h1><span class="electronic">电子</span>圣经团契</h1>
+    </div>
+    <div>
+      <button class="search-btn" aria-label="搜索"><i class="fas fa-search"></i></button>
+      <button class="theme-toggle" aria-label="切换主题"><i class="fas fa-moon"></i></button>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>推荐音乐</h2>
+      <div class="music-carousel">
+        <div class="music-card active" data-audio="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/Listener%20Songs/Feed%20My%20Sheep.mp3">
+          <img src="picture/feed.png" alt="封面" class="music-thumbnail" loading="lazy" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='">
+          <div class="music-overlay">
+            <i class="fas fa-play play-btn"></i>
+          </div>
+          <button class="pause-btn"><i class="fas fa-pause"></i></button>
+        </div>
+        <div class="music-card" data-audio="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/Listener%20Songs/Be%20thou%20my%20vision.mp3">
+          <img src="picture/bethou.png" alt="封面" class="music-thumbnail" loading="lazy" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='">
+          <div class="music-overlay">
+            <i class="fas fa-play play-btn"></i>
+          </div>
+          <button class="pause-btn"><i class="fas fa-pause"></i></button>
+        </div>
+        <div class="music-card" data-audio="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/Listener%20Songs/A%20shelter%20in%20the%20storm.mp3">
+          <img src="picture/ashelter.png" alt="封面" class="music-thumbnail" loading="lazy" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='">
+          <div class="music-overlay">
+            <i class="fas fa-play play-btn"></i>
+          </div>
+          <button class="pause-btn"><i class="fas fa-pause"></i></button>
+        </div>
+        <div class="carousel-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="recommend-section blur-bg-secondary">
+      <h2>推荐内容</h2>
+      <button class="recommend-button" aria-label="圣经阅读">
+        <span class="icon-container"><i class="fas fa-book"></i></span> 圣经阅读
+      </button>
+      <button class="recommend-button" aria-label="圣经查考">
+        <span class="icon-container"><i class="fas fa-search"></i></span> 圣经查考
+      </button>
+      <button class="recommend-button" aria-label="歌曲视频">
+        <span class="icon-container"><i class="fas fa-music"></i></span> 歌曲视频
+      </button>
+    
+    </section>
+
+    <div class="bible-daily">
+      <div class="bible-header">
+        <i class="fas fa-bible"></i>
+        <h2>每日经文</h2>
+        <span class="date-badge"></span>
+      </div>
+      <div class="bible-content">
+        <p class="scripture-text">耶和华是我的牧者，我必不致缺乏。</p>
+        <p class="scripture-reference">诗篇 23:1</p>
+      </div>
+    </div>
+
+    <section class="tracts-section">
+      <h2>圣经传单阅读</h2>
+      <div class="tracts-container blur-bg">
+        <div class="tract-card" aria-label="再也没有救恩了">
+          <img src="picture/nomore.png" alt="传单1" class="tract-cover" loading="lazy" onclick="handlePreview('studybible/NoMoreSalvation_cn.docx')">
+          <div class="tract-overlay">再也没有救恩了</div>
+        </div>
+        <div class="tract-card" aria-label="属灵的审判开始于2011年5月21日">
+          <img src="picture/juge.png" alt="传单2" class="tract-cover" loading="lazy" onclick="handlePreview('studybible/Spiritual_Judgment_cn2.doc')">
+          <div class="tract-overlay">属灵的审判开始于2011年5月21日</div>
+        </div>
+        <div class="tract-card" aria-label="为什么世界如此自相分裂">
+          <img src="picture/why.png" alt="传单3" class="tract-cover" loading="lazy" onclick="handlePreview('studybible/2019_05_26_ebible_world_divided_tract_cn.docx')">
+          <div class="tract-overlay">为什么世界如此自相分裂</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tracts-section">
+      <h2>圣经查考</h2>
+      <div class="tracts-container blur-bg">
+        <div class="tract-card" aria-label="创世纪24章">
+          <img src="picture/mobile24.png" alt="传单1" class="tract-cover" loading="lazy" onclick="handlePreview('studybible/Genesis24.docx')">
+          <div class="tract-overlay">创世纪24章</div>
+        </div>
+        <div class="tract-card" aria-label="创世纪25章">
+          <img src="picture/mobile25.png" alt="传单2" class="tract-cover" loading="lazy" onclick="handlePreview('studybible/Genesis25.doc')">
+          <div class="tract-overlay">创世纪25章</div>
+        </div>
+        <div class="tract-card" aria-label="创世纪26章">
+          <img src="picture/mobile26.png" alt="传单3" class="tract-cover" loading="lazy" onclick="handlePreview('studybible/Genesis26.docx')">
+          <div class="tract-overlay">创世纪26章</div>
+        </div>
+        <div class="tract-card" aria-label="但以理书1章 音频" onclick="document.querySelector('.audio-section').scrollIntoView({behavior: 'smooth'})">
+          <img src="picture/daniel1.png" alt="但以理书1章" class="tract-cover" loading="lazy">
+          <div class="tract-overlay">但以理书1章 音频</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="audio-section">
+      <h2>但以理书1章 音频</h2>
+      <div class="audio-container blur-bg">
+        <div class="audio-card">
+          <h4>但以理书 第一讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A01%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <h4>但以理书 第二讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A02%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <h4>但以理书 第三讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A03%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <h4>但以理书 第四讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A04%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <h4>但以理书 第五讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A05%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <h4>但以理书 第六讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A06%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <h4>但以理书 第七讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A07%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <h4>但以理书 第八讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A08%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <h4>但以理书 第九讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A09%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <h4>但以理书 第十讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A010%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <h4>但以理书 第十一讲</h4>
+          <audio controls>
+            <source src="https://pub-a0a268c371304a3ebfc9bccb8e3a3152.r2.dev/video/Daniel/Chapter%201/%E4%BD%86%E4%BB%A5%E7%90%86%E4%B9%A61%E7%AB%A011%E8%AE%B2.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+    </section>
+
+    <section class="bible-timeline">
+      <h1>圣经历史年代表</h1>
+      <p>看看圣经中发现的圣经历史时间表，从创世之日到时间的终结，由已故的哈罗德·康平（Harold Camping）发现，正如上帝允许他的那样，在末世时解封了他的话语。这个交互式图表将显示关键的圣经事件，例如创建日期、洪水发生的时间、出埃及、所罗门圣殿地基的奠基等。</p>
+      <p>您将单击编号框以揭开这些日期背后的真相，所有这些都是通过对圣经的仔细研究发现的。你会看到圣经的作者，全能的上帝是多么精确和详细。</p>
+      <button class="timeline-button" onclick="window.location.href='timeline.html'">
+        <i class="fas fa-clock"></i> 探索完整时间线
+      </button>
+    </section>
+
+    <section class="timeline-section">
+      <h2>圣经历史年代表</h2>
+      <div class="timeline-container blur-bg">
+        <div class="timeline-buttons">
+          <button class="timeline-btn active" data-video-index="0">第1集：巴比伦倾倒</button>
+          <button class="timeline-btn" data-video-index="1">第2集：公元前4900年</button>
+          <button class="timeline-btn" data-video-index="2">第3集：圣经时间表</button>
+        </div>
+        <div class="timeline-video-container">
+          <video class="timeline-video active" controls>
+            <source src="https://pub-b9b10ffed3144f8aba9aa3150f527448.r2.dev/videos/Babylong_is_fallon.mp4" type="video/mp4">
+            Your browser does not support the video element.
+          </video>
+          <video class="timeline-video" controls>
+            <source src="https://pub-b9b10ffed3144f8aba9aa3150f527448.r2.dev/videos/4900B.C.mp4" type="video/mp4">
+            Your browser does not support the video element.
+          </video>
+          <video class="timeline-video" controls>
+            <source src="https://pub-b9b10ffed3144f8aba9aa3150f527448.r2.dev/videos/Biblecaltimeline.mp4" type="video/mp4">
+            Your browser does not support the video element.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section blur-bg-secondary">
+      <h2>关于我们</h2>
+      <div class="about-container">
+        <p>「电子圣经团契」这个名字承载着我们的核心信念：</p>
+        <p><strong>电子</strong>：我们相信主通过电子媒介（如广播、互联网等）在极大的程度上拯救了许多来自教会和世界其他团体之外的人。如今我们的任务是“喂养祂的羊”，以便所有神所拯救的人都能通过福音得以建造。</p>
+        <p><strong>圣经</strong>：圣经是我们的唯一权威。任何人类所制定的信条、教义或声明都无法凌驾于圣经之上。我们正处在一个时代，在这个时代中，圣经被神极大地尊崇，神的话语是至高无上的。</p>
+        <p><strong>团契</strong>：我们是一群信徒的团契，渴望通过神的话语与神建立团契。圣经教导我们，教会时代已经结束，因此我们与任何教会或教派没有任何隶属或认同。</p>
+        <p>感谢您的访问。</p>
+        <blockquote>“我们所看见、所听见的，宣告给你们，使你们也与我们有团契，我们乃是与父、并与祂儿子耶稣基督有团契。”<br>— 约翰一书 1:3</blockquote>
+      </div>
+    </section>
+  </main>
+
+  <nav class="blur-bg">
+    <a href="#" class="nav-item active">
+      <span class="icon-container"><i class="fas fa-home"></i></span>
+      <span>首页</span>
+    </a>
+    <a href="mobile/file.html" class="nav-item">
+      <span class="icon-container"><i class="far fa-file-alt"></i></span>
+      <span>文件</span>
+    </a>
+    <a href="mobile/item.html" class="nav-item">
+      <span class="icon-container"><i class="far fa-compass"></i></span>
+      <span>发现</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="icon-container"><i class="far fa-comments"></i></span>
+      <span>开放论坛</span>
+    </a>
+    <a href="mobile/live.html" class="nav-item">
+      <span class="icon-container"><i class="fas fa-video"></i><span class="badge"></span></span>
+      <span>直播室</span>
+    </a>
+  </nav>
+
+  <script>
+    // 文件预览函数
+    function handlePreview(file) {
+      window.location.href = `word.html?file=${file}`;
+    }
+
+    // 设备检测，重定向非移动设备
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    if (!isMobileDevice()) {
+      window.location.href = 'index.html';
+    }
+
+    // 搜索按钮点击事件
+    document.querySelector('.search-btn').addEventListener('click', () => {
+      alert('搜索功能暂未实现');
+    });
+
+    // 暗模式切换
+    document.querySelector('.theme-toggle').addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      document.querySelector('.theme-toggle i').classList.toggle('fa-moon', !isDark);
+      document.querySelector('.theme-toggle i').classList.toggle('fa-sun', isDark);
+    });
+
+    // 推荐内容和时间线按钮交互
+    document.querySelectorAll('.recommend-button:not([onclick])').forEach(button => {
+      button.addEventListener('click', () => {
+        const label = button.getAttribute('aria-label');
+        alert(`${label} 功能暂未实现`);
+      });
+    });
+
+    // 音乐轮播逻辑
+    const cards = document.querySelectorAll('.music-card');
+    const dots = document.querySelectorAll('.dot');
+    const carousel = document.querySelector('.music-carousel');
+    let currentIndex = 0;
+    let currentAudio = null;
+    let currentVideoIndex = 0;
+    let carouselInterval = setInterval(showNextCard, 5000);
+    let startX, endX;
+
+    function updateCarousel() {
+      cards.forEach((card, index) => {
+        card.classList.toggle('active', index === currentIndex);
+      });
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function showNextCard() {
+      currentIndex = (currentIndex + 1) % cards.length;
+      updateCarousel();
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentIndex = index;
+        updateCarousel();
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(showNextCard, 5000);
+      });
+    });
+
+    carousel.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    });
+
+    carousel.addEventListener('touchend', e => {
+      endX = e.changedTouches[0].clientX;
+      if (startX - endX > 50) {
+        currentIndex = (currentIndex + 1) % cards.length;
+        updateCarousel();
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(showNextCard, 5000);
+      } else if (endX - startX > 50) {
+        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        updateCarousel();
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(showNextCard, 5000);
+      }
+    });
+
+    cards.forEach(card => {
+      const audio = new Audio(card.dataset.audio);
+      const playBtn = card.querySelector('.play-btn');
+      const pauseBtn = card.querySelector('.pause-btn');
+
+      card.addEventListener('click', () => {
+        if (currentAudio && currentAudio !== audio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          cards.forEach(c => {
+            c.classList.remove('playing');
+            c.querySelector('.play-btn').classList.remove('hidden');
+            c.querySelector('.pause-btn').style.display = 'none';
+          });
+        }
+
+        if (audio.paused) {
+          audio.play();
+          card.classList.add('playing');
+          playBtn.classList.add('hidden');
+          pauseBtn.style.display = 'block';
+          currentAudio = audio;
+          clearInterval(carouselInterval);
+        } else {
+          audio.pause();
+          card.classList.remove('playing');
+          playBtn.classList.remove('hidden');
+          pauseBtn.style.display = 'none';
+          currentAudio = null;
+          carouselInterval = setInterval(showNextCard, 5000);
+        }
+      });
+
+      pauseBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        audio.pause();
+        card.classList.remove('playing');
+        playBtn.classList.remove('hidden');
+        pauseBtn.style.display = 'none';
+        currentAudio = null;
+        carouselInterval = setInterval(showNextCard, 5000);
+      });
+    });
+
+    // 音频播放控制
+    const audioPlayers = document.querySelectorAll('audio');
+    audioPlayers.forEach(player => {
+      player.addEventListener('play', () => {
+        audioPlayers.forEach(otherPlayer => {
+          if (otherPlayer !== player) {
+            otherPlayer.pause();
+            otherPlayer.currentTime = 0;
+          }
+        });
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          cards.forEach(c => {
+            c.classList.remove('playing');
+            c.querySelector('.play-btn').classList.remove('hidden');
+            c.querySelector('.pause-btn').style.display = 'none';
+          });
+          currentAudio = null;
+          carouselInterval = setInterval(showNextCard, 5000);
+        }
+        document.querySelectorAll('.timeline-video').forEach(video => {
+          video.pause();
+          video.currentTime = 0;
+          video.classList.remove('active');
+        });
+        currentVideoIndex = -1;
+      });
+    });
+
+    // 视频播放控制
+    const timelineButtons = document.querySelectorAll('.timeline-btn:not(:disabled)');
+    const timelineVideos = document.querySelectorAll('.timeline-video');
+
+    timelineButtons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        if (index === currentVideoIndex) return;
+
+        document.querySelector('.timeline-btn.active')?.classList.remove('active');
+        button.classList.add('active');
+
+        timelineVideos[currentVideoIndex]?.classList.remove('active');
+        timelineVideos[currentVideoIndex]?.pause();
+
+        currentVideoIndex = index;
+        timelineVideos[currentVideoIndex].classList.add('active');
+        timelineVideos[currentVideoIndex].play();
+
+        pauseAllMedia();
+      });
+    });
+
+    function pauseAllMedia() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        cards.forEach(c => {
+          c.classList.remove('playing');
+          c.querySelector('.play-btn').classList.remove('hidden');
+          c.querySelector('.pause-btn').style.display = 'none';
+        });
+        currentAudio = null;
+        carouselInterval = setInterval(showNextCard, 5000);
+      }
+
+      audioPlayers.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+
+      timelineVideos.forEach((video, index) => {
+        if (index !== currentVideoIndex) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+    }
+
+    timelineVideos.forEach(video => {
+      video.addEventListener('play', () => {
+        timelineVideos.forEach(other => {
+          if (other !== video) {
+            other.pause();
+            other.currentTime = 0;
+            other.classList.remove('active');
+          }
+        });
+        audioPlayers.forEach(audio => {
+          audio.pause();
+          audio.currentTime = 0;
+        });
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          cards.forEach(c => {
+            c.classList.remove('playing');
+            c.querySelector('.play-btn').classList.remove('hidden');
+            c.querySelector('.pause-btn').style.display = 'none';
+          });
+          currentAudio = null;
+          carouselInterval = setInterval(showNextCard, 5000);
+        }
+        currentVideoIndex = Array.from(timelineVideos).indexOf(video);
+        timelineButtons.forEach((btn, idx) => {
+          btn.classList.toggle('active', idx === currentVideoIndex);
+        });
+      });
+
+      video.addEventListener('error', () => {
+        console.error('视频加载失败:', video.src);
+        alert('视频加载失败，请检查网络连接');
+      });
+    });
+
+    // 每日经文动态更新
+    document.addEventListener('DOMContentLoaded', function() {
+      const startDate = new Date('2024-01-01');
+      const today = new Date();
+      const diffDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+
+      const verses = [
+        { text: "耶和华是我的牧者，我必不致缺乏。", ref: "诗篇 23:1" },
+        { text: "你们要尝尝主恩的滋味，便知道他是美善。", ref: "诗篇 34:8" },
+        { text: "我的心哪，你要称颂耶和华，不可忘记祂的一切恩惠。", ref: "诗篇 103:2" }
+      ];
+
+      const dailyIndex = diffDays % verses.length;
+      const container = document.querySelector('.bible-daily');
+
+      container.querySelector('.scripture-text').textContent = verses[dailyIndex].text;
+      container.querySelector('.scripture-reference').textContent = verses[dailyIndex].ref;
+
+      const formatDate = (date) => {
+        return `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`;
+      };
+      container.querySelector('.date-badge').textContent = formatDate(today);
+    });
+  </script>
+</body>
+</html>

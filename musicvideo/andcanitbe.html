@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电子圣经团契</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* 顶栏 */
+        .navbar {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .back-btn {
+            font-size: 16px;
+            color: #007bff;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 123, 255, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .main-title {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-text .electronic {
+            color: #007bff;
+        }
+
+        /* 视频容器 */
+        .video-container {
+            margin-top: 100px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .video-title {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        video {
+            width: 100%;
+            max-width: 75vw; /* 电脑占3/4横屏 */
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: #000;
+        }
+
+        /* 手机适配 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px;
+            }
+
+            .main-title {
+                font-size: 16px;
+            }
+
+            .logo-text {
+                font-size: 20px;
+            }
+
+            .logo img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .video-container {
+                margin-top: 80px;
+                padding: 10px;
+            }
+
+            video {
+                max-width: 100vw; /* 手机占满屏幕 */
+                border-radius: 10px;
+            }
+
+            .video-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶栏 -->
+    <div class="navbar">
+        <a href="javascript:history.back()" class="back-btn">返回</a>
+        <div class="logo-container">
+            <div class="main-title">圣经音乐视频</div>
+            <div class="logo">
+                <img src="ebfside.png" alt="电子圣经团契 Logo">
+                <span class="logo-text"><span class="electronic">电子</span>圣经团契</span>
+            </div>
+        </div>
+        <div style="width: 60px;"></div> <!-- 占位保持对称 -->
+    </div>
+
+    <!-- 视频内容 -->
+    <div class="video-container">
+        <h1 class="video-title">And Can It Be</h1>
+        <video controls>
+            <source src="https://pub-b9b10ffed3144f8aba9aa3150f527448.r2.dev/videos/And_can_it_be.mp4" type="video/mp4">
+            您的浏览器不支持视频播放。
+        </video>
+    </div>
+
+    <script>
+        // 动态调整视频尺寸
+        window.addEventListener('resize', () => {
+            const video = document.querySelector('video');
+            if (window.innerWidth <= 768) {
+                video.style.maxWidth = '100vw';
+            } else {
+                video.style.maxWidth = '75vw';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频播放器 - 电子圣经团契</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff0000;
+            --secondary: #606060;
+            --background: #f9f9f9;
+            --card-bg: #ffffff;
+            --text: #030303;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --progress: #ff0000;
+            --progress-bg: #ccc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 2px var(--shadow);
+            z-index: 1000;
+        }
+
+        .top-bar .back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--secondary);
+            cursor: pointer;
+        }
+
+        .top-bar .branding {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .top-bar .right-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .top-bar .action-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--secondary);
+            cursor: pointer;
+        }
+
+        .main-container {
+            display: flex;
+            max-width: 1280px;
+            margin: 80px auto 0;
+            padding: 24px;
+            gap: 24px;
+        }
+
+        .player-container {
+            flex: 1;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background: #000;
+        }
+
+        .video-element {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .controls-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .player-container:hover .controls-container {
+            opacity: 1;
+        }
+
+        .progress-container {
+            background: var(--progress-bg);
+            height: 4px;
+            width: 100%;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress {
+            background: var(--progress);
+            height: 100%;
+            width: 0;
+            transition: width 0.1s linear;
+        }
+
+        .time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .control-btn:hover {
+            color: var(--progress);
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-bar {
+            background: var(--progress-bg);
+            height: 4px;
+            width: 80px;
+            position: relative;
+            cursor: pointer;
+            display: none;
+        }
+
+        .volume-container:hover .volume-bar {
+            display: block;
+        }
+
+        .volume-progress {
+            background: #fff;
+            height: 100%;
+            width: 100%;
+        }
+
+        .speed-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .video-info {
+            padding: 16px 0;
+        }
+
+        .video-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .channel-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+
+        .channel-details {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .channel-avatar {
+            width: 48px;
+            height: 48px;
+            background: #ccc;
+            border-radius: 50%;
+        }
+
+        .channel-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .subscribers {
+            font-size: 12px;
+            color: var(--secondary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .subscribe-btn {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .related-videos {
+            width: 400px;
+        }
+
+        .related-video {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .related-thumbnail {
+            width: 168px;
+            height: 94px;
+            background: #eee;
+            border-radius: 8px;
+        }
+
+        .related-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .related-meta {
+            font-size: 12px;
+            color: var(--secondary);
+        }
+
+        .player-container:fullscreen {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .player-container:fullscreen .video-wrapper {
+            padding-top: 0;
+            height: 100%;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+                padding: 16px;
+            }
+            .related-videos {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button class="back-btn" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="branding">电子圣经团契</div>
+        <div class="right-actions">
+            <button class="action-btn"><i class="fas fa-search"></i></button>
+            <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="player-container">
+            <div class="video-wrapper">
+                <video class="video-element" id="videoPlayer">
+                    <source id="videoSource" src="" type="video/mp4">
+                    您的浏览器不支持视频播放。
+                </video>
+            </div>
+            <div class="controls-container">
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <div class="time">
+                    <span id="currentTime">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+                <div class="controls">
+                    <div class="left-controls" style="display: flex; gap: 12px;">
+                        <button class="control-btn" id="rewindBtn" title="后退10秒">
+                        </button>
+                        <button class="control-btn" id="playPauseBtn" title="播放/暂停">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" id="forwardBtn" title="快进10秒">
+                
+                        </button>
+                        <div class="volume-container">
+                            <button class="control-btn" id="volumeIcon"><i class="fas fa-volume-up"></i></button>
+                            <div class="volume-bar" id="volumeBar">
+                                <div class="volume-progress" id="volumeProgress"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-controls" style="display: flex; gap: 12px;">
+                        <button class="speed-btn" id="speedBtn">1x</button>
+                        <button class="control-btn" id="fullscreenBtn" title="全屏">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="related-videos">
+            <div class="related-video">
+                <div class="related-thumbnail"></div>
+                <div>
+                    <div class="related-title">创世记第1章深度解析</div>
+                    <div class="related-meta">电子圣经团契 • 12.5万次观看 • 3天前</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const fileParam = urlParams.get('file');
+        const defaultVideo = 'https://www.w3schools.com/html/mov_bbb.mp4';
+
+        const video = document.getElementById('videoPlayer');
+        const videoSource = document.getElementById('videoSource');
+        const videoNameEl = document.getElementById('videoName');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const rewindBtn = document.getElementById('rewindBtn');
+        const forwardBtn = document.getElementById('forwardBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progress = document.getElementById('progress');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const volumeBar = document.getElementById('volumeBar');
+        const volumeProgress = document.getElementById('volumeProgress');
+        const volumeIcon = document.getElementById('volumeIcon');
+        const speedBtn = document.getElementById('speedBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        let isPlaying = false;
+        let isDragging = false;
+        let playbackSpeed = 1;
+        let videoParts = [];
+        let currentPartIndex = 0;
+        let totalDuration = 0;
+
+        // 判断是否为分段视频并初始化
+        function initializeVideo() {
+            if (fileParam && !fileParam.endsWith('.mp4')) { // 假设非 .mp4 结尾为文件夹
+                // 模拟分段视频列表（实际需根据服务器文件命名规则调整）
+                videoParts = [];
+                let partIndex = 1;
+                while (true) {
+                    const partPath = `/videos/${fileParam}/part${partIndex}.mp4`;
+                    // 这里无法直接检查文件是否存在，需预定义或通过后端支持
+                    videoParts.push(partPath);
+                    if (partIndex >= 10) break; // 假设最多10段，需根据实际调整
+                    partIndex++;
+                }
+                videoNameEl.textContent = fileParam; // 文件夹名作为标题
+            } else {
+                videoParts = [fileParam ? `/videos/${fileParam}` : defaultVideo];
+                videoNameEl.textContent = fileParam || '创世记第1章深度解析';
+            }
+            document.title = `${videoNameEl.textContent} - 电子圣经团契`;
+            loadVideoPart(currentPartIndex);
+        }
+
+        // 加载视频分段
+        function loadVideoPart(index) {
+            if (index >= videoParts.length) return;
+            videoSource.src = videoParts[index];
+            video.load();
+            video.play().catch(err => console.error(`播放失败：${err.message}`));
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+
+        // 计算总时长（假设所有分段加载完成）
+        function updateTotalDuration() {
+            totalDuration = 0;
+            videoParts.forEach((_, i) => {
+                const tempVideo = document.createElement('video');
+                tempVideo.src = videoParts[i];
+                tempVideo.onloadedmetadata = () => {
+                    totalDuration += tempVideo.duration;
+                    if (i === currentPartIndex) {
+                        durationEl.textContent = formatTime(totalDuration);
+                    }
+                };
+            });
+        }
+
+        video.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(video.duration);
+            progress.style.width = '0%';
+            if (videoParts.length > 1) updateTotalDuration();
+        });
+
+        video.addEventListener('timeupdate', () => {
+            if (!isDragging) {
+                const percentage = (video.currentTime / video.duration) * 100;
+                progress.style.width = `${percentage}%`;
+                currentTimeEl.textContent = formatTime(video.currentTime);
+            }
+        });
+
+        video.addEventListener('ended', () => {
+            if (currentPartIndex < videoParts.length - 1) {
+                currentPartIndex++;
+                loadVideoPart(currentPartIndex);
+            } else {
+                isPlaying = false;
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                video.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                video.play().catch(err => console.error(`播放失败：${err.message}`));
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        rewindBtn.addEventListener('click', () => {
+            video.currentTime = Math.max(0, video.currentTime - 10);
+        });
+
+        forwardBtn.addEventListener('click', () => {
+            video.currentTime = Math.min(video.duration, video.currentTime + 10);
+        });
+
+        progressContainer.addEventListener('click', (e) => {
+            const width = progressContainer.clientWidth;
+            const clickX = e.offsetX;
+            const duration = video.duration || 0;
+            const newTime = (clickX / width) * duration;
+            video.currentTime = newTime;
+            const percentage = (newTime / duration) * 100;
+            progress.style.width = `${percentage}%`;
+            currentTimeEl.textContent = formatTime(newTime);
+        });
+
+        progressContainer.addEventListener('mousedown', () => {
+            isDragging = true;
+            video.pause();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const rect = progressContainer.getBoundingClientRect();
+                const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+                const duration = video.duration || 0;
+                const newTime = (clickX / rect.width) * duration;
+                video.currentTime = newTime;
+                const percentage = (newTime / duration) * 100;
+                progress.style.width = `${percentage}%`;
+                currentTimeEl.textContent = formatTime(newTime);
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isDragging && isPlaying) {
+                video.play().catch(err => console.error(`播放失败：${err.message}`));
+            }
+            isDragging = false;
+        });
+
+        volumeBar.addEventListener('click', (e) => {
+            const width = volumeBar.clientWidth;
+            const clickX = e.offsetX;
+            const volume = clickX / width;
+            video.volume = volume;
+            volumeProgress.style.width = `${volume * 100}%`;
+            updateVolumeIcon(volume);
+        });
+
+        volumeIcon.addEventListener('click', () => {
+            if (video.volume > 0) {
+                video.volume = 0;
+                volumeProgress.style.width = '0%';
+                volumeIcon.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else {
+                video.volume = 1;
+                volumeProgress.style.width = '100%';
+                volumeIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        });
+
+        speedBtn.addEventListener('click', () => {
+            playbackSpeed = playbackSpeed === 1 ? 1.5 : playbackSpeed === 1.5 ? 2 : 1;
+            video.playbackRate = playbackSpeed;
+            speedBtn.textContent = `${playbackSpeed}x`;
+        });
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.querySelector('.player-container').requestFullscreen();
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+            } else {
+                document.exitFullscreen();
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+            }
+        });
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        function updateVolumeIcon(volume) {
+            if (volume === 0) {
+                volumeIcon.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else if (volume < 0.5) {
+                volumeIcon.innerHTML = '<i class="fas fa-volume-down"></i>';
+            } else {
+                volumeIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        }
+
+        // 初始化
+        initializeVideo();
+    </script>
+</body>
+</html>

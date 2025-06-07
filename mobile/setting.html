@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件 - 电子圣经团契手机端</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0066cc;
+      --secondary-color: #99ccff;
+      --text-color: #1a202c;
+      --bg-gradient: linear-gradient(135deg, #f5f7fa, #e0e7ff);
+      --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      --blur-bg: rgba(255, 255, 255, 0.98);
+      --blur-bg-secondary: rgba(255, 255, 255, 0.9);
+      --border-radius: 10px;
+      --transition: all 0.2s ease;
+    }
+
+    .dark-mode {
+      --bg-gradient: linear-gradient(135deg, #2d3748, #4a5568);
+      --blur-bg: rgba(45, 55, 72, 0.98);
+      --blur-bg-secondary: rgba(45, 55, 72, 0.9);
+      --text-color: #e2e8f0;
+      --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-color);
+    }
+
+    .blur-bg {
+      background: var(--blur-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: var(--card-shadow);
+      border-radius: var(--border-radius);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      background: var(--blur-bg);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius);
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+
+    .electronic {
+      color: var(--primary-color);
+    }
+
+    .search-btn, .settings-btn, .theme-toggle {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-color);
+      cursor: pointer;
+      padding: 10px;
+      transition: var(--transition);
+    }
+
+    .search-btn:hover, .settings-btn:hover, .theme-toggle:hover {
+      color: var(--primary-color);
+      transform: scale(1.02);
+    }
+
+    main {
+      flex: 1;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .settings-control {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .settings-control label {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    .settings-control input[type="range"] {
+      width: 100%;
+      padding: 5px 0;
+      cursor: pointer;
+    }
+
+    .settings-button, .back-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 280px;
+      padding: 14px 20px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary-color);
+      border: 2px solid var(--secondary-color);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .settings-button i, .back-button i {
+      font-size: 18px;
+    }
+
+    .settings-button:hover, .back-button:hover {
+      background: #005bb5;
+      border-color: #80bfff;
+      transform: scale(1.02);
+    }
+
+    .settings-button:focus, .back-button:focus {
+      outline: 3px solid var(--secondary-color);
+      outline-offset: 2px;
+    }
+
+    nav {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      padding: 12px 0;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      background: var(--blur-bg);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 12px;
+      transition: var(--transition);
+    }
+
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+
+    .nav-item:not(.active) i {
+      color: var(--secondary-color);
+    }
+
+    .nav-item:hover {
+      color: var(--primary-color);
+      transform: scale(1.02);
+    }
+
+    .nav-item i {
+      font-size: 24px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        font-size: 15px;
+      }
+      header {
+        padding: 12px;
+      }
+      .logo {
+        width: 44px;
+        height: 44px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .search-btn, .settings-btn, .theme-toggle {
+        font-size: 22px;
+        padding: 8px;
+      }
+      .settings-control label {
+        font-size: 15px;
+      }
+      .settings-button, .back-button {
+        max-width: 260px;
+        padding: 12px 18px;
+        font-size: 16px;
+      }
+      .settings-button i, .back-button i {
+        font-size: 16px;
+      }
+      .nav-item {
+        font-size: 13px;
+        padding: 10px;
+      }
+      .nav-item i {
+        font-size: 22px;
+      }
+    }
+
+    .dark-mode .settings-button, .dark-mode .back-button {
+      background: #2b6cb0;
+      border-color: #a0aec0;
+      color: #e2e8f0;
+    }
+
+    .dark-mode .settings-button:hover, .dark-mode .back-button:hover {
+      background: #1a4971;
+      border-color: #cbd5e0;
+    }
+
+    .dark-mode .search-btn, .dark-mode .settings-btn, .dark-mode .theme-toggle {
+      color: #e2e8f0;
+    }
+
+    .dark-mode .search-btn:hover, .dark-mode .settings-btn:hover, .dark-mode .theme-toggle:hover {
+      color: #80bfff;
+    }
+
+    .dark-mode .nav-item {
+      color: #e2e8f0;
+    }
+
+    .dark-mode .nav-item.active {
+      color: #80bfff;
+    }
+
+    .dark-mode .nav-item:not(.active) i {
+      color: #a0aec0;
+    }
+
+    .dark-mode .nav-item:hover {
+      color: #80bfff;
+    }
+  </style>
+</head>
+<body>
+  <header class="blur-bg">
+    <div class="logo-container">
+      <img src="logo/ebfside.png" alt="Logo" class="logo" loading="lazy" onerror="this.style.display='none'">
+      <h1><span class="electronic">电子</span>圣经团契</h1>
+    </div>
+    <div>
+      <button class="search-btn" aria-label="搜索"><i class="fas fa-search"></i></button>
+      <button class="theme-toggle" aria-label="切换主题"><i class="fas fa-moon"></i></button>
+    </div>
+  </header>
+
+
+
+  <nav class="blur-bg">
+    <a href="../mobile.html" class="nav-item">
+      <i class="fas fa-home"></i>
+      <span>首页</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="far fa-file-alt"></i>
+      <span>文件</span>
+    </a>
+    <a href="#" class="nav-item active">
+      <i class="fas fa-gear"></i>
+      <span>文件</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="far fa-compass"></i>
+      <span>发现</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="far fa-comments"></i>
+      <span>开放论坛</span>
+    </a>
+  </nav>
+
+  <script>
+    // 设备检测，重定向非移动设备
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    if (!isMobileDevice()) {
+      window.location.href = 'index.html';
+    }
+
+    // cookie 管理
+    function setCookie(name, value, days) {
+      const expires = new Date();
+      expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+      document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+    }
+
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return null;
+    }
+
+    // 应用文件
+    function applySettings() {
+      const fontSize = getCookie('fontSize') || '16';
+      const scale = getCookie('scale') || '1.0';
+      document.body.style.fontSize = `${fontSize}px`;
+      document.body.style.transform = `scale(${scale})`;
+      document.body.style.transformOrigin = 'top left';
+      document.getElementById('fontSize').value = fontSize;
+      document.getElementById('scale').value = scale;
+      document.getElementById('fontSizeValue').textContent = `${fontSize}px`;
+      document.getElementById('scaleValue').textContent = scale;
+    }
+
+    // 保存文件
+    function saveSettings() {
+      const fontSize = document.getElementById('fontSize').value;
+      const scale = document.getElementById('scale').value;
+      setCookie('fontSize', fontSize, 30);
+      setCookie('scale', scale, 30);
+      applySettings();
+      alert('文件已保存');
+    }
+
+    // 实时更新滑块值显示
+    document.getElementById('fontSize').addEventListener('input', () => {
+      document.getElementById('fontSizeValue').textContent = `${document.getElementById('fontSize').value}px`;
+    });
+
+    document.getElementById('scale').addEventListener('input', () => {
+      document.getElementById('scaleValue').textContent = document.getElementById('scale').value;
+    });
+
+    // 页面加载时应用文件
+    document.addEventListener('DOMContentLoaded', applySettings);
+
+    // 搜索按钮点击事件
+    document.querySelector('.search-btn').addEventListener('click', () => {
+      alert('搜索功能暂未实现');
+    });
+
+    // 文件按钮点击事件（头部）
+    document.querySelector('.settings-btn').addEventListener('click', () => {
+      window.location.href = '../mobile.html';
+    });
+
+    // 暗模式切换
+    document.querySelector('.theme-toggle').addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      document.querySelector('.theme-toggle i').classList.toggle('fa-moon', !isDark);
+      document.querySelector('.theme-toggle i').classList.toggle('fa-sun', isDark);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电子圣经团契</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .electronic {
+            color: #1E90FF;
+        }
+
+        nav .nav-link {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav .nav-link:hover {
+            color: #1E90FF;
+        }
+
+        .search input {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search input:focus {
+            border-color: #1E90FF;
+        }
+
+        /* 主内容 */
+        .container {
+            margin-top: 80px;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1E90FF;
+            font-size: 32px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-info h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .video-info p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            margin-top: 40px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav .nav-link {
+                margin: 0 10px;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            .search input {
+                width: 100%;
+            }
+        }
+        a {
+            text-decoration: none;
+            text-decoration-line: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo/ebfside.png" alt="" width="100px">
+            <span class="electronic">电子</span>圣经团契
+        </div>
+        <nav>
+            <a href="#" class="nav-link">首页</a>
+            <a href="#" class="nav-link">视频</a>
+            <a href="#" class="nav-link">关于</a>
+        </nav>
+        <div class="search">
+            <input type="text" placeholder="搜索视频...">
+        </div>
+    </header>
+
+    <!-- 主内容 -->
+    <main class="container">
+        <h1>圣经音乐视频</h1>
+        <div class="video-grid">
+         <a href="musicvideo/andcanitbe.html"><div class="video-card">
+                <img src="picture/andcan.png" alt="视频缩略图">
+                <div class="video-info">
+                    <h3>赞美诗：怎能如此</h3>
+                    <p>时长：4:30 | 上传日期：2025-05-10</p>
+                </div>
+            </div></a>
+              <a href="musicvideo/feed.html"><div class="video-card">
+                <img src="picture/feed.png" alt="视频缩略图">
+                <div class="video-info">
+                    <h3>赞美诗：喂养我的羊</h3>
+                    <p>时长：4:30 | 上传日期：2025-05-10</p>
+                </div>
+            </div></a>
+            </a>
+              <a href="musicvideo/bethou.html"><div class="video-card">
+                <img src="picture/bethou.png" alt="视频缩略图">
+                <div class="video-info">
+                    <h3>赞美诗：成为我异像</h3>
+                    <p>时长：4:30 | 上传日期：2025-05-11</p>
+                </div>
+            </div></a>
+            <a href="musicvideo/Ashelter.html"><div class="video-card">
+                <img src="picture/ashelter.png" alt="视频缩略图">
+                <div class="video-info">
+                    <h3>赞美诗：成为我异像</h3>
+                    <p>时长：4:30 | 上传日期：2025-05-11</p>
+                </div>
+            </div></a>
+            
+            
+      
+    </main>
+
+    <!-- 底部 -->
+    <footer>
+        <p>© 2025 电子圣经团契. 保留所有权利。</p>
+    </footer>
+
+  
+</body>
+</html>
