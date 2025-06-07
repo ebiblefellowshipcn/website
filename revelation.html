@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>启示录 1, 9, 11, 14, 15, 21 | 电子圣经团契</title>
   <link rel="icon" href="logo/ebfside.png">
-  <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- APlayer CSS -->
   <link rel="stylesheet" href="ListenAPlayer.min.css">
   <style>
-    /* ========== 变量定义 ========== */
+    
     :root {
       --primary-color: #4A90E2;
       --secondary-color: #50E3C2;
@@ -22,7 +20,7 @@
       --transition-fast: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* ========== 全局重置 ========== */
+    
     * {
       margin: 0;
       padding: 0;
@@ -38,7 +36,7 @@
       overflow-x: hidden;
     }
 
-    /* ========== 顶部导航 ========== */
+    
     header {
       position: fixed;
       top:  itinerary0;
@@ -131,7 +129,7 @@
       left: 25%;
     }
 
-    /* Hamburger Menu */
+    
     .hamburger {
       display: none;
       font-size: 1.5rem;
@@ -149,7 +147,7 @@
       display: flex;
     }
 
-    /* ========== 欢迎区 ========== */
+    
     .hero {
       text-align: center;
       padding: 100px 32px 60px;
@@ -184,7 +182,7 @@
       opacity: 0.8;
     }
 
-    /* ========== 下拉菜单 ========== */
+    
     .dropdown-container {
       display: flex;
       justify-content: center;
@@ -229,7 +227,7 @@
       pointer-events: none;
     }
 
-    /* ========== 内容区 ========== */
+    
     .content {
       max-width: 1200px;
       margin: 0 auto;
@@ -271,7 +269,7 @@
       box-shadow: 0 4px 12px var(--shadow-color);
     }
 
-    /* ========== 右下角“返回主页” ========== */
+    
     .back-home {
       position: fixed;
       right: 32px;
@@ -298,7 +296,7 @@
       font-size: 1.4rem;
     }
 
-    /* ========== 响应式 ========== */
+    
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 2rem;
@@ -366,7 +364,7 @@
       }
     }
 
-    /* ========== 键帧动画 ========== */
+    
     @keyframes fadeInUp {
       0% { opacity: 0; transform: translateY(30px); }
       100% { opacity: 1; transform: translateY(0); }
@@ -449,7 +447,6 @@
   <div class="back-home">
     <i class="fas fa-home"></i><span>返回主页</span>
   </div>
-  <!-- APlayer JS -->
   <script src="ListenAPlayer.min.js"></script>
   <script>
     // Hamburger Menu Toggle
