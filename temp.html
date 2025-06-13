@@ -1,421 +1,931 @@
 <!DOCTYPE html>
+
+
 <html lang="zh-CN">
+
+
 <head>
+
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>电子圣经团契 - 圣经音乐</title>
-    <link rel="stylesheet" href="https://unpkg.com/aplayer/dist/APlayer.min.css">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>圣经时间线</title>
+
 
     <style>
-        /* 全局样式：纯白背景 */
+
+
         body {
+
+
+            font-family: 'Segoe UI', Arial, sans-serif;
+
+
+            background-color: #f0f2f5;
+
+
             margin: 0;
+
+
             padding: 0;
-            background: #ffffff; /* 纯白背景，备用渐变 #e6f0ff 到 #ffffff */
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Roboto, sans-serif;
-            color: #1c2526;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+
+
             overflow-x: hidden;
+
+
+            color: #2c3e50;
+
+
         }
 
-        /* 头部：垂直布局，无背景 */
-        header {
-            background: none;
-            padding: 40px 60px;
-            margin: 50px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: fadeIn 1.2s ease-in-out;
+
+        .timeline-container {
+
+
             position: relative;
-            z-index: 10;
-        }
 
-        /* Logo容器 */
-        .logo-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-        }
 
-        /* Logo图片 */
-        .logo-container img {
-            width: 200px;
-            height: auto;
-            border-radius: 24px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
-        }
+            max-width: 1200px;
 
-        .logo-container img:hover {
-            transform: scale(1.1) rotate(4deg);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-        }
 
-        /* 电子圣经团契文字 */
-        .logo-text {
-            font-size: 34px;
-            font-weight: 800;
-            width: 200px;
-            margin-left: 30px;
-            line-height: 1.3;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo-text .electronic {
-            color: #007aff;
-        }
-
-        .logo-text .fellowship {
-            color: #1c2526;
-        }
-
-        /* 圣经音乐标题 */
-        header h1 {
-            font-size: 38px;
-            font-weight: 800;
-            color: #1c2526;
-            margin: 0;
-            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-            letter-spacing: 1.5px;
-            animation: slideUp 1s ease-in-out;
-        }
-
-        /* 返回按钮：苹果风格，无模糊 */
-        .back-button {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 16px;
-            padding: 14px 28px;
-            text-decoration: none;
-            color: #007aff;
-            font-weight: 600;
-            font-size: 17px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: background 0.4s ease, transform 0.4s ease;
-            z-index: 20;
-        }
-
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.65);
-            transform: translateY(-3px);
-        }
-
-        /* ------- 音乐盒子样式（正方形、美化、歌词下方） ------- */
-        .players-wrap {
-            --gap: 24px;
-            --player-size: 500px; /* 桌面默认正方形 */
-            display: grid;
-            grid-template-columns: repeat(auto-fit, var(--player-size));
-            gap: var(--gap);
-            padding: 40px; /* 增大容器内边距 */
-            max-width: 1440px;
             margin: 0 auto;
-            justify-content: center;
-        }
 
-        .player {
-            position: relative;
-            width: var(--player-size);
-            border-radius: 40px; /* 增大圆角 */
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin: 36px auto; /* 增大外边距 */
-        }
 
-        .player:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2), 0 6px 16px rgba(0, 0, 0, 0.1);
-        }
+            padding: 20px;
 
-        .player .aplayer {
-            width: 100%;
-            height: 100%;
-            aspect-ratio: 1/1; /* 强制正方形 */
-            padding: 44px; /* 增大内边距 */
-            box-sizing: border-box;
-            background: transparent;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
 
-        .aplayer .aplayer-info {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 12px;
-            padding: 12px;
-            font-size: 22px; /* 增大字体 */
-            font-weight: 600;
-        }
+            height: 100vh;
 
-        .aplayer .aplayer-controller .aplayer-bar-wrap {
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 4px;
-            transform: scale(1.1); /* 控件放大 */
-        }
 
-        .aplayer .aplayer-controller .aplayer-bar .aplayer-played {
-            background: #007aff;
-        }
-
-        /* 显示歌词按钮（仅第一个播放器） */
-        .player:first-child .aplayer-btn-lrc {
-            display: inline-block !important;
-            transform: scale(1.1);
-        }
-
-        /* 歌词面板：放置在盒子下方 */
-        .aplayer-lrc-panel {
-            position: relative;
-            width: 90%;
-            max-width: 460px;
-            margin: 16px auto 0;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 16px;
-            border-radius: 16px;
             overflow-y: auto;
-            font-size: clamp(20px, 3vw, 22px); /* 更大歌词字体 */
-            line-height: 1.8;
-            color: #1c2526;
-            min-height: 120px;
+
+
+            scroll-behavior: smooth;
+
+
         }
 
-        .aplayer-lrc-current {
-            color: #40c4ff;
-            font-weight: 700;
-            animation: lyricHighlight 0.4s ease-in-out;
+
+        .timeline-line {
+
+
+            position: absolute;
+
+
+            left: 50px;
+
+
+            top: 0;
+
+
+            bottom: 0;
+
+
+            width: 3px;
+
+
+            background: #3498db;
+
+
+            z-index: 0;
+
+
         }
 
-        /* 歌词高亮动画 */
-        @keyframes lyricHighlight {
-            0% { transform: scale(1); opacity: 0.7; }
-            100% { transform: scale(1.15); opacity: 1; }
+
+        .timeline-item {
+
+
+            position: relative;
+
+
+            margin-bottom: 20px;
+
+
+            padding: 15px 25px;
+
+
+            background: #fff;
+
+
+            border-left: 4px solid #3498db;
+
+
+            border-radius: 5px;
+
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+
+            transition: transform 0.3s, opacity 0.3s;
+
+
+            width: calc(100% - 300px);
+
+
+            margin-left: 80px; /* 基础左边距 */
+
+
         }
 
-        .aplayer-lrc-panel::-webkit-scrollbar {
-            width: 6px;
+
+        .timeline-item h3 {
+
+
+            margin: 0 0 8px;
+
+
+            color: #2c3e50;
+
+
+            font-size: 1.3em;
+
+
         }
 
-        .aplayer-lrc-panel::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.3);
+
+        .timeline-item p {
+
+
+            margin: 5px 0;
+
+
+            font-size: 0.95em;
+
+
+            line-height: 1.5;
+
+
+        }
+
+
+        .timeline-item .toggle-btn {
+
+
+            background: #3498db;
+
+
+            color: #fff;
+
+
+            border: none;
+
+
+            padding: 6px 12px;
+
+
+            cursor: pointer;
+
+
             border-radius: 3px;
+
+
+            font-size: 0.85em;
+
+
+            margin-top: 8px;
+
+
+            transition: background 0.2s;
+
+
         }
 
-        .aplayer-lrc-panel::-webkit-scrollbar-track {
-            background: transparent;
+
+        .timeline-item .toggle-btn:hover {
+
+
+            background: #2980b9;
+
+
         }
 
-        /* 动画 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .event-marker {
+
+
+            position: absolute;
+
+
+            left: -37px;
+
+
+            top: 20px;
+
+
+            width: 14px;
+
+
+            height: 14px;
+
+
+            background: #e74c3c;
+
+
+            border-radius: 50%;
+
+
+            border: 3px solid #fff;
+
+
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+
+            z-index: 1;
+
+
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .details {
+
+
+            margin-top: 10px;
+
+
+            padding: 10px;
+
+
+            background: #f9f9f9;
+
+
+            border-left: 2px solid #3498db;
+
+
+            border-radius: 3px;
+
+
+            display: none;
+
+
         }
 
-        /* 响应式设计：增大手机端尺寸 */
-        @media (max-width: 1024px) {
-            .players-wrap {
-                --player-size: 480px;
-            }
+
+        .details.show {
+
+
+            display: block;
+
+
         }
+
+
+        /* 动态左边距样式 */
+
+
+        .adam { margin-left: 80px; }
+
+
+        .seth { margin-left: 210px; } /* 130px */
+
+
+        .enos { margin-left: 315px; } /* 130 + 105 */
+
+
+        .cainan { margin-left: 1380px; } /* 130 + 105 + 905 */
+
+
+        .mahalaleel { margin-left: 2275px; } /* 130 + 105 + 905 + 895 */
+
+
+        .jared { margin-left: 3170px; } /* 130 + 105 + 905 + 895 + 895 */
+
+
+        .enoch { margin-left: 4132px; } /* 130 + 105 + 905 + 895 + 895 + 962 */
+
+
+        .methuselah { margin-left: 4497px; } /* 130 + 105 + 905 + 895 + 895 + 962 + 365 */
+
+
+        .lamech { margin-left: 5466px; } /* 130 + 105 + 905 + 895 + 896 + 962 + 365 + 969 */
+
+
+        .noah { margin-left: 6243px; } /* 130 + 105 + 905 + 895 + 896 + 962 + 365 + 969 + 777 */
+
+
+        .flood { margin-left: 650px; } /* 130 + 595 + 905 + 895 + 896 + 962 + 345 + 969 + 777 + 6023px */
+
 
         @media (max-width: 768px) {
-            header {
-                padding: 25px 40px;
+
+
+            .timeline-container {
+
+
+                left: 30px;
+
+
             }
 
-            .logo-container {
-                flex-direction: column;
-                margin-bottom: 15px;
+
+            .timeline-item {
+
+
+                width: calc(100% - 30px);
+
+
+                margin-left: 50px;
+
+
             }
 
-            .logo-container img {
-                width: 150px;
+
+            .event-marker {
+
+
+                left: -27px;
+
+
             }
 
-            .logo-text {
-                font-size: 30px;
-                width: 150px;
-                margin-left: 0;
-                margin-top: 15px;
-                text-align: center;
+
+            .adam, .seth, .enos, .cainan, .mahalaleel, .jared, .enoch, .methuselah, .lamech, .noah, .flood {
+
+
+                margin-left: 50px;
+
+
             }
 
-            header h1 {
-                font-size: 34px;
-            }
 
-            .players-wrap {
-                --player-size: 480px;
-                grid-template-columns: 1fr;
-                max-width: 95%;
-                padding: 40px;
-            }
-
-            .player {
-                width: 100%;
-                max-width: 480px;
-                margin: 36px auto;
-            }
         }
 
-        @media (max-width: 480px) {
-            header {
-                padding: 20px 25px;
-                margin: 30px 0;
-            }
 
-            .logo-container img {
-                width: 120px;
-            }
-
-            .logo-text {
-                font-size: 26px;
-                width: 120px;
-            }
-
-            header h1 {
-                font-size: 30px;
-            }
-
-            .back-button {
-                padding: 12px 22px;
-                font-size: 15px;
-            }
-
-            .players-wrap {
-                --player-size: 100%;
-                grid-template-columns: 1fr;
-                max-width: 95%;
-                padding: 40px;
-            }
-
-            .player {
-                width: 100%;
-                max-width: 520px; /* 手机端增大 */
-                margin: 36px auto;
-            }
-
-            .aplayer-lrc-panel {
-                width: 95%;
-                max-width: 480px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .players-wrap {
-                --player-size: 100%;
-                padding: 36px;
-            }
-
-            .player {
-                max-width: 500px;
-            }
-        }
     </style>
+
+
 </head>
+
+
 <body>
-    <!-- 返回按钮 -->
-    <a href="#" class="back-button">返回</a>
 
-    <!-- 头部 -->
-    <header>
-        <div class="logo-container">
-            <img src="logo/ebfside.png" alt="电子圣经团契 Logo">
-            <div class="logo-text">
-                <span class="electronic">电子</span><span class="fellowship">圣经团契</span>
-            </div>
-        </div>
-        <h1>圣经音乐</h1>
-    </header>
 
-    <!-- 音乐盒子容器（10个示例盒子，第一个有自制歌词） -->
-    <div class="players-wrap">
-        <div class="player" style="background-image: url('https://picsum.photos/seed/1/600');">
-            <div class="aplayer"></div>
-            <div class="aplayer-lrc-panel"></div> <!-- 歌词面板移到下方 -->
-        </div>
-        <div class="player" style="background-image: url('https://picsum.photos/seed/2/600');"><div class="aplayer"></div></div>
-        <div class="player" style="background-image: url('https://picsum.photos/seed/3/600');"><div class="aplayer"></div></div>
-        <div class="player" style="background-image: url('https://picsum.photos/seed/4/600');"><div class="aplayer"></div></div>
-        <div class="player" style="background-image: url('https://picsum.photos/seed/5/600');"><div class="aplayer"></div></div>
-        <div class="player" style="background-image: url('https://picsum.photos/seed/6/600');"><div class="aplayer"></div></div>
-        <div class="player" style="background-image: url('https://picsum.photos/seed/7/600');"><div class="aplayer"></div></div>
-        <div class="player" style="background-image: url('https://picsum.photos/seed/8/600');"><div class="aplayer"></div></div>
-        <div class="player" style="background-image: url('https://picsum.photos/seed/9/600');"><div class="aplayer"></div></div>
-        <div class="player" style="background-image: url('https://picsum.photos/seed/10/600');"><div class="aplayer"></div></div>
+    <div class="timeline-container" id="timelineContainer">
+
+
+        <div class="timeline-line"></div>
+
+
     </div>
 
-    <script src="https://unpkg.com/aplayer/dist/APlayer.min.js"></script>
-    <script>
-        /* 音频素材（10个示例，第一个有自制歌词） */
-        const audioList = [
-            {
-                name: '赞美诗 1',
-                artist: '电子圣经团契',
-                url: 'https://s1.ebiblefellowship.org:40080/b/piano/11.mp3',
-                cover: 'https://picsum.photos/seed/1/600',
-                lrc: `[00:00.00]自制歌词 - 赞美诗 1
-[00:05.00]主啊，你的爱如海洋
-[00:10.00]宽广深邃永不干涸
-[00:15.00]我心向你高声赞美
-[00:20.00]荣耀归于至高真神
-[00:25.00]哈利路亚，感谢主恩
-[00:30.00]你的名永远尊崇`
-            },
-            { name: '赞美诗 2', artist: '电子圣经团契', url: 'https://s1.ebiblefellowship.org:40080/b/piano/12.mp3', cover: 'https://picsum.photos/seed/2/600', lrc: '' },
-            { name: '赞美诗 3', artist: '电子圣经团契', url: 'path/to/music3.mp3', cover: 'https://picsum.photos/seed/3/600', lrc: '' },
-            { name: '赞美诗 4', artist: '电子圣经团契', url: 'path/to/music4.mp3', cover: 'https://picsum.photos/seed/4/600', lrc: '' },
-            { name: '赞美诗 5', artist: '电子圣经团契', url: 'path/to/music5.mp3', cover: 'https://picsum.photos/seed/5/600', lrc: '' },
-            { name: '赞美诗 6', artist: '电子圣经团契', url: 'path/to/music6.mp3', cover: 'https://picsum.photos/seed/6/600', lrc: '' },
-            { name: '赞美诗 7', artist: '电子圣经团契', url: 'path/to/music7.mp3', cover: 'https://picsum.photos/seed/7/600', lrc: '' },
-            { name: '赞美诗 8', artist: '电子圣经团契', url: 'path/to/music8.mp3', cover: 'https://picsum.photos/seed/8/600', lrc: '' },
-            { name: '赞美诗 9', artist: '电子圣经团契', url: 'path/to/music9.mp3', cover: 'https://picsum.photos/seed/9/600', lrc: '' },
-            { name: '赞美诗 10', artist: '电子圣经团契', url: 'path/to/music10.mp3', cover: 'https://picsum.photos/seed/10/600', lrc: '' },
-        ];acccccc
 
-        /* 实例化 APlayer 并通过 JS 调整 CSS */
-        document.querySelectorAll('.player').forEach((box, i) => {
-            const player = new APlayer({
-                container: box.querySelector('.aplayer'),
-                theme: '#007aff',
-                mini: false,
-                loop: 'all',
-                preload: 'auto',
-                lrcType: i === 0 ? 3 : 0, /* 第一个播放器启用LRC */
-                audio: [audioList[i]]
+
+
+
+    <script>
+
+
+        // 时间线数据
+
+
+        const timelineData = [
+
+
+            {
+
+
+                year: -11013,
+
+
+                title: "创世 - 亚当",
+
+
+                description: "亚当 (上帝之子) 生于创世，寿命930年",
+
+
+                timepath: "亚当到塞特出生：130年 × 100 = 13000年，公元1988年 (教会时代结束)",
+
+
+                type: "patriarch",
+
+
+                class: "adam",
+
+
+                details: []
+
+
+            },
+
+
+            {
+
+
+                year: -10883,
+
+
+                title: "塞特",
+
+
+                description: "亚当之子，寿命912年",
+
+
+                timepath: "塞特到以挪士出生：105年 × 123 = 13045年，公元2033年 (复活/世界末日)",
+
+
+                type: "patriarch",
+
+
+                class: "seth",
+
+
+                details: ["塞特时间路径：105年 × 123 = 13045年"]
+
+
+            },
+
+
+            {
+
+
+                year: -10778,
+
+
+                title: "以挪士",
+
+
+                description: "塞特之子，寿命905年",
+
+
+                type: "patriarch",
+
+
+                class: "enos",
+
+
+                details: []
+
+
+            },
+
+
+            {
+
+
+                year: -9873,
+
+
+                title: "该南",
+
+
+                description: "以挪士后裔，寿命910年",
+
+
+                type: "patriarch",
+
+
+                class: "cainan",
+
+
+                details: []
+
+
+            },
+
+
+            {
+
+
+                year: -8963,
+
+
+                title: "玛勒列",
+
+
+                description: "该南后裔，寿命895年",
+
+
+                timepath: "玛勒列时间路径：895 × 10 = 8950年，公元前13年，地球年龄11000年",
+
+
+                type: "patriarch",
+
+
+                class: "mahalaleel",
+
+
+                details: ["玛勒列时间路径：-2050年，地球年龄8963年"]
+
+
+            },
+
+
+            {
+
+
+                year: -8068,
+
+
+                title: "雅列",
+
+
+                description: "玛勒列后裔，寿命962年",
+
+
+                timepath: "雅列到儿子出生至洪水：162 × 19 = 3078年，公元前4990年 (洪水)；162 × 50 = 8100年，公元33年 (十字架)",
+
+
+                type: "patriarch",
+
+
+                class: "jared",
+
+
+                details: []
+
+
+            },
+
+
+            {
+
+
+                year: -7106,
+
+
+                title: "以诺",
+
+
+                description: "雅列后裔，寿命365年",
+
+
+                timepath: "65 × 74 = 4810年，公元前2297年 (他拉出生)",
+
+
+                type: "patriarch",
+
+
+                class: "enoch",
+
+
+                details: []
+
+
+            },
+
+
+            {
+
+
+                year: -6741,
+
+
+                title: "玛士撒拉",
+
+
+                description: "以诺后裔，寿命969年",
+
+
+                type: "patriarch",
+
+
+                class: "methuselah",
+
+
+                details: []
+
+
+            },
+
+
+            {
+
+
+                year: -5772,
+
+
+                title: "拉麦",
+
+
+                description: "玛士撒拉后裔，寿命777年",
+
+
+                type: "patriarch",
+
+
+                class: "lamech",
+
+
+                details: []
+
+
+            },
+
+
+            {
+
+
+                year: -5590,
+
+
+                title: "诺亚",
+
+
+                description: "拉麦之子，寿命950年",
+
+
+                timepath: "诺亚时间路径：950 × 8 = 7600年，公元2011年，地球年龄13023年",
+
+
+                type: "patriarch",
+
+
+                class: "noah",
+
+
+                details: ["洪水后350年时间路径"]
+
+
+            },
+
+
+            {
+
+
+                year: -4990,
+
+
+                title: "洪水",
+
+
+                description: "洪水发生，地球年龄6023年",
+
+
+                timepath: "洪水到审判日：7000年，公元2011年",
+
+
+                type: "event",
+
+
+                class: "flood",
+
+
+                details: []
+
+
+            },
+
+
+            // 以下为简化，完整时间线可继续扩展
+
+
+            {
+
+
+                year: -2167,
+
+
+                title: "亚伯拉罕",
+
+
+                description: "他拉之子，寿命175年",
+
+
+                timepath: "亚伯拉罕时间路径：175 × 24 = 4200年，公元2033年，地球年龄13045年",
+
+
+                type: "patriarch",
+
+
+                class: "",
+
+
+                details: ["40年复制：从亚伯拉罕离开迦勒底的吾珥到应许之地"]
+
+
+            },
+
+
+            {
+
+
+                year: -7,
+
+
+                title: "基督诞生",
+
+
+                description: "耶稣基督诞生",
+
+
+                type: "event",
+
+
+                class: "",
+
+
+                details: []
+
+
+            },
+
+
+            {
+
+
+                year: 2033,
+
+
+                title: "世界末日",
+
+
+                description: "审判日结束，世界末日，时间终结",
+
+
+                type: "event",
+
+
+                class: "",
+
+
+                details: []
+
+
+            }
+
+
+        ];
+
+
+
+
+
+        // 渲染时间线
+
+
+        function renderTimeline(data) {
+
+
+            const container = document.getElementById('timelineContainer');
+
+
+            container.innerHTML = '<div class="timeline-line"></div>';
+
+
+            data.forEach(item => {
+
+
+                const itemElement = document.createElement('div');
+
+
+                itemElement.className = `timeline-item ${item.class}`;
+
+
+                itemElement.dataset.year = item.year;
+
+
+                itemElement.innerHTML = `
+
+
+                    <div class="event-marker"></div>
+
+
+                    <h3>${item.title} (${item.year < 0 ? '公元前' + (-item.year) : '公元' + item.year}年)</h3>
+
+
+                    <p>${item.description}</p>
+
+
+                    ${item.timepath ? `<p><strong>时间路径：</strong> ${item.timepath}</p>` : ''}
+
+
+                    ${item.details.length ? `
+
+
+                        <button class="toggle-btn" onclick="toggleDetails(this)">展开/收起</button>
+
+
+                        <div class="details">${item.details.map(detail => `<p>${detail}</p>`).join('')}</div>
+
+
+                    ` : ''}
+
+
+                `;
+
+
+                container.appendChild(itemElement);
+
+
             });
 
-            /* 强制正方形 */
-            const aplayer = box.querySelector('.aplayer');
-            aplayer.style.width = '100%';
-            aplayer.style.height = '100%';
-            aplayer.style.aspectRatio = '1/1';
 
-            /* 第一个播放器：动态调整歌词面板到下方 */
-            if (i === 0) {
-                const lrcPanel = box.querySelector('.aplayer-lrc-panel');
-                if (lrcPanel) {
-                    lrcPanel.style.position = 'relative';
-                    lrcPanel.style.width = '90%';
-                    lrcPanel.style.maxWidth = '460px';
-                    lrcPanel.style.margin = '16px auto 0';
-                }
+        }
+
+
+
+
+
+        // 展开/收起详情
+
+
+        function toggleDetails(button) {
+
+
+            const details = button.nextElementSibling;
+
+
+            if (details) {
+
+
+                details.classList.toggle('show');
+
+
+                button.textContent = details.classList.contains('show') ? '收起' : '展开/收起';
+
+
             }
+
+
+        }
+
+
+
+
+
+        // 平滑滚动处理
+
+
+        let isScrolling;
+
+
+        const container = document.getElementById('timelineContainer');
+
+
+        container.addEventListener('wheel', (e) => {
+
+
+            e.preventDefault();
+
+
+            container.scrollTop += e.deltaY;
+
+
+            clearTimeout(isScrolling);
+
+
+            isScrolling = setTimeout(() => {
+
+
+                // 可添加滚动结束后的逻辑
+
+
+            }, 100);
+
+
         });
+
+
+
+
+
+        // 触摸滑动支持
+
+
+        let startY;
+
+
+        container.addEventListener('touchstart', (e) => {
+
+
+            startY = e.touches[0].clientY;
+
+
+        });
+
+
+        container.addEventListener('touchmove', (e) => {
+
+
+            const deltaY = startY - e.touches[0].clientY;
+
+
+            container.scrollTop += deltaY;
+
+
+            startY = e.touches[0].clientY;
+
+
+        });
+
+
+
+
+
+        // 初始渲染
+
+
+        renderTimeline(timelineData);
+
+
     </script>
+
+
 </body>
+
+
 </html>
